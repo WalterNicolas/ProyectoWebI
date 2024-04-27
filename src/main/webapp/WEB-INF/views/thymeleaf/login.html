@@ -1,48 +1,60 @@
-<!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Taller Web I</title>
-
-    <!-- Boostrap core css -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-
-    <!-- custom style -->
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+<!DOCTYPE html>
+<html>
+<head th:replace="templates/head :: head">
 </head>
-
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">UNLAM</a>
-</nav>
+<div th:replace="templates/header :: header">
+</div>
+<section class="vh-100">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card d-flex h-100 align-items-stretch">
+                    <div class="card-body">
+                        <img src="https://as2.ftcdn.net/v2/jpg/03/01/84/91/1000_F_301849104_I4eoRdmA52EKV60fiHIJv5kXqRuvVbXe.jpg"
+                             class="img-fluid" alt="Sample image">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 border-opacity-10 ">
+                <div class="card  d-flex h-100 align-items-stretch">
+                    <div class="card-body secundario border-0">
+                        <form form action="#" th:action="@{/validar-login}" method="POST" th:object="${datosLogin}">
+                            <div class="divider d-flex align-items-center my-4">
+                                <h3 class="text-light text-center">Training App</h3>
+                            </div>
 
-<main role="main" class="container">
+                            <!-- Email input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label text-light" for="email">Email address</label>
+                                <input th:field="*{email}" id="email" type="email" class="form-control form-control-lg"
+                                       placeholder="Ingrese el e-Mail" required />
 
-    <div class = "container">
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <form action="#" th:action="@{/validar-login}" method="POST" th:object="${datosLogin}">
-                <h3 class="form-signin-heading">Taller Web I</h3>
-                <hr class="colorgraph"><br>
+                            </div>
 
-                <input th:field="*{email}" id="email" type="email" class="form-control" required/>
-                <input th:field="*{password}" type="password" id="password" class="form-control" required/>
+                            <!-- Password input -->
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="password">Password</label>
+                                <input th:field="*{password}" type="password" id="password"  class="form-control form-control-lg"
+                                       placeholder="Enter password" required/>
 
-                <button id="btn-login" class="btn btn-lg btn-primary btn-block" Type="Submit">Login</button>
+                            </div>
 
-                <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
-                </p>
-            </form>
-            <a id="ir-a-registrarme" href="nuevo-usuario">Registrarme</a>
+                            <div class="text-center text-lg-start mt-4 pt-2">
+                                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn primario  texto3 btn-lg"
+                                >Registrarme</button>
+                                <p class="small fw-bold mt-2 pt-1 mb-0 texto3">No tienes tu usuario?  <a id="ir-a-registrarme" href="nuevo-usuario" class="texto1">Registrarme</a></p>
+                            </div>
+
+                            <p th:if="${error != null}" class="alert pt-2 alert-danger" th:text="'Error ' + ${error}">
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</main>
-<!-- /.container -->
-
-<!-- Boostrap core js -->
-<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+    </section>
+<footer th:replace="templates/footer:: footer">
+</footer>
 </body>
 </html>

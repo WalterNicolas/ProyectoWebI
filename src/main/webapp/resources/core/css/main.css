@@ -1,19 +1,38 @@
-body {
-  padding-top: 5rem;
+body{
+    padding:0px;
+    margin:0px;
 }
 .starter-template {
   padding: 3rem 1.5rem;
   text-align: center;
 }
-
-h1{
-	color:#0000FF;
+body{
+    background-color:#404040;
 }
-
 h2{
 	color:#FF0000;
 }
+cotenido{
 
-.navbar-brand{
-    margin:0 2rem;
+}
+.primario{
+    background-color: #F70C5B !important;
+    font-size: 16px;
+}
+.secundario{
+    background-color:#404040;
+}
+.titulo1{
+    color: #F70C5B !important;
+    font-size: 100px;
+}
+.titulo2{
+    color:grey;
+    font-size: 70px;
+}
+.texto1{
+    color: #F70C5B !important;
+}
+texto2{
+    color: grey !important;
 }
