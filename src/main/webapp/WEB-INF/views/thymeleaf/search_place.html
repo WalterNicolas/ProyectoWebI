@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Taller Web I</title>
+
+    <!-- Boostrap core css -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+
+    <!-- custom style -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/search.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+</head>
+<body>
+<div th:replace="templates/header :: header">
+</div>
+<div class="container d-flex justify-content-center align-items-center flex-column">
+    <h2 class="text-center text-white">Encuentra tu lugar ideal</h2>
+
+    <div class="input-group mb-2">
+        <input type="text" class="form-control" placeholder="Busca por ubicación o tipo de actividad" aria-label="Username" aria-describedby="basic-addon1">
+        <button class="btn rose-button text-center justify-content-center font-weight-bold"><i
+                class="fa-solid fa-dumbbell"></i></button>
+    </div>
+    <section class="searchCardContainer mt-3 scroll">
+        <div class="mt-1 searchCard">
+            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+            <div class="infoContainer">
+                <h3>ZonaRyp</h3>
+                <span>Musculacion / cardio</span>
+                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
+            </div>
+        </div>
+        <div class="mt-1 searchCard">
+            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+            <div class="infoContainer">
+                <h3>ZonaRyp</h3>
+                <span>Musculacion / cardio</span>
+                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
+            </div>
+        </div>
+        <div class="mt-1 searchCard">
+            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+            <div class="infoContainer">
+                <h3>ZonaRyp</h3>
+                <span>Musculacion / cardio</span>
+                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
+            </div>
+        </div>
+        <div class="mt-1 searchCard">
+            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+            <div class="infoContainer">
+                <h3>ZonaRyp</h3>
+                <span>Musculacion / cardio</span>
+                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer th:replace="templates/footer:: footer">
+</footer>
+</body>
+</html>
