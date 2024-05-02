@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Taller Web I</title>
+
+    <!-- Boostrap core css -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+
+    <!-- custom style -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/gym-routines.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+<div th:replace="templates/header :: header">
+</div>
+<div class="general">
+    <h1 class="titulo1">Mis rutinas</h1>
+    <div class="summary-card">
+        <h2>Resumen de la semana</h2>
+        <p class="texto2">4/5 Rutinas cumplidas</p>
+        <p class="texto2">-10% Peso</p>
+        <p class="texto2">1 Rutinas por hacer</p>
+    </div>
+    <section class="home-routines">
+        <div class="container d-flex">
+                <div class="col-user secundario">
+                    <img class="profile-img" th:src="@{/img/user-icon.png}" alt="">
+                    <p class="user-name">Nombre-Usuario</p>
+                </div>
+                <div class="col-list primario">
+                    <p class="to-do-list">Por hacer</p>
+                    <ul>
+                        <li>Calentamiento previo</li>
+                        <li>Hidratacion</li>
+                        <li>Ejercicios</li>
+                        <li>Repeticiones</li>
+                        <li>Elongamiento</li>
+                    </ul>
+                </div>
+            </div>
+    </section>
+</div>
+
+<footer th:replace="templates/footer:: footer">
+</footer>
+</body>
+</html>
