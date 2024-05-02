@@ -6,15 +6,15 @@
         <div class="collapse navbar-collapse segundario" id="navbarNav">
             <ul class="navbar-nav ">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
+                    <a class="nav-link active" aria-current="page" th:href="@{home}">
                         <img th:src="@{/images/logo.png}" alt="Ejemplo de imagen" />
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Mi Rutina</a>
+                    <a class="nav-link text-light" th:href="@{routines-summary}">Mi Rutina</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Gimnasio</a>
+                    <a class="nav-link text-light" th:href="@{search}">Gimnasio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#">Mi historial</a>
