@@ -13,7 +13,7 @@ import java.time.Period;
 @Transactional
 public class ServicioFormularioImp implements ServicioFormulario{
     @Override
-    public AptitudFisica registrarDatos(AptitudFisica aptitudFisica) throws DatosMalIngresadosException {
+    public AptitudFisica registrarDatos(AptitudFisica aptitudFisica)  {
         if (!sonParametrosValidos(aptitudFisica)) {
             throw new DatosMalIngresadosException();
         }
@@ -34,10 +34,10 @@ public class ServicioFormularioImp implements ServicioFormulario{
     public Boolean sonParametrosValidos(AptitudFisica aptitudFisica) {
         return aptitudFisica.getAltura() > 0
                 && aptitudFisica.getPeso() > 0
-                && aptitudFisica.getFechaNacimiento() != null
-                && !aptitudFisica.getFechaNacimiento().isEmpty()
                 && aptitudFisica.getTipoEntrenamiento() != null
                 && !aptitudFisica.getTipoEntrenamiento().isEmpty()
+                && aptitudFisica.getFechaNacimiento() != null
+                && !aptitudFisica.getFechaNacimiento().isEmpty()
                 && aptitudFisica.getDiasEntrenamiento() > 0
                 && aptitudFisica.getHorasEntrenamiento() > 0
                 && aptitudFisica.getEstadoFisico() != null
