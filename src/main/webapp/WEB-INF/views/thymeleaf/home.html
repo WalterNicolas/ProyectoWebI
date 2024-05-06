@@ -1,32 +1,92 @@
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Taller Web I</title>
-
-  <!-- Boostrap core css -->
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-
-  <!-- custom style -->
-  <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+<head th:replace="templates/head :: head">
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="templates/header:: header" >
-  <a class="navbar-brand" href="#">UNLAM</a>
-</nav>
+<div th:replace="templates/header :: header">
+</div>
 
 <main role="main" class="container">
   <div class = "container">
     <h2 class="titulo1">DashBoard</h2>
+    <div th:if="${aptitudFisica != null}">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Datos de Aptitud Física</h5>
+          <p class="card-text">Altura: <span th:text="${aptitudFisica.altura}"></span> cm</p>
+          <p class="card-text">Peso: <span th:text="${aptitudFisica.peso}"></span> kg</p>
+          <p class="card-text">Tipo entrenaminto: <span th:text="${aptitudFisica.tipoEntrenamiento}"></span> </p>
+          <p class="card-text">Dias: <span th:text="${aptitudFisica.diasEntrenamiento}"></span> por Semana</p>
+          <p class="card-text">Horas por día: <span th:text="${aptitudFisica.horasEntrenamiento}"></span> </p>
+          <p class="card-text">Peso: <span th:text="${aptitudFisica.estadoFisico}"></span> </p>
+          <!-- Agrega más campos aquí según tus necesidades -->
+        </div>
+      </div>
+    </div>
+    <div th:if="${aptitudFisica == null}">
+      <p class="text-light">No hay datos de aptitud física disponibles.</p>
+    </div>
 
-   <!--<a href="" class="btn btn-lg btn-primary btn-block">Volver</a> -->
   </div>
-</main>
+  <div
+          class="flex flex-col md:flex-row space-x-0 md:space-x-8 space-y-12  md:space-y-0 justify-center items-center mt-10">
+    <div class="bg-[#FFFBEC] rounded-xl">
+      <div class="flex flex-col p-8 rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-96 md:w-auto">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Ice_logo.svg/138px-Ice_logo.svg.png?20191213230535" class="w-8">
+        <div class="mt-3 font-semibold text-lg">Pack Standar</div>
+        <div class="text-sm font-light">Rutina</div>
+        <div class="my-4">
+          <span class="font-bold text-base">Gratis</span>
+          <span class="font-light text-sm">/month</span>
+        </div>
+
+        <button class="bg-[#F4F5FA] px-4 py-3 rounded-full  border border-[#F0F0F6] shadow-xl mt-4">
+          Suscripcion Free
+        </button>
+      </div>
+    </div>
+
+    <div class="bg-[#F9ECFF] rounded-xl">
+      <div class="flex flex-col p-8 rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-96 md:w-auto">
+        <img src="https://www.dstny.se/app/uploads/telia_pp_rgb.png.webp" class="w-12">
+        <div class="mt-3 font-semibold text-lg">Go Fit</div>
+        <div class="text-sm font-light w-60 md:w-auto">Rutina/Gimnasio</div>
+        <div class="my-4">
+          <span class="font-bold text-base">10K-</span>
+          <span class="font-light text-sm">/month</span>
+        </div>
+
+        <button class="bg-[#F4F5FA] px-4 py-3 rounded-full  border border-[#F0F0F6] shadow-xl mt-4">
+          Comprar Suscripcion
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bg-[#ECEEFF] rounded-xl">
+      <div class="flex flex-col p-8 rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-96 md:w-auto">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Telenor_Logo.svg/1600px-Telenor_Logo.svg.png" class="w-12">
+        <div class="mt-3 font-semibold text-lg">Full Pack</div>
+        <div class="text-sm font-light w-60 md:w-auto">Rutina/gimnasio/</div>
+        <div class="my-4">
+          <span class="font-bold text-base">1028,-</span>
+          <span class="font-light text-sm">/month</span>
+        </div>
+
+        <button class="bg-[#F4F5FA] px-4 py-3 rounded-full  border border-[#F0F0F6] shadow-xl mt-4">
+          Comprar Suscripcion
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center">
+    <button class="mt-12 bg-slate-900 text-white px-4 rounded-full py-3">Ve detalles de las suscripciones</button>
+  </div>
+  </div>
+ </main>
 <footer></footer>
 <!-- /.container -->
 

@@ -36,7 +36,7 @@ public class ControladorLoginTest {
 	}
 
 	@Test
-	public void loginConUsuarioYPasswordInorrectosDeberiaLlevarALoginNuevamente(){
+	public void loginConUsuarioPasswordInorrectosDeberiaLlevarALoginNuevamente(){
 		// preparacion
 		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(null);
 
@@ -67,13 +67,13 @@ public class ControladorLoginTest {
 	}
 
 	@Test
-	public void registrameSiUsuarioNoExisteDeberiaCrearUsuarioYVolverAlLogin() throws UsuarioExistente {
+	public void registrameSiUsuarioNoExisteDeberiaCrearUsuarioYLlevarmeAFormularioAptitudFisica() throws UsuarioExistente {
 
 		// ejecucion
 		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock);
 
 		// validacion
-		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
+		assertThat(modelAndView.getViewName(), equalToIgnoringCase("formulario"));
 		verify(servicioLoginMock, times(1)).registrar(usuarioMock);
 	}
 

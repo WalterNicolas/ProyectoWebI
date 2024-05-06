@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
+import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -57,7 +58,8 @@ public class ControladorLogin {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("nuevo-usuario", model);
         }
-        return new ModelAndView("redirect:/login");
+        model.put("aptitudFisica", new AptitudFisica());
+        return new ModelAndView("formulario",model);
     }
 
     @RequestMapping(path = "/nuevo-usuario", method = RequestMethod.GET)
