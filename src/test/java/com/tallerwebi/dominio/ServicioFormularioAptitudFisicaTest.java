@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
 import com.tallerwebi.presentacion.ControladorLogin;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import net.bytebuddy.asm.Advice;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 public class ServicioFormularioAptitudFisicaTest {
@@ -61,6 +63,32 @@ public class ServicioFormularioAptitudFisicaTest {
     private void thenRetornaAptitudFisica(AptitudFisica apto) {
         assertThat(apto,notNullValue());
         assertThat(apto.getAltura(),equalTo(185));
+    }
+    @Test
+    public void siLaEdadEsMenorDe18LanceUnExcepcion(){
+        givenNoHayDatos();
+        whenLaEdadEsMenoa18();
+    }
+
+    private void whenLaEdadEsMenoa18() {
+        AptitudFisica apto = new AptitudFisica();
+        apto.setAltura(185);
+        apto.setPeso(100.5);
+        LocalDate fechaDeNacimiento = LocalDate.of(2018, 1, 31);
+
+        // Crear un objeto DateTimeFormatter para el formato deseado
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convertir la fecha de nacimiento a String
+        String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
+        apto.setFechaNacimiento(fechaDeNacimientoString);
+        apto.setTipoEntrenamiento("Gym");
+        apto.setDiasEntrenamiento(3);
+        apto.setHorasEntrenamiento(1);
+        apto.setEstadoFisico("sedentario");
+        assertThrows(esMenorDeEdadException.class,
+                ()->servicioFormulario.registrarDatos(apto));
+
     }
 
 }
