@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
 import com.tallerwebi.presentacion.ControladorLogin;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
@@ -90,5 +91,29 @@ public class ServicioFormularioAptitudFisicaTest {
                 ()->servicioFormulario.registrarDatos(apto));
 
     }
+    @Test
+    public void siFaltaAlgunDatoQueEnvieUnExcepcion(){
+        givenNoHayDatos();
+        whenFaltaAlgunDato();
+    }
 
+    private void whenFaltaAlgunDato() {
+        AptitudFisica apto = new AptitudFisica();
+        apto.setAltura(185);
+        apto.setPeso(100.5);
+        LocalDate fechaDeNacimiento = LocalDate.of(2018, 1, 31);
+
+        // Crear un objeto DateTimeFormatter para el formato deseado
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convertir la fecha de nacimiento a String
+        String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
+        apto.setFechaNacimiento(fechaDeNacimientoString);
+        apto.setTipoEntrenamiento("Gym");
+        apto.setDiasEntrenamiento(3);
+        apto.setEstadoFisico("sedentario");
+        assertThrows(DatosMalIngresadosException.class,
+                ()->servicioFormulario.registrarDatos(apto));
+
+    }
 }
