@@ -76,3 +76,16 @@ img{
 .input-group{
     width: 31.25rem;
 }
+
+.mapImg{
+    width:475px;
+    height:412px;
+}
+
+.mapContainer{
+    display: flex;
+    width: 500px;
+    background-color: #AB093F;
+    border-radius: 10px;
+    justify-content: center;
+}

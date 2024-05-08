@@ -2,9 +2,12 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
+import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,11 +56,13 @@ public class ControladorLogin {
         } catch (UsuarioExistente e){
             model.put("error", "El usuario ya existe");
             return new ModelAndView("nuevo-usuario", model);
-        } catch (Exception e){
-            model.put("error", "Error al registrar el nuevo usuario");
+        } catch (DatosIncompletosLogin e){
+            model.put("error", "Faltan datos para Registrar / Asegurate de elegir tu lugar de residencia");
             return new ModelAndView("nuevo-usuario", model);
         }
-        return new ModelAndView("redirect:/login");
+        model.put("aptitudFisica", new AptitudFisica());
+        model.put("usuario",usuario);
+        return new ModelAndView("formulario",model);
     }
 
     @RequestMapping(path = "/nuevo-usuario", method = RequestMethod.GET)

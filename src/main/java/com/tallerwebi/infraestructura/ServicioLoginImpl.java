@@ -3,7 +3,10 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
+import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
+import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +31,23 @@ public class ServicioLoginImpl implements ServicioLogin {
     @Override
     public void registrar(Usuario usuario) throws UsuarioExistente {
         Usuario usuarioEncontrado = repositorioUsuario.buscarUsuario(usuario.getEmail(), usuario.getPassword());
+
         if(usuarioEncontrado != null){
             throw new UsuarioExistente();
         }
-        repositorioUsuario.guardar(usuario);
+        if(!sonParametrosValidos(usuario)) {
+            throw new DatosIncompletosLogin();
+        }else{
+            repositorioUsuario.guardar(usuario);
+        }
+    }
+    public Boolean sonParametrosValidos(Usuario usuario) {
+        return usuario.getLongitud() != null
+                && usuario.getLatitud() != null
+                && usuario.getEmail() != null
+                && usuario.getApellido() != null
+                && usuario.getNombre() != null
+                && usuario.getPassword() != null;
     }
 
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="templates/head :: head">
+</head>
+<body>
+<section class="vh-100" style="padding-top: 100px;">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="card d-flex h-100  secundario align-items-stretch">
+                <form class="p-3" action="#" th:action="@{/guardar-aptitud-fisica}"  method="POST" th:object="${aptitudFisica}">
+                    <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física: <span th:if="${usuario != null}"  th:text="${usuario.getNombre()}"> </span> </h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="altura">Altura (en cm)</label>
+                                <input id="altura" class="form-control" th:field="*{altura}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="peso">Peso (en kg)</label>
+                                <input id="peso" class="form-control" th:field="*{peso}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="fechaNacimiento">Fecha Nacimiento</label>
+                                <input id="fechaNacimiento" type="date" class="form-control" th:field="*{fechaNacimiento}" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-3">
+                        <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
+                        <select id="tipoEntrenamiento" class="form-select" th:field="*{tipoEntrenamiento}" required>
+                            <option value="">Seleccione...</option>
+                            <option value="calistenia">Calistenia</option>
+                            <option value="musculacion">Musculación</option>
+                            <option value="cardio">Cardio</option>
+                            <option value="natacion">Natación</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="diasEntrenamiento">Días de Entrenamiento por Semana</label>
+                                <input id="diasEntrenamiento" type="number" class="form-control" th:field="*{diasEntrenamiento}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="horasEntrenamiento">Hora por Sesion:</label>
+                                <input id="horasEntrenamiento" type="number" class="form-control" th:field="*{horasEntrenamiento}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="estadoFisico">Tu estado físico:</label>
+                                <select id="estadoFisico" class="form-select" th:field="*{estadoFisico}" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="sedentario">Sedentario</option>
+                                    <option value="intermedio">Intermedio</option>
+                                    <option value="entrenado">Entrenado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Resto del formulario omitido por brevedad -->
+                    <p th:if="${error != null}" class="alert pt-2 alert-danger" th:text="'Error ' + ${error}">
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button id="btn-guardar" class="btn primario texto3 btn-lg" type="submit">Guardar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</section>
+<footer th:replace="templates/footer:: footer">
+</footer>
+</body>
+</html>
