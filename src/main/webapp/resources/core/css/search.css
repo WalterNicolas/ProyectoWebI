@@ -25,7 +25,8 @@ border-color:transparent
 
 .searchCardContainer {
     overflow: auto;
-    height: 400px;
+    height:auto;
+    max-height: 400px;
     width: 31.25rem;
     padding-right: 10px;
 }
