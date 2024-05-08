@@ -3,14 +3,13 @@
 <head th:replace="templates/head :: head">
 </head>
 <body>
-<section class="vh-100">
+<section class="vh-100" style="padding-top: 100px;">
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="card d-flex h-100  secundario align-items-stretch">
                 <form class="p-3" action="#" th:action="@{/guardar-aptitud-fisica}"  method="POST" th:object="${aptitudFisica}">
-                    <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física</h3>
-
+                    <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física: <span th:if="${usuario != null}"  th:text="${usuario.getNombre()}"> </span> </h3>
                     <div class="row">
                         <div class="col-md-4">
                             <div data-mdb-input-init class="form-outline mb-3">

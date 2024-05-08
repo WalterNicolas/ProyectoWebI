@@ -15,7 +15,11 @@ public class Usuario {
     private String email;
     private String password;
     private String rol;
+    private String nombre;
+    private String apellido;
     private Boolean activo = false;
+    private Double longitud;
+    private Double latitud;
 
     @OneToMany
     private List<Exercise> rutinas;
@@ -51,11 +55,43 @@ public class Usuario {
         this.activo = activo;
     }
 
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
     public boolean activo() {
         return activo;
     }
 
     public void activar() {
         activo = true;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 }

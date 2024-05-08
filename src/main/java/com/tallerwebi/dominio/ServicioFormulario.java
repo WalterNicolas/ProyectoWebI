@@ -5,7 +5,7 @@ import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 
 public interface ServicioFormulario {
 
-   AptitudFisica registrarDatos(AptitudFisica aptitudFisica) throws DatosMalIngresadosException;
+   AptitudFisica registrarDatos(AptitudFisica aptitudFisica);
    Integer calcularEdad(String fechaNacimiento);
    Boolean sonParametrosValidos(AptitudFisica aptitudFisica);
 }
