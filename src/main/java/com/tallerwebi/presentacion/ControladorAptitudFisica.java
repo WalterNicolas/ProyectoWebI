@@ -2,10 +2,9 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioFormulario;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
-import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
+import com.tallerwebi.dominio.excepcion.EsMenorDeEdadException;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 
-public class ControladorFormulario {
+public class ControladorAptitudFisica {
     private final ServicioFormulario servicioFormulario;
 
-    public ControladorFormulario(ServicioFormulario servicioFormulario) {
+    public ControladorAptitudFisica(ServicioFormulario servicioFormulario) {
         this.servicioFormulario = servicioFormulario;
     }
 
@@ -27,7 +26,7 @@ public class ControladorFormulario {
     public ModelAndView irAFormulario() {
         ModelMap modelo = new ModelMap();
         modelo.put("aptitudFisica", new AptitudFisica());
-        return new ModelAndView("formulario", modelo);
+        return new ModelAndView("aptitud-fisica", modelo);
     }
 
     @RequestMapping(path = "/guardar-aptitud-fisica", method = RequestMethod.POST)
@@ -39,14 +38,14 @@ public class ControladorFormulario {
             return registroExitoso(model);
         } catch (DatosMalIngresadosException ex) {
             return registroFallido(model, "Faltan Datos");
-        } catch (esMenorDeEdadException ex) {
+        } catch (EsMenorDeEdadException ex) {
             return registroFallido(model, "Tiene menos de 18 Anos");
         }
     }
 
     private ModelAndView registroFallido(ModelMap model, String mensaje) {
         model.put("error", mensaje);
-        return new ModelAndView("formulario", model);
+        return new ModelAndView("aptitud-fisica", model);
     }
 
     private ModelAndView registroExitoso(ModelMap model) {

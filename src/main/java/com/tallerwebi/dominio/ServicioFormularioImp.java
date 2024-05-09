@@ -1,7 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
-import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
+import com.tallerwebi.dominio.excepcion.EsMenorDeEdadException;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class ServicioFormularioImp implements ServicioFormulario{
             throw new DatosMalIngresadosException();
         }
         if (!esMayorDeEdad(aptitudFisica.getFechaNacimiento())) {
-            throw new esMenorDeEdadException();
+            throw new EsMenorDeEdadException();
         }
         return aptitudFisica;
     }

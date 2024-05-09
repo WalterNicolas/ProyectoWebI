@@ -1,12 +1,11 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import com.tallerwebi.presentacion.DataModel.DetalleRutina;
 import com.tallerwebi.presentacion.DataModel.Ejercicio;
 
 import java.util.List;
 
-public interface ServicioRoutines {
+public interface ServicioRutinas {
 
     List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios);
     Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina);

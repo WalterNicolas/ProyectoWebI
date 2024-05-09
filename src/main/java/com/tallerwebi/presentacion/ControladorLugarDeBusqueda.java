@@ -1,9 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Lugar;
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.ServicioSearch;
-import com.tallerwebi.dominio.excepcion.SearchException;
+import com.tallerwebi.dominio.ServicioBusqueda;
+import com.tallerwebi.dominio.excepcion.BusquedaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,13 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class searchPlaceController {
+public class ControladorLugarDeBusqueda {
 
-    private ServicioSearch servicioSearch;
+    private ServicioBusqueda servicioSearch;
 
 
     @Autowired
-    public searchPlaceController(ServicioSearch servicioSearch){
+    public ControladorLugarDeBusqueda(ServicioBusqueda servicioSearch){
         this.servicioSearch = servicioSearch;
     }
 
@@ -29,10 +28,10 @@ public class searchPlaceController {
         try {
             lugares = servicioSearch.buscarSitios();
             modelo.addAttribute("lugares", lugares);
-            return new ModelAndView("search_place", modelo);
-        } catch (SearchException e) {
+            return new ModelAndView("lugar-de-busqueda", modelo);
+        } catch (BusquedaException e) {
             modelo.put("error","No hay lugares disponibles");
-            return new ModelAndView("search_place", modelo);
+            return new ModelAndView("lugar-de-busqueda", modelo);
         }
     }
 }

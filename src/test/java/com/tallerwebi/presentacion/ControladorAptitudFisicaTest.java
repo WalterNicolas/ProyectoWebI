@@ -2,7 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioFormulario;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
-import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
+import com.tallerwebi.dominio.excepcion.EsMenorDeEdadException;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class ControladorFormularioTest {
+public class ControladorAptitudFisicaTest {
     @Mock
     private ServicioFormulario servicioFormularioMock;
 
     @InjectMocks
-    private ControladorFormulario controladorFormulario;
+    private ControladorAptitudFisica controladorFormulario;
 
     @BeforeEach
     public void setUp() {
@@ -30,7 +30,7 @@ public class ControladorFormularioTest {
     }
 
     @Test
-    public void testProcesarFormulario_ExcepcionDatosMalIngresados() throws DatosMalIngresadosException, esMenorDeEdadException {
+    public void testProcesarFormulario_ExcepcionDatosMalIngresados() throws DatosMalIngresadosException, EsMenorDeEdadException {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
 
@@ -43,11 +43,11 @@ public class ControladorFormularioTest {
     }
 
     @Test
-    public void testProcesarFormulario_ExcepcionMenorDeEdad() throws DatosMalIngresadosException, esMenorDeEdadException {
+    public void testProcesarFormulario_ExcepcionMenorDeEdad() throws DatosMalIngresadosException, EsMenorDeEdadException {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        when(servicioFormularioMock.registrarDatos(aptitudFisica)).thenThrow(new esMenorDeEdadException());
+        when(servicioFormularioMock.registrarDatos(aptitudFisica)).thenThrow(new EsMenorDeEdadException());
 
         ModelAndView modelAndView = controladorFormulario.procesarFormulario(aptitudFisica, request);
 
@@ -56,7 +56,7 @@ public class ControladorFormularioTest {
     }
 
     @Test
-    public void testProcesarFormulario_Exito() throws DatosMalIngresadosException, esMenorDeEdadException {
+    public void testProcesarFormulario_Exito() throws DatosMalIngresadosException, EsMenorDeEdadException {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
 

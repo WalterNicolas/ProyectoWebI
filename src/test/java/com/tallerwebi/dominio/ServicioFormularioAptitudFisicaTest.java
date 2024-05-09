@@ -1,20 +1,17 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
-import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
-import com.tallerwebi.presentacion.ControladorLogin;
+import com.tallerwebi.dominio.excepcion.EsMenorDeEdadException;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
-import net.bytebuddy.asm.Advice;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -87,7 +84,7 @@ public class ServicioFormularioAptitudFisicaTest {
         apto.setDiasEntrenamiento(3);
         apto.setHorasEntrenamiento(1);
         apto.setEstadoFisico("sedentario");
-        assertThrows(esMenorDeEdadException.class,
+        assertThrows(EsMenorDeEdadException.class,
                 ()->servicioFormulario.registrarDatos(apto));
 
     }

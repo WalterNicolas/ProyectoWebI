@@ -1,10 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.ServicioRoutines;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.presentacion.DataModel.DetalleRutina;
-import com.tallerwebi.presentacion.DataModel.Ejercicio;
+import com.tallerwebi.dominio.ServicioRutinas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,15 +9,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.mock;
 
-public class MyRoutinesControllerTest {
+public class ControladorMisRutinasTest {
 
-    private MyRoutinesController myRoutinesController;
-    private ServicioRoutines servicioRoutinesMock;
+    private ControladorMisRutinas myRoutinesController;
+    private ServicioRutinas servicioRoutinesMock;
 
     @BeforeEach
     public void init(){
-        servicioRoutinesMock = mock(ServicioRoutines.class);
-        myRoutinesController = new MyRoutinesController(servicioRoutinesMock);
+        servicioRoutinesMock = mock(ServicioRutinas.class);
+        myRoutinesController = new ControladorMisRutinas(servicioRoutinesMock);
     }
     @Test
     public void queMuestreElResumenDeRutina(){

@@ -5,16 +5,14 @@ import com.tallerwebi.presentacion.DataModel.Ejercicio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ServicioRutinasTest {
-    ServicioRoutines servicioRoutines;
+    ServicioRutinas servicioRoutines;
     /*
     1. que se pueda crear una lista de ejercicios
     2. que se pueda marcar un ejercicio como realizado
@@ -23,7 +21,7 @@ public class ServicioRutinasTest {
      */
     @BeforeEach
     public void init(){
-        servicioRoutines = new ServicioRoutinesImp();
+        servicioRoutines = new ServicioRutinasImp();
 
     }
 

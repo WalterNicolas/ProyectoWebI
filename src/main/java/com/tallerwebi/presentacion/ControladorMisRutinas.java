@@ -1,21 +1,20 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioRoutines;
+import com.tallerwebi.dominio.ServicioRutinas;
 import com.tallerwebi.presentacion.DataModel.DetalleRutina;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class MyRoutinesController  {
+public class ControladorMisRutinas {
 
-    private ServicioRoutines servicioRoutines;
+    private ServicioRutinas servicioRoutines;
 
     @Autowired
-    public MyRoutinesController(ServicioRoutines servicioRoutines) {
+    public ControladorMisRutinas(ServicioRutinas servicioRoutines) {
         this.servicioRoutines = servicioRoutines;
     }
 
@@ -23,7 +22,7 @@ public class MyRoutinesController  {
     public static ModelAndView verMisRutinas() {
         ModelMap modelo = new ModelMap();
         modelo.put("detalleRutina", new DetalleRutina());
-        return new ModelAndView("my-routines", modelo);
+        return new ModelAndView("mis-rutinas", modelo);
     }
 
 //    @RequestMapping("/routines-update", method = RequestMethod.POST)

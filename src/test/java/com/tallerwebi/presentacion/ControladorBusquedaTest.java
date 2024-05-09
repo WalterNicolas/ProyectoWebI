@@ -1,9 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Lugar;
-import com.tallerwebi.dominio.ServicioSearch;
-import com.tallerwebi.dominio.enums.ExerciseType;
-import com.tallerwebi.dominio.excepcion.SearchException;
+import com.tallerwebi.dominio.ServicioBusqueda;
+import com.tallerwebi.dominio.excepcion.BusquedaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,25 +18,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
-public class ControladorSearchTests {
+public class ControladorBusquedaTest {
 
 
-    private searchPlaceController controller;
+    private ControladorLugarDeBusqueda controller;
 
     @Mock
-    private ServicioSearch servicioSearchMock;
+    private ServicioBusqueda servicioSearchMock;
 
     @BeforeEach
     public void setUp() {
-        servicioSearchMock = org.mockito.Mockito.mock(ServicioSearch.class);
-        controller = new searchPlaceController(servicioSearchMock);
+        servicioSearchMock = org.mockito.Mockito.mock(ServicioBusqueda.class);
+        controller = new ControladorLugarDeBusqueda(servicioSearchMock);
     }
 
     @Test
     public void whenNoSeEncuentranLugaresLanzarError() throws Exception {
 
         when(servicioSearchMock.mockDatos()).thenReturn(Collections.emptyList());
-        doThrow(new SearchException()).when(servicioSearchMock).buscarSitios();
+        doThrow(new BusquedaException()).when(servicioSearchMock).buscarSitios();
 
         ModelAndView modelAndView = controller.irASearch();
 
