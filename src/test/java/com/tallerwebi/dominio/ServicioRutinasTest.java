@@ -50,7 +50,7 @@ public class ServicioRutinasTest {
         detalleRutina.addEjercicio(unEjercicio);
         detalleRutina.addEjercicio(otroEjercicio);
         detalleRutina.addEjercicio(algunEjercicio);
-        return servicioRoutines.cargarEjercicios(detalleRutina.getListaEjercicios());
+        return (List<Ejercicio>) servicioRoutines.cargarEjercicios(detalleRutina.getListaEjercicios());
     }
 
     private void thenRetornaListaDeEjercicios(List<Ejercicio> listaEjercicios) {
@@ -66,13 +66,14 @@ public class ServicioRutinasTest {
     }
 
     private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(List<Ejercicio> listaEjercicios, Ejercicio unEjercicio){
-        Ejercicio actual = new Ejercicio();
-        for(actual : listaEjercicios){
+//        Ejercicio actual = new Ejercicio();
+        for(Ejercicio actual : listaEjercicios){
             if(actual.getDescripcionEjercicio().equals(unEjercicio.getDescripcionEjercicio())) {
                 actual.completarEjercicio();
             }
         return listaEjercicios;
         }
+        return listaEjercicios;
     }
 
     private List<Ejercicio> givenExisteListaDeEjercicios() {
@@ -83,33 +84,39 @@ public class ServicioRutinasTest {
     @Test
     public void queSePuedaCalcularElIMC(){
         givenExistenDatos();
-        Double imc = whenCalculaIMC(75.5,1.65);
+        Double pesoActual=75.5;
+        Double altura=1.65;
+        Double imc = whenCalculaIMC();
         thenRetornaIMC(imc);
     }
 
     @Test
     public void queSePuedaCalcularLaDiferenciaDePeso(){
         givenExistenDatos();
-        Double difPeso = whenCalculaDiferenciaDePeso(88.2,75.5);
+        Double difPeso = whenCalculaDiferenciaDePeso();
         thenRetornaDiferenciaDePeso(difPeso);
     }
 
     private void givenExistenDatos() {
     }
 
-    private Double whenCalculaIMC(peso,altura) {
-        return servicioRoutines.calcularIMC(peso,altura);
+    private Double whenCalculaIMC() {
+        Double pesoActual=75.5;
+        Double altura=1.65;
+        return servicioRoutines.calcularIMC(pesoActual,altura);
     }
 
-    private void whenCalculaDiferenciaDePeso(pesoInicial,pesoActual) {
-        return servicioRoutines.calcularDiferenciaDeKilos(pesoinicial,pesoActual);
+    private Double whenCalculaDiferenciaDePeso() {
+        Double pesoInicial=88.2;
+        Double pesoActual=75.5;
+        return servicioRoutines.calcularDiferenciaDeKilos(pesoInicial,pesoActual);
     }
 
-    private void thenRetornaIMC() {
+    private void thenRetornaIMC(Double imc) {
         assertThat(imc,notNullValue());
     }
 
-    private void thenRetornaDiferenciaDePeso() {
+    private void thenRetornaDiferenciaDePeso(Double difPeso) {
         assertThat(difPeso,notNullValue());
     }
 }

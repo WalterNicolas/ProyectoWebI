@@ -22,9 +22,9 @@ public class ServicioRoutinesImp implements ServicioRoutines{
     @Override
     public Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina){
         Integer ejerciciosCumplidos=0;
-        Ejercicio actual = new Ejercicio();
+//        Ejercicio actual = new Ejercicio();
         if((detalleRutina.getListaEjercicios())!=null){
-            for(actual : detalleRutina.getListaEjercicios()){
+            for(Ejercicio actual : detalleRutina.getListaEjercicios()){
                 if (actual.getRealizado().equals(true)) {
                     ejerciciosCumplidos++;
                 }
@@ -43,7 +43,7 @@ public class ServicioRoutinesImp implements ServicioRoutines{
     @Override
     public Integer contarEjerciciosporHacer(DetalleRutina detalleRutina){
         Integer ejerciciosPorHacer=0;
-        Ejercicio actual = new Ejercicio();
+//        Ejercicio actual = new Ejercicio();
         if((detalleRutina.getListaEjercicios())!=null) {
             for (Ejercicio actual : detalleRutina.getListaEjercicios()) {
                 if (actual.getRealizado().equals(false)) {

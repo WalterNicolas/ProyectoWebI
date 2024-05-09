@@ -39,7 +39,7 @@ public class MyRoutinesControllerTest {
     }
 
     private ModelAndView whenVerMisRutinas() {
-        return  MyRoutinesController.verMisRutinas();
+        return  myRoutinesController.verMisRutinas();
     }
 
     private void thenVistaResumenRutinaExitosa(ModelAndView mav) {

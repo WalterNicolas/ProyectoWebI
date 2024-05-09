@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MyRoutinesController  {
 
-    ServicioRoutines servicioRoutines = new ServicioRoutinesImp();
+    private ServicioRoutines servicioRoutines;
 
     @Autowired
     public MyRoutinesController(ServicioRoutines servicioRoutines) {
@@ -20,7 +20,7 @@ public class MyRoutinesController  {
     }
 
     @RequestMapping("/routines-summary")
-    public ModelAndView verMisRutinas() {
+    public static ModelAndView verMisRutinas() {
         ModelMap modelo = new ModelMap();
         modelo.put("detalleRutina", new DetalleRutina());
         return new ModelAndView("my-routines", modelo);
