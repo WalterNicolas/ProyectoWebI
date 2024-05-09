@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.Random;
 
 @Entity
 @Data
@@ -15,6 +16,8 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
     private String email;
     private String password;
     private String rol;
@@ -26,9 +29,21 @@ public class Usuario {
     private Double altura;
     private Double peso;
     private Date date;
-    private Double diasEntrenados;
-    private Double horasEntrenadas;
+    private Integer diasEntrenados;
+    private Integer horasEntrenadas;
 
+    public Usuario( ) {
+        Random random = new Random();
+        this.nombre=  "Juan";
+        this.apellido = "Pedro";
+        this.id = Math.abs(random.nextLong());
+        this.longitud =  90.0; // Rango de -90 a 90
+        this.latitud = 180.12; // Rango de -180 a 180
+        this.altura = 162.3; // Rango de 0 a 300
+        this.peso =  150.10; // Rango de 0 a 150
+        this.diasEntrenados = 5; // Rango de 0 a 7
+        this.horasEntrenadas = 3 ; // Rango de 0 a 24
+    }
 
     public Long getId() {
         return id;

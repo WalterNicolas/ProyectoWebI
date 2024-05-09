@@ -16,25 +16,31 @@
                     <form class="p-3"    >
                         <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física</h3>
                         <div class="rounded-circle overflow-hidden mx-auto " style="width: 200px; height: 200px;">
-                        <img src="../../../resources/core/images/user-icon.png" alt="Foto de perfil">
+                        <img th:src="@{/img/user-icon.png}" alt="Foto de perfil">
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="altura" th:text="${user.getAltura()}+ Altura" ></label>
-                                    <input id="altura" class="form-control"  required/>
+                                    <p></p>
+                                    <p><span>Altura</span></p>
+                                    <label class="form-label text-light"  th:text="${user.getAltura()}" ></label>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="peso" th:text="${user.getPeso()} +''+Peso"></label>
-                                    <input id="peso" class="form-control" required/>
+                                    <p></p>
+                                    <p><span>Peso</span></p>
+                                    <label class="form-label text-light" th:text="${user.getPeso()}"></label>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="fechaNacimiento" th:text="${user.getDate()}"></label>
-                                    <input id="fechaNacimiento" type="date" class="form-control"  required/>
+                                    <p></p>
+                                    <p><span>Fecha de nacimiento</span></p>
+                                    <label class="form-label text-light"  th:text="${user.getDate()}"></label>
+
                                 </div>
                             </div>
                         </div>
@@ -52,14 +58,18 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="diasEntrenados" th:text="${user.getDiasEntrenados()}+ Dias +''+Entrenados"></label>
-                                    <input id="diasEntrenados" type="number" class="form-control"  required/>
+                                    <p></p>
+                                    <p><span>Dias entrenados</span></p>
+                                    <label class="form-label text-light" th:text="${user.getDiasEntrenados()}"></label>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="horasEntrenamiento" th:text="${user.getHorasEntrenadas()}"></label>
-                                    <input id="horasEntrenamiento" type="number" class="form-control"  required/>
+                                    <p></p>
+                                    <p><span>Horas entrenadas</span></p>
+                                    <label class="form-label text-light"  th:text="${user.getHorasEntrenadas()}"></label>
+
                                 </div>
                             </div>
                            <!-- <div class="col-md-4">
