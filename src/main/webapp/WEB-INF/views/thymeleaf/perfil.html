@@ -15,29 +15,31 @@
                 <div class="card d-flex h-100  secundario align-items-stretch">
                     <form class="p-3"    >
                         <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física</h3>
-
+                        <div class="rounded-circle overflow-hidden mx-auto " style="width: 200px; height: 200px;">
+                        <img src="../../../resources/core/images/user-icon.png" alt="Foto de perfil">
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="altura" th:text="${user.getAltura}""> </label>
+                                    <label class="form-label text-light" for="altura" th:text="${user.getAltura()}+ Altura" ></label>
                                     <input id="altura" class="form-control"  required/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="peso">Peso (en kg)</label>
+                                    <label class="form-label text-light" for="peso" th:text="${user.getPeso()} +''+Peso"></label>
                                     <input id="peso" class="form-control" required/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="fechaNacimiento">Fecha Nacimiento</label>
+                                    <label class="form-label text-light" for="fechaNacimiento" th:text="${user.getDate()}"></label>
                                     <input id="fechaNacimiento" type="date" class="form-control"  required/>
                                 </div>
                             </div>
                         </div>
 
-                        <div data-mdb-input-init class="form-outline mb-3">
+                        <!--<div data-mdb-input-init class="form-outline mb-3">
                             <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
                             <select id="tipoEntrenamiento" class="form-select" required>
                                 <option value="">Seleccione...</option>
@@ -46,21 +48,21 @@
                                 <option value="cardio">Cardio</option>
                                 <option value="natacion">Natación</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="diasEntrenamiento">Días de Entrenamiento por Semana</label>
-                                    <input id="diasEntrenamiento" type="number" class="form-control"  required/>
+                                    <label class="form-label text-light" for="diasEntrenados" th:text="${user.getDiasEntrenados()}+ Dias +''+Entrenados"></label>
+                                    <input id="diasEntrenados" type="number" class="form-control"  required/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
-                                    <label class="form-label text-light" for="horasEntrenamiento">Hora por Sesion:</label>
+                                    <label class="form-label text-light" for="horasEntrenamiento" th:text="${user.getHorasEntrenadas()}"></label>
                                     <input id="horasEntrenamiento" type="number" class="form-control"  required/>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                           <!-- <div class="col-md-4">
                                 <div data-mdb-input-init class="form-outline mb-3">
                                     <label class="form-label text-light" for="estadoFisico">Tu estado físico:</label>
                                     <select id="estadoFisico" class="form-select" required>
@@ -70,14 +72,14 @@
                                         <option value="entrenado">Entrenado</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- Resto del formulario omitido por brevedad -->
                         <!--<p th:if="${error != null}" class="alert pt-2 alert-danger" th:text="'Error ' + ${error}"> -->
 
-                        <div class="text-center text-lg-start mt-4 pt-2">
+                       <!-- <div class="text-center text-lg-start mt-4 pt-2">
                             <button id="btn-guardar" class="btn primario texto3 btn-lg" type="submit">Guardar</button>
-                        </div>
+                        </div> -->
                     </form>
 
                 </div>

@@ -1,11 +1,15 @@
 package com.tallerwebi.dominio;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
+@Data
 public class Usuario {
 
     @Id
@@ -19,6 +23,12 @@ public class Usuario {
     private Boolean activo = false;
     private Double longitud;
     private Double latitud;
+    private Double altura;
+    private Double peso;
+    private Date date;
+    private Double diasEntrenados;
+    private Double horasEntrenadas;
+
 
     public Long getId() {
         return id;
