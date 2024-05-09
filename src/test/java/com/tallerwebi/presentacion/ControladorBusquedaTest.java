@@ -40,7 +40,7 @@ public class ControladorBusquedaTest {
 
         ModelAndView modelAndView = controller.irASearch();
 
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("search_place"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("lugar-de-busqueda"));
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("No hay lugares disponibles"));
     }
 
@@ -56,7 +56,7 @@ public class ControladorBusquedaTest {
 
         ModelAndView modelAndView = controller.irASearch();
 
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("search_place"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("lugar-de-busqueda"));
         assertEquals(lugares, modelAndView.getModel().get("lugares"));
     }
 

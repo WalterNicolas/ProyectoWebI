@@ -22,7 +22,7 @@ public class ControladorAptitudFisica {
         this.servicioFormulario = servicioFormulario;
     }
 
-    @RequestMapping("/formulario")
+    @RequestMapping("/aptitud-fisica")
     public ModelAndView irAFormulario() {
         ModelMap modelo = new ModelMap();
         modelo.put("aptitudFisica", new AptitudFisica());

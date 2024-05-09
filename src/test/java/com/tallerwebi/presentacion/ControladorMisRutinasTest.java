@@ -22,11 +22,6 @@ public class ControladorMisRutinasTest {
     @Test
     public void queMuestreElResumenDeRutina(){
         givenExisteRutina();
-//        DetalleRutina detalleRutina = new DetalleRutina ();
-//        Ejercicio unEjercicio = new Ejercicio ();
-//        Ejercicio otroEjercicio = new Ejercicio ();
-//        detalleRutina.addEjercicio(unEjercicio);
-//        detalleRutina.addEjercicio(otroEjercicio);
         ModelAndView mav = whenVerMisRutinas();
         thenVistaResumenRutinaExitosa(mav);
     }
@@ -39,7 +34,7 @@ public class ControladorMisRutinasTest {
     }
 
     private void thenVistaResumenRutinaExitosa(ModelAndView mav) {
-        assertThat(mav.getViewName(), equalToIgnoringCase("my-routines"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("mis-rutinas"));
     }
 }
 

@@ -38,6 +38,6 @@ public class ControladorFormAptitudFisicaTest {
      return  controladorLogin.registrarme(usuario);
     }
     private void thenVistaFormularioExitosa(ModelAndView mav) {
-        assertThat(mav.getViewName(), equalToIgnoringCase("formulario"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("aptitud-fisica"));
     }
 }
