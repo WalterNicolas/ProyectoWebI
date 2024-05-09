@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class ControladorFormularioTest {
+public class ControladorAptitudFisicaTest {
     @Mock
     private ServicioFormulario servicioFormularioMock;
 
     @InjectMocks
-    private ControladorFormulario controladorFormulario;
+    private ControladorAptitudFisica controladorFormulario;
 
     @BeforeEach
     public void setUp() {
@@ -38,7 +38,7 @@ public class ControladorFormularioTest {
 
         ModelAndView modelAndView = controladorFormulario.procesarFormulario(aptitudFisica, request);
 
-        assertEquals("formulario", modelAndView.getViewName());
+        assertEquals("formularioAptitudFisica", modelAndView.getViewName());
         assertEquals("Faltan Datos", modelAndView.getModel().get("error"));
     }
 
@@ -51,7 +51,7 @@ public class ControladorFormularioTest {
 
         ModelAndView modelAndView = controladorFormulario.procesarFormulario(aptitudFisica, request);
 
-        assertEquals("formulario", modelAndView.getViewName());
+        assertEquals("formularioAptitudFisica", modelAndView.getViewName());
         assertEquals("Tiene menos de 18 Anos", modelAndView.getModel().get("error"));
     }
 

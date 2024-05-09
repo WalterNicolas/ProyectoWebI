@@ -6,17 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ControladorFormAptitudFisicaTest {
 
-    private ControladorFormulario controladorFormulario;
+    private ControladorAptitudFisica controladorFormulario;
     private ControladorLogin controladorLogin;
     private ServicioLogin servicioLoginMock;
 
@@ -42,6 +38,6 @@ public class ControladorFormAptitudFisicaTest {
      return  controladorLogin.registrarme(usuario);
     }
     private void thenVistaFormularioExitosa(ModelAndView mav) {
-        assertThat(mav.getViewName(), equalToIgnoringCase("formulario"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("formularioAptitudFisica"));
     }
 }

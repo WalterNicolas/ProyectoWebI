@@ -7,7 +7,6 @@ import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +61,7 @@ public class ControladorLogin {
         }
         model.put("aptitudFisica", new AptitudFisica());
         model.put("usuario",usuario);
-        return new ModelAndView("formulario",model);
+        return new ModelAndView("formularioAptitudFisica",model);
     }
 
     @RequestMapping(path = "/nuevo-usuario", method = RequestMethod.GET)

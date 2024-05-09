@@ -4,7 +4,7 @@ import com.tallerwebi.dominio.excepcion.SearchException;
 
 import java.util.List;
 
-public interface ServicioSearch {
+public interface ServicioMapa {
 
     Double buscarDistancia(Lugar l);
     List<Lugar> buscarSitios() throws SearchException;
