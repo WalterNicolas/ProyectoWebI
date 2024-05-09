@@ -1,15 +1,11 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
-import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import com.tallerwebi.presentacion.DataModel.DetalleRutina;
 import com.tallerwebi.presentacion.DataModel.Ejercicio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -43,14 +39,14 @@ public class ServicioRutinasTest {
 
 
     private List<Ejercicio> whenIngresarListaDeEjercicios() {
-        DetalleRutina detalleRutina = new DetalleRutina ();
         Ejercicio unEjercicio = new Ejercicio ("abdominales",30);
         Ejercicio otroEjercicio = new Ejercicio ("flexiones de brazos",45);
         Ejercicio algunEjercicio = new Ejercicio ("sentadillas",20);
+        DetalleRutina detalleRutina = new DetalleRutina ();
         detalleRutina.addEjercicio(unEjercicio);
         detalleRutina.addEjercicio(otroEjercicio);
         detalleRutina.addEjercicio(algunEjercicio);
-        return (List<Ejercicio>) servicioRoutines.cargarEjercicios(detalleRutina.getListaEjercicios());
+        return servicioRoutines.cargarEjercicios(detalleRutina.getListaEjercicios());
     }
 
     private void thenRetornaListaDeEjercicios(List<Ejercicio> listaEjercicios) {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ServicioRoutines {
 
-    DetalleRutina cargarEjercicios(List<Ejercicio> listaEjercicios);
+    List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios);
     Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina);
     Double calcularDiferenciaDeKilos(Double pesoInicial, Double pesoActual);
     Integer contarEjerciciosporHacer(DetalleRutina detalleRutina);

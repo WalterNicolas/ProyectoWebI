@@ -13,10 +13,10 @@ import java.util.List;
 public class ServicioRoutinesImp implements ServicioRoutines{
 
     @Override
-    public DetalleRutina cargarEjercicios(List<Ejercicio> listaEjercicios){
+    public List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios){
         DetalleRutina detalleRutina = new DetalleRutina();
         detalleRutina.setListaEjercicios(listaEjercicios);
-        return detalleRutina;
+        return detalleRutina.getListaEjercicios();
     }
 
     @Override
