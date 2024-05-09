@@ -34,6 +34,7 @@
                 class="fa-solid fa-dumbbell"></i></button>
     </div>
     <section class="searchCardContainer mt-3 scroll">
+        <span th:if="${error}"  th:text="${error}" class="text-white"></span>
         <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
             <img th:src="@{/img/ZonaRyp.jpg}" alt="">
             <div class="infoContainer">

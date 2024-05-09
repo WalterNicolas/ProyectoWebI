@@ -3,6 +3,7 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.Lugar;
 import com.tallerwebi.dominio.ServicioSearch;
 import com.tallerwebi.dominio.enums.ExerciseType;
+import com.tallerwebi.dominio.excepcion.SearchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,16 @@ public class ServicioSearchImp implements ServicioSearch {
     }
 
     @Override
-    public List<Lugar> buscarSitios() throws Exception {
+    public List<Lugar> buscarSitios() throws SearchException{
+        List<Lugar> lugares = mockDatos();
+        if (lugares.isEmpty()){
+            throw new SearchException();
+        }
+        return lugares;
+    }
+
+    @Override
+    public List<Lugar> mockDatos(){
         List<Lugar> lugares = new ArrayList<>();
 
         lugares.add(new Lugar("Zona Ryp", List.of(ExerciseType.musculacion), "Ubicacion A",-34.747132079753904,-58.585186748664825));
