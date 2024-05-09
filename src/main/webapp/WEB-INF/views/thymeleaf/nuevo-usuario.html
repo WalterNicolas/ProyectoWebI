@@ -3,21 +3,32 @@
 <head th:replace="templates/head :: head">
 </head>
 <body>
-<div th:replace="templates/header :: header">
-</div>
-  <section class="vh-100">
+<section class="vh-100" style="padding-top: 50px;">
     <div class="row">
       <div class="col-sm-6">
         <div class="card d-flex h-100  secundario align-items-stretch">
+          <h2 class="text-light text-center pt-4">Elije tu zona donde entrenarias</h2>
+          <div id="mapid" style="height: 400px;"></div>
+          <div class=ml-4 id="coordenadas"></div>
             <form  class="p-3" action="#" th:action="@{/registrarme}" method="POST" th:object="${usuario}">
+              <input type="hidden" th:name="latitud" th:id="latitud" th:field="*{latitud}" />
+              <input type="hidden" th:name="longitud" th:id="longitud" th:field="*{longitud}" />
               <h3 class="form-signin-heading text-light text-center">Nuevo Usuario</h3>
+              <div data-mdb-input-init class="form-outline mb-3">
+                <label class="form-label text-light" for="Email">Nombre</label>
+                <input th:field="*{nombre}" id="nombre" class="form-control" required/>
+              </div>
+              <div data-mdb-input-init class="form-outline mb-3">
+                <label class="form-label text-light" for="Email">Apellido</label>
+                <input th:field="*{apellido}" id="apellido" class="form-control" required/>
+              </div>
                 <div data-mdb-input-init class="form-outline mb-3">
               <label class="form-label text-light" for="Email">Email address</label>
               <input th:field="*{email}" id="email" class="form-control" required/>
                 </div>
                 <div data-mdb-input-init class="form-outline mb-3">
               <label class="form-label text-light" for="password">Email address</label>
-              <input th:field="*{password}" type="password" id="password" class="form-control" required/>
+              <input th:field="*{password}" type="password" id="password" class="form-control" />
                 </div>
                 <div class="text-center text-lg-start mt-4 pt-2">
               <button id="btn-registrarme" class="btn primario  texto3 btn-lg" Type="Submit">Registrarme</button>
@@ -25,7 +36,6 @@
               </p>
                 </div>
             </form>
-
         </div>
       </div>
       <div class="col-sm-6">
@@ -41,4 +51,27 @@
 <footer th:replace="templates/footer:: footer">
 </footer>
 </body>
+<script th:inline="javascript">
+  $(document).ready(function() {
+    var mymap = L.map('mapid').setView([-34.6475, -58.5560], 13); // Coordenadas de Ramos Mejía
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+
+    var marker = L.marker([-34.6475, -58.5560], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+    marker.on('dragend', function (event) {
+      var marker = event.target;
+      var position = marker.getLatLng();
+      marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
+
+      // Actualizar el div de coordenadas con las nuevas coordenadas
+      $('#latitud').val(position.lat.toFixed(6));
+      $('#longitud').val(position.lng.toFixed(6));
+      $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+
+    });
+  });
+</script>
+
 </html>
