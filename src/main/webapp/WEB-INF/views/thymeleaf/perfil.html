@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="templates/head :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:replace="templates/header :: header">
+    </div>
+
+    <section class="vh-100">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="card d-flex h-100  secundario align-items-stretch">
+                    <form class="p-3"    >
+                        <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física</h3>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div data-mdb-input-init class="form-outline mb-3">
+                                    <label class="form-label text-light" for="altura" th:text="${user.getAltura}""> </label>
+                                    <input id="altura" class="form-control"  required/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div data-mdb-input-init class="form-outline mb-3">
+                                    <label class="form-label text-light" for="peso">Peso (en kg)</label>
+                                    <input id="peso" class="form-control" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div data-mdb-input-init class="form-outline mb-3">
+                                    <label class="form-label text-light" for="fechaNacimiento">Fecha Nacimiento</label>
+                                    <input id="fechaNacimiento" type="date" class="form-control"  required/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-3">
+                            <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
+                            <select id="tipoEntrenamiento" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <option value="calistenia">Calistenia</option>
+                                <option value="musculacion">Musculación</option>
+                                <option value="cardio">Cardio</option>
+                                <option value="natacion">Natación</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div data-mdb-input-init class="form-outline mb-3">
+                                    <label class="form-label text-light" for="diasEntrenamiento">Días de Entrenamiento por Semana</label>
+                                    <input id="diasEntrenamiento" type="number" class="form-control"  required/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div data-mdb-input-init class="form-outline mb-3">
+                                    <label class="form-label text-light" for="horasEntrenamiento">Hora por Sesion:</label>
+                                    <input id="horasEntrenamiento" type="number" class="form-control"  required/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div data-mdb-input-init class="form-outline mb-3">
+                                    <label class="form-label text-light" for="estadoFisico">Tu estado físico:</label>
+                                    <select id="estadoFisico" class="form-select" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="sedentario">Sedentario</option>
+                                        <option value="intermedio">Intermedio</option>
+                                        <option value="entrenado">Entrenado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Resto del formulario omitido por brevedad -->
+                        <!--<p th:if="${error != null}" class="alert pt-2 alert-danger" th:text="'Error ' + ${error}"> -->
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button id="btn-guardar" class="btn primario texto3 btn-lg" type="submit">Guardar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </section>
+
+
+</body>
+</html>
