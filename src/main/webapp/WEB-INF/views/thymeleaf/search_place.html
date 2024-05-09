@@ -8,6 +8,10 @@
 
     <!-- Boostrap core css -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- custom style -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
@@ -30,42 +34,23 @@
                 class="fa-solid fa-dumbbell"></i></button>
     </div>
     <section class="searchCardContainer mt-3 scroll">
-        <div class="mt-1 searchCard">
+        <span th:if="${error}"  th:text="${error}" class="text-white"></span>
+        <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
             <img th:src="@{/img/ZonaRyp.jpg}" alt="">
             <div class="infoContainer">
-                <h3>ZonaRyp</h3>
-                <span>Musculacion / cardio</span>
-                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
-            </div>
-        </div>
-        <div class="mt-1 searchCard">
-            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
-            <div class="infoContainer">
-                <h3>ZonaRyp</h3>
-                <span>Musculacion / cardio</span>
-                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
-            </div>
-        </div>
-        <div class="mt-1 searchCard">
-            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
-            <div class="infoContainer">
-                <h3>ZonaRyp</h3>
-                <span>Musculacion / cardio</span>
-                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
-            </div>
-        </div>
-        <div class="mt-1 searchCard">
-            <img th:src="@{/img/ZonaRyp.jpg}" alt="">
-            <div class="infoContainer">
-                <h3>ZonaRyp</h3>
-                <span>Musculacion / cardio</span>
-                <p><i class="fa-solid fa-location-dot"></i> Ubicacion</p>
+                <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
+                <ul th:each="type : ${lugar.type}">
+                    <li th:text="${type}"></li>
+                </ul>
+                <p> <i class="fa-solid fa-location-dot"></i> Distancia <span th:text="${lugar.distancia}"></span></p>
             </div>
         </div>
     </section>
     <section class="map mt-3">
         <div class="mapContainer">
-            <img th:src="@{/img/googleMaps.jpg}" class="mapImg">
+           <!-- <img th:src="@{/img/googleMaps.jpg}" class="mapImg">-->
+            <div id="mapid" style="height: 400px; width:100%;"></div>
+            <div class=ml-4 id="coordenadas"></div>
         </div>
     </section>
 </div>
@@ -73,4 +58,26 @@
 <footer th:replace="templates/footer:: footer">
 </footer>
 </body>
+<script th:inline="javascript">
+    $(document).ready(function() {
+      var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13); // Coordenadas de Ramos Mejía
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mymap);
+
+      var marker = L.marker([-34.74973643128108, -58.571734784656066], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+      marker.on('dragend', function (event) {
+        var marker = event.target;
+        var position = marker.getLatLng();
+        marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
+
+        // Actualizar el div de coordenadas con las nuevas coordenadas
+        $('#latitud').val(position.lat.toFixed(6));
+        $('#longitud').val(position.lng.toFixed(6));
+        $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+
+      });
+    });
+</script>
 </html>
