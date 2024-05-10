@@ -7,11 +7,9 @@ body{
   text-align: center;
 }
 
-h2{
-	color:#FF0000;
-}
-cotenido{
 
+body {
+    background-image: url('/img/fondologin.jpg');
 }
 .primario{
     background-color: #F70C5B !important;

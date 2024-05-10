@@ -5,11 +5,11 @@
 <body>
 <div class="  h-screen w-full items-center justify-center" style="background-image: url('/img/fondologin.jpg'); background-size: cover;">
 
-    <!-- Columna izquierda para el formulario -->
+  <!-- Columna izquierda para el formulario -->
 
-    <div class="rounded-xl bg-gray-800 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 mr-4 pt-5">
-      <div class="row justify-content-center">
-        <div class="col-md-4">
+  <div class="rounded-xl bg-gray-800 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 mr-4 pt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
         <form class="p-3" action="#" th:action="@{/registrarme}" method="POST" th:object="${usuario}">
           <input type="hidden" th:name="latitud" th:id="latitud" th:field="*{latitud}" />
           <input type="hidden" th:name="longitud" th:id="longitud" th:field="*{longitud}" />
@@ -37,13 +37,14 @@
           </div>
         </form>
       </div>
-        <div class="col-md-4">
-          <div id="mapid" style="height: 50vh;"></div>
-          <div class="ml-4 text-light" id="coordenadas"></div></div>
+      <div class="col-md-4">
+        <div id="mapid" style="height: 50vh;"></div>
+        <div class="ml-4 text-light" id="coordenadas"></div>
       </div>
     </div>
+  </div>
 
-    </div>
+</div>
 
 </div>
 

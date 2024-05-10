@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head">
+</head>
+<body>
+     <div th:replace="templates/header :: header">
+    </div>
+    <div class="flex flex-wrap">
+        <!-- Titulo -->
+    <div class="w-full  lg:mb-0 lg:w-12/12 lg:flex-none">  <h1 class="text-light text-center">Mi Perfil</h1></div>
+
+        <!-- Datos Personales -->
+        <div class="w-full px-3 mb-6 lg:mb-0 lg:w-6/12 lg:flex-none">
+            <div class="relative flex flex-col min-w-0 break-words bg-white bg-opacity-25 shadow-soft-xl rounded-2xl bg-clip-border">
+                <div class="flex-auto p-4">
+                    <div class="flex flex-wrap -mx-3">
+                        <div class="max-w-full px-3 lg:w-1/2 lg:flex-none">
+                            <div class="flex flex-col h-full">
+                                <h5 class="font-bold text-light text-center">Datos Personales</h5>
+                                <form class="p-3" action="#" th:action="@{/registrarme}" method="POST" th:object="${usuario}">
+                                    <input type="hidden" th:name="latitud" th:id="latitud" th:field="*{latitud}" />
+                                    <input type="hidden" th:name="longitud" th:id="longitud" th:field="*{longitud}" />
+                                    <h3 class="form-signin-heading text-light text-center"></h3>
+                                    <div data-mdb-input-init class="form-outline mb-3">
+                                        <label class="form-label text-light" for="Email">Nombre</label>
+                                        <input th:field="*{nombre}" id="nombre" class="form-control" required />
+                                    </div>
+                                    <div data-mdb-input-init class="form-outline mb-3">
+                                        <label class="form-label text-light" for="Email">Apellido</label>
+                                        <input th:field="*{apellido}" id="apellido" class="form-control" required />
+                                    </div>
+                                    <div data-mdb-input-init class="form-outline mb-3">
+                                        <label class="form-label text-light" for="Email">Dirección de correo electrónico</label>
+                                        <input th:field="*{email}" id="email" class="form-control" required />
+                                    </div>
+                                    <div data-mdb-input-init class="form-outline mb-3">
+                                        <label class="form-label text-light" for="password">Contraseña</label>
+                                        <input th:field="*{password}" type="password" id="password" class="form-control" />
+                                    </div>
+                                    <div class="text-center text-lg-start mt-4 pt-2">
+                                        <button id="btn-registrarme" class="btn btn btn-primary" Type="Submit">Actualizar</button>
+                                        <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="max-w-full px-3 mt-12 ml-auto text-center lg:mt-0 lg:w-5/12 lg:flex-none">
+
+                                     <div id="mapid" style="height: 50vh;"></div>
+                                     <div class="ml-4 text-light" id="coordenadas"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+           <!--Aptitud Fisica -->
+        <div class="w-full max-w-full px-3 lg:w-4/12 lg:flex-none">
+            <div class="border-black/12.5 shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-opacity-25 bg-clip-border p-4">
+                <form class="p-3" action="#" th:action="@{/guardar-aptitud-fisica}"  method="POST" th:object="${aptitudFisica}">
+                    <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física: <span th:if="${usuario != null}"  th:text="${usuario.getNombre()}"> </span> </h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="altura">Altura (en cm)</label>
+                                <input id="altura" class="form-control" th:field="*{altura}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="peso">Peso (en kg)</label>
+                                <input id="peso" class="form-control" th:field="*{peso}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="fechaNacimiento">Fecha Nacimiento</label>
+                                <input id="fechaNacimiento" type="date" class="form-control" th:field="*{fechaNacimiento}" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-3">
+                        <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
+                        <select id="tipoEntrenamiento" class="form-select" th:field="*{tipoEntrenamiento}" required>
+                            <option value="">Seleccione...</option>
+                            <option value="calistenia">Calistenia</option>
+                            <option value="musculacion">Musculación</option>
+                            <option value="cardio">Cardio</option>
+                            <option value="natacion">Natación</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="diasEntrenamiento">Días  por Semana</label>
+                                <input id="diasEntrenamiento" type="number" class="form-control" th:field="*{diasEntrenamiento}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="horasEntrenamiento">Hora por Sesion:</label>
+                                <input id="horasEntrenamiento" type="number" class="form-control" th:field="*{horasEntrenamiento}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <label class="form-label text-light" for="estadoFisico">Tu estado físico:</label>
+                                <select id="estadoFisico" class="form-select" th:field="*{estadoFisico}" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="sedentario">Sedentario</option>
+                                    <option value="intermedio">Intermedio</option>
+                                    <option value="entrenado">Entrenado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Resto del formulario omitido por brevedad -->
+                    <p th:if="${error != null}" class="alert pt-2 alert-danger" th:text="'Error ' + ${error}">
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button id="btn-guardar" class="btn btn-primary btn-lg" type="submit">Actualizar</button>
+                    </div>
+                </form>            </div>
+        </div>
+        <!-- tipo de Membresia -->
+       <div class="w-full max-w-full px-3 lg:w-2/12 lg:flex-none">
+           <div class="border-black/12.5 shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-opacity-25 bg-clip-border p-4">
+                    <span class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-80"></span>
+                   <div class="relative z-10 flex flex-col flex-auto h-full p-4">
+                       <h5 class="pt-2 mb-6 font-bold text-white">Su Membresia Actual es :</h5>
+                       <p class="text-white">Tiene vigencia hasta el: </p>
+                    <button> Actualizar Membresia</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+<footer th:replace="templates/footer:: footer">
+</footer>
+</body>
+<script th:inline="javascript">
+   $(document).ready(function() {
+       var mymap = L.map('mapid').setView([-34.6475, -58.5560], 13); // Coordenadas de Ramos Mejía
+
+       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+       }).addTo(mymap);
+
+       var marker = L.marker([-34.6475, -58.5560], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+       marker.on('dragend', function (event) {
+           var marker = event.target;
+           var position = marker.getLatLng();
+           marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
+
+           // Actualizar el div de coordenadas con las nuevas coordenadas
+           $('#latitud').val(position.lat.toFixed(6));
+           $('#longitud').val(position.lng.toFixed(6));
+           $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+
+       });
+   });
+</script>
+</html>
