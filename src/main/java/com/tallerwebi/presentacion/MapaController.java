@@ -21,7 +21,7 @@ public class MapaController {
         this.servicioSearch = servicioSearch;
     }
 
-    @RequestMapping("/search")
+    @RequestMapping("/mapaBuscador")
     public ModelAndView irASearch() {
         List<Lugar> lugares;
         ModelMap modelo = new ModelMap();

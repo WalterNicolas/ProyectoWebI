@@ -18,7 +18,7 @@ public class MisRutinasController {
         this.servicioRutina = servicioRutina;
     }
 
-    @RequestMapping("/routines-summary")
+    @RequestMapping("/misRutinas")
     public static ModelAndView verMisRutinas() {
         ModelMap modelo = new ModelMap();
         modelo.put("detalleRutina", new DetalleRutina());

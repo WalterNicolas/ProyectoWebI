@@ -3,51 +3,51 @@
 <head th:replace="templates/head :: head">
 </head>
 <body>
-<section class="vh-100" style="padding-top: 50px;">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card d-flex h-100  secundario align-items-stretch">
-          <h2 class="text-light text-center pt-4">Elije tu zona donde entrenarias</h2>
-          <div id="mapid" style="height: 400px;"></div>
-          <div class=ml-4 id="coordenadas"></div>
-            <form  class="p-3" action="#" th:action="@{/registrarme}" method="POST" th:object="${usuario}">
-              <input type="hidden" th:name="latitud" th:id="latitud" th:field="*{latitud}" />
-              <input type="hidden" th:name="longitud" th:id="longitud" th:field="*{longitud}" />
-              <h3 class="form-signin-heading text-light text-center">Nuevo Usuario</h3>
-              <div data-mdb-input-init class="form-outline mb-3">
-                <label class="form-label text-light" for="Email">Nombre</label>
-                <input th:field="*{nombre}" id="nombre" class="form-control" required/>
-              </div>
-              <div data-mdb-input-init class="form-outline mb-3">
-                <label class="form-label text-light" for="Email">Apellido</label>
-                <input th:field="*{apellido}" id="apellido" class="form-control" required/>
-              </div>
-                <div data-mdb-input-init class="form-outline mb-3">
-              <label class="form-label text-light" for="Email">Email address</label>
-              <input th:field="*{email}" id="email" class="form-control" required/>
-                </div>
-                <div data-mdb-input-init class="form-outline mb-3">
-              <label class="form-label text-light" for="password">Email address</label>
-              <input th:field="*{password}" type="password" id="password" class="form-control" />
-                </div>
-                <div class="text-center text-lg-start mt-4 pt-2">
-              <button id="btn-registrarme" class="btn primario  texto3 btn-lg" Type="Submit">Registrarme</button>
-              <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
-              </p>
-                </div>
-            </form>
-        </div>
+<div class="  h-screen w-full items-center justify-center" style="background-image: url('/img/fondologin.jpg'); background-size: cover;">
+
+    <!-- Columna izquierda para el formulario -->
+
+    <div class="rounded-xl bg-gray-800 bg-opacity-70 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 mr-4 pt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+        <form class="p-3" action="#" th:action="@{/registrarme}" method="POST" th:object="${usuario}">
+          <input type="hidden" th:name="latitud" th:id="latitud" th:field="*{latitud}" />
+          <input type="hidden" th:name="longitud" th:id="longitud" th:field="*{longitud}" />
+          <h3 class="form-signin-heading text-light text-center">Nuevo Usuario</h3>
+          <div data-mdb-input-init class="form-outline mb-3">
+            <label class="form-label text-light" for="Email">Nombre</label>
+            <input th:field="*{nombre}" id="nombre" class="form-control" required />
+          </div>
+          <div data-mdb-input-init class="form-outline mb-3">
+            <label class="form-label text-light" for="Email">Apellido</label>
+            <input th:field="*{apellido}" id="apellido" class="form-control" required />
+          </div>
+          <div data-mdb-input-init class="form-outline mb-3">
+            <label class="form-label text-light" for="Email">Dirección de correo electrónico</label>
+            <input th:field="*{email}" id="email" class="form-control" required />
+          </div>
+          <div data-mdb-input-init class="form-outline mb-3">
+            <label class="form-label text-light" for="password">Contraseña</label>
+            <input th:field="*{password}" type="password" id="password" class="form-control" />
+          </div>
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button id="btn-registrarme" class="btn btn btn-primary" Type="Submit">Registrarme</button>
+            <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
+            </p>
+          </div>
+        </form>
       </div>
-      <div class="col-sm-6">
-        <div class="card d-flex h-100 align-items-stretch">
-          <img src="https://i.pinimg.com/564x/25/e9/cf/25e9cfbebbc5eeb3ec11f926aecac4ef.jpg"
-               class="img-fluid" alt="Sample image">
-        </div>
+        <div class="col-md-4">
+          <div id="mapid" style="height: 50vh;"></div>
+          <div class="ml-4 text-light" id="coordenadas"></div></div>
       </div>
+    </div>
 
     </div>
 
-  </section>
+</div>
+
+
 <footer th:replace="templates/footer:: footer">
 </footer>
 </body>
