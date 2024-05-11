@@ -7,11 +7,6 @@
     width: 1142px;
     margin: 0 auto;
   }
-
-
-  body {
-    background-color: #000;
-  }
   .ag-courses_box {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -156,6 +151,8 @@
 </div>
 
 <main role="main" class="container">
+
+
   <div class = "container">
     <h2 class="titulo1">DashBoard</h2>
     <div th:if="${aptitudFisica != null}">
@@ -239,6 +236,7 @@
 <!-- /.container -->
 
 <!-- Boostrap core js -->
+<script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
