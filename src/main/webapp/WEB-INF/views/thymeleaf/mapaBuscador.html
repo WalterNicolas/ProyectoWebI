@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head">
+</head>
+<body>
+<div th:replace="templates/header :: header">
+</div>
+   <div class="row p-4">
+       <div class="col-md-12"> <h2 class="text-center text-white">Encuentra tu lugar ideal</h2></div>
+   </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+            <input type="text" class="form-control" placeholder="Busca por ubicación o tipo de actividad" aria-label="Username" aria-describedby="basic-addon1">
+            <button class="btn rose-button text-center justify-content-center font-weight-bold"><i
+                    class="fa-solid fa-dumbbell"></i></button>
+            <section class="searchCardContainer mt-3 scroll">
+                <span th:if="${error}"  th:text="${error}" class="text-white"></span>
+                <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
+                    <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+                    <div class="infoContainer">
+                        <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
+                        <ul th:each="type : ${lugar.type}">
+                            <li th:text="${type}"></li>
+                        </ul>
+                        <p> <i class="fa-solid fa-location-dot"></i> Distancia <span th:text="${lugar.distancia}"></span></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+
+                <!-- <img th:src="@{/img/googleMaps.jpg}" class="mapImg">-->
+                <div id="mapid" style="height: 500px; width:100%;">
+                    /div>
+                <div class=ml-4 id="coordenadas"></div>
+            </div>
+
+</body>
+<script th:inline="javascript">
+    $(document).ready(function() {
+      var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13); // Coordenadas de Ramos Mejía
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mymap);
+
+      var marker = L.marker([-34.74973643128108, -58.571734784656066], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+      marker.on('dragend', function (event) {
+        var marker = event.target;
+        var position = marker.getLatLng();
+        marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
+
+        // Actualizar el div de coordenadas con las nuevas coordenadas
+        $('#latitud').val(position.lat.toFixed(6));
+        $('#longitud').val(position.lng.toFixed(6));
+        $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+
+      });
+    });
+</script>
+</html>

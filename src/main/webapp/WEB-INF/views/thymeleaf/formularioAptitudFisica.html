@@ -3,10 +3,11 @@
 <head th:replace="templates/head :: head">
 </head>
 <body>
-<section class="vh-100" style="padding-top: 100px;">
+<div class="flex h-screen w-full items-center justify-center" style="background-image: url('/img/fondologin.jpg'); background-size: cover;">
+    <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
     <div class="row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
+
+        <div class="col-sm-12">
             <div class="card d-flex h-100  secundario align-items-stretch">
                 <form class="p-3" action="#" th:action="@{/guardar-aptitud-fisica}"  method="POST" th:object="${aptitudFisica}">
                     <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física: <span th:if="${usuario != null}"  th:text="${usuario.getNombre()}"> </span> </h3>
@@ -44,7 +45,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div data-mdb-input-init class="form-outline mb-3">
-                                <label class="form-label text-light" for="diasEntrenamiento">Días de Entrenamiento por Semana</label>
+                                <label class="form-label text-light" for="diasEntrenamiento">Días  por Semana</label>
                                 <input id="diasEntrenamiento" type="number" class="form-control" th:field="*{diasEntrenamiento}" required/>
                             </div>
                         </div>
@@ -70,14 +71,16 @@
                     <p th:if="${error != null}" class="alert pt-2 alert-danger" th:text="'Error ' + ${error}">
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button id="btn-guardar" class="btn primario texto3 btn-lg" type="submit">Guardar</button>
+                        <button id="btn-guardar" class="btn btn-primary btn-lg" type="submit">Guardar</button>
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
-    <div class="col-sm-3"></div>
+
+    </div>
+</div>
 </section>
 <footer th:replace="templates/footer:: footer">
 </footer>

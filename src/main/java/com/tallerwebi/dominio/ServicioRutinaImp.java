@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import com.tallerwebi.presentacion.DataModel.DetalleRutina;
 import com.tallerwebi.presentacion.DataModel.Ejercicio;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ServicioRoutinesImp implements ServicioRoutines{
+public class ServicioRutinaImp implements ServicioRutina {
 
     @Override
     public List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios){

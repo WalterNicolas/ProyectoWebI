@@ -5,7 +5,6 @@ import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
 import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,42 +15,40 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 
-public class ControladorFormulario {
-    ServicioFormulario servicioFormulario;
+public class ControladorAptitudFisica {
+    private final ServicioFormulario servicioFormulario;
 
-    public ControladorFormulario(ServicioFormulario servicioFormulario){
+    public ControladorAptitudFisica(ServicioFormulario servicioFormulario) {
         this.servicioFormulario = servicioFormulario;
     }
-/**
-    @RequestMapping("/formulario")
+
+    @RequestMapping("/formularioAptitudFisica")
     public ModelAndView irAFormulario() {
         ModelMap modelo = new ModelMap();
         modelo.put("aptitudFisica", new AptitudFisica());
-        return new ModelAndView("formulario", modelo);
+        return new ModelAndView("formularioAptitudFisica", modelo);
     }
- */
-   @RequestMapping (path="/guardar-aptitud-fisica", method = RequestMethod.POST)
+
+    @RequestMapping(path = "/guardar-aptitud-fisica", method = RequestMethod.POST)
     public ModelAndView procesarFormulario(@ModelAttribute("aptitudFisica") AptitudFisica aptitudFisica, HttpServletRequest request) {
-        // Aquí puedes procesar los datos recibidos del formulario
-       ModelMap model = new ModelMap();
-       try {
-           AptitudFisica apto = servicioFormulario.registrarDatos(aptitudFisica);
-           model.put("aptitudFisica",apto);
-       } catch (DatosMalIngresadosException ex) {
-           return registroFallido(model, "Faltan Datos");
-       }
-       catch (esMenorDeEdadException ex) {
-           return registroFallido(model, "Tiene menos de 18 Anos");
-       }
-       return registroExitoso(model);
+        ModelMap model = new ModelMap();
+        try {
+            AptitudFisica apto = servicioFormulario.registrarDatos(aptitudFisica);
+            model.put("aptitudFisica", apto);
+            return registroExitoso(model);
+        } catch (DatosMalIngresadosException ex) {
+            return registroFallido(model, "Faltan Datos");
+        } catch (esMenorDeEdadException ex) {
+            return registroFallido(model, "Tiene menos de 18 Anos");
+        }
     }
 
     private ModelAndView registroFallido(ModelMap model, String mensaje) {
-        model.put("error",mensaje);
-        return new ModelAndView("formulario",model);
+        model.put("error", mensaje);
+        return new ModelAndView("formularioAptitudFisica", model);
     }
 
     private ModelAndView registroExitoso(ModelMap model) {
-        return new ModelAndView("home",model);
+        return new ModelAndView("home", model);
     }
 }

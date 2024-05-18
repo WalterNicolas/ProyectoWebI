@@ -1,10 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.ServicioRoutines;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.presentacion.DataModel.DetalleRutina;
-import com.tallerwebi.presentacion.DataModel.Ejercicio;
+import com.tallerwebi.dominio.ServicioRutina;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,15 +9,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.mock;
 
-public class MyRoutinesControllerTest {
+public class MisRutinasControllerTest {
 
-    private MyRoutinesController myRoutinesController;
-    private ServicioRoutines servicioRoutinesMock;
+    private MisRutinasController myRoutinesController;
+    private ServicioRutina servicioRutinaMock;
 
     @BeforeEach
     public void init(){
-        servicioRoutinesMock = mock(ServicioRoutines.class);
-        myRoutinesController = new MyRoutinesController(servicioRoutinesMock);
+        servicioRutinaMock = mock(ServicioRutina.class);
+        myRoutinesController = new MisRutinasController(servicioRutinaMock);
     }
     @Test
     public void queMuestreElResumenDeRutina(){
@@ -43,7 +39,7 @@ public class MyRoutinesControllerTest {
     }
 
     private void thenVistaResumenRutinaExitosa(ModelAndView mav) {
-        assertThat(mav.getViewName(), equalToIgnoringCase("my-routines"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("misRutinas"));
     }
 }
 

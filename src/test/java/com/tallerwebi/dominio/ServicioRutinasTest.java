@@ -5,16 +5,14 @@ import com.tallerwebi.presentacion.DataModel.Ejercicio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ServicioRutinasTest {
-    ServicioRoutines servicioRoutines;
+    ServicioRutina servicioRutina;
     /*
     1. que se pueda crear una lista de ejercicios
     2. que se pueda marcar un ejercicio como realizado
@@ -23,7 +21,7 @@ public class ServicioRutinasTest {
      */
     @BeforeEach
     public void init(){
-        servicioRoutines = new ServicioRoutinesImp();
+        servicioRutina = new ServicioRutinaImp();
 
     }
 
@@ -46,7 +44,7 @@ public class ServicioRutinasTest {
         detalleRutina.addEjercicio(unEjercicio);
         detalleRutina.addEjercicio(otroEjercicio);
         detalleRutina.addEjercicio(algunEjercicio);
-        return servicioRoutines.cargarEjercicios(detalleRutina.getListaEjercicios());
+        return servicioRutina.cargarEjercicios(detalleRutina.getListaEjercicios());
     }
 
     private void thenRetornaListaDeEjercicios(List<Ejercicio> listaEjercicios) {
@@ -99,13 +97,13 @@ public class ServicioRutinasTest {
     private Double whenCalculaIMC() {
         Double pesoActual=75.5;
         Double altura=1.65;
-        return servicioRoutines.calcularIMC(pesoActual,altura);
+        return servicioRutina.calcularIMC(pesoActual,altura);
     }
 
     private Double whenCalculaDiferenciaDePeso() {
         Double pesoInicial=88.2;
         Double pesoActual=75.5;
-        return servicioRoutines.calcularDiferenciaDeKilos(pesoInicial,pesoActual);
+        return servicioRutina.calcularDiferenciaDeKilos(pesoInicial,pesoActual);
     }
 
     private void thenRetornaIMC(Double imc) {
