@@ -20,9 +20,6 @@
                     <img th:src="@{/img/ZonaRyp.jpg}" alt="">
                     <div class="infoContainer">
                         <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
-                        <ul th:each="type : ${lugar.type}">
-                            <li th:text="${type}"></li>
-                        </ul>
                         <p> <i class="fa-solid fa-location-dot"></i> Distancia <span th:text="${lugar.distancia}"></span></p>
                     </div>
                 </div>
