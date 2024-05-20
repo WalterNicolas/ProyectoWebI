@@ -1,9 +1,8 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
 
 @Entity
 public class Usuario {
@@ -18,6 +17,7 @@ public class Usuario {
     private String apellido;
     private Boolean activo = false;
     private Double longitud;
+
     private Double latitud;
 
     public Long getId() {
