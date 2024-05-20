@@ -10,6 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>11</jdk.version>
+        <spring.boot.version>2.6.4</spring.boot.version>
         <spring.version>5.2.22.RELEASE</spring.version>
         <servletapi.version>4.0.4</servletapi.version>
         <thymeleaf.spring.version>3.0.15.RELEASE</thymeleaf.spring.version>
@@ -22,7 +23,40 @@
         <hsqldb.version>2.3.2</hsqldb.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -42,11 +76,6 @@
             <version>${spring.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -120,7 +149,7 @@
             <version>${playwright.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- compile only, deployed container will provide this -->
+              <!-- compile only, deployed container will provide this -->
         <!--
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -132,7 +161,6 @@
     </dependencies>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -154,7 +182,7 @@
             </plugin>
 
             <!-- Plugin para ejecutar las pruebas -->
-            <plugin>
+             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version> <!-- Ajusta la versión según tus necesidades -->
@@ -176,6 +204,9 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
+                    <configurationClasses>
+                        <configurationClass>org.eclipse.jetty.util.log.StdErrLog</configurationClass>
+                    </configurationClasses>
                 </configuration>
             </plugin>
 
@@ -193,6 +224,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
