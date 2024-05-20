@@ -1,26 +1,45 @@
 package com.tallerwebi.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySources({
+        @PropertySource("classpath:application.properties")
+})
 public class HibernateConfig {
+
+    @Value("${spring.datasource.url}")
+    private String dataSourceUrl;
+
+    @Value("${spring.datasource.username}")
+    private String dataSourceUsername;
+
+    @Value("${spring.datasource.password}")
+    private String dataSourcePassword;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String dataSourceDriverClassName;
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
-        dataSource.setUrl("jdbc:hsqldb:mem:db_");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("");
+        dataSource.setDriverClassName(dataSourceDriverClassName);
+        dataSource.setUrl(dataSourceUrl);
+        dataSource.setUsername(dataSourceUsername);
+        dataSource.setPassword(dataSourcePassword);
         return dataSource;
     }
 
@@ -40,10 +59,11 @@ public class HibernateConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
         return properties;
     }
 }
+
