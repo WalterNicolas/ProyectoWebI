@@ -1,12 +1,10 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.enums.ExerciseType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 @Data
@@ -26,7 +24,7 @@ public class Lugar {
     private ServicioUsuario servicioUsuario;
 
     @Autowired
-    private ServicioSearch servicioSearch;
+    private ServicioMapa servicioSearch;
 
     public Lugar(String nombre, List<ExerciseType> type, String ubicacion, Double longitud, Double latitud) {
         this.nombre = nombre;

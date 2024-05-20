@@ -1,8 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Lugar;
-import com.tallerwebi.dominio.ServicioSearch;
-import com.tallerwebi.dominio.enums.ExerciseType;
+import com.tallerwebi.dominio.ServicioMapa;
 import com.tallerwebi.dominio.excepcion.SearchException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,18 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
-public class ControladorSearchTests {
+public class ControladorMapaTests {
 
 
-    private searchPlaceController controller;
+    private MapaController controller;
 
     @Mock
-    private ServicioSearch servicioSearchMock;
+    private ServicioMapa servicioSearchMock;
 
     @BeforeEach
     public void setUp() {
-        servicioSearchMock = org.mockito.Mockito.mock(ServicioSearch.class);
-        controller = new searchPlaceController(servicioSearchMock);
+        servicioSearchMock = org.mockito.Mockito.mock(ServicioMapa.class);
+        controller = new MapaController(servicioSearchMock);
     }
 
     @Test
@@ -41,7 +40,7 @@ public class ControladorSearchTests {
 
         ModelAndView modelAndView = controller.irASearch();
 
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("search_place"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("No hay lugares disponibles"));
     }
 
@@ -57,7 +56,7 @@ public class ControladorSearchTests {
 
         ModelAndView modelAndView = controller.irASearch();
 
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("search_place"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertEquals(lugares, modelAndView.getModel().get("lugares"));
     }
 

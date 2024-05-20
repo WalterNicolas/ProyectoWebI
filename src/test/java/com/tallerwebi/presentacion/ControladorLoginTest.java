@@ -74,7 +74,7 @@ public class ControladorLoginTest {
 		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock);
 
 		// validacion
-		assertThat(modelAndView.getViewName(), equalToIgnoringCase("formulario"));
+		assertThat(modelAndView.getViewName(), equalToIgnoringCase("formularioAptitudFisica"));
 		verify(servicioLoginMock, times(1)).registrar(usuarioMock);
 	}
 
@@ -123,6 +123,6 @@ public class ControladorLoginTest {
 		return controladorLogin.registrarme(usuario);
 	}
 	private void thenEnviaUbicacionYSeRegistraExitosamente(ModelAndView mav) {
-		assertThat(mav.getViewName(), equalToIgnoringCase("formulario"));
+		assertThat(mav.getViewName(), equalToIgnoringCase("formularioAptitudFisica"));
 	}
 }

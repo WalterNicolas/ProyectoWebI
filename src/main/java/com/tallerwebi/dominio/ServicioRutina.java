@@ -6,7 +6,7 @@ import com.tallerwebi.presentacion.DataModel.Ejercicio;
 
 import java.util.List;
 
-public interface ServicioRoutines {
+public interface ServicioRutina {
 
     List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios);
     Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina);

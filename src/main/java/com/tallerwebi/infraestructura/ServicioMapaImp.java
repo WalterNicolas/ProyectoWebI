@@ -1,17 +1,16 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Lugar;
-import com.tallerwebi.dominio.ServicioSearch;
+import com.tallerwebi.dominio.ServicioMapa;
 import com.tallerwebi.dominio.enums.ExerciseType;
 import com.tallerwebi.dominio.excepcion.SearchException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("servicioSearch")
-public class ServicioSearchImp implements ServicioSearch {
+public class ServicioMapaImp implements ServicioMapa {
 
 
     @Override
