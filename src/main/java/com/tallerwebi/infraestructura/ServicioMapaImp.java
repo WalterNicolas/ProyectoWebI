@@ -31,12 +31,12 @@ public class ServicioMapaImp implements ServicioMapa {
     public List<Lugar> mockDatos(){
         List<Lugar> lugares = new ArrayList<>();
 
-        lugares.add(new Lugar("Zona Ryp", List.of(ExerciseType.musculacion), "Ubicacion A",-34.747132079753904,-58.585186748664825));
+        lugares.add(new Lugar("Zona Ryp", "Ubicacion A",-34.747132079753904,-58.585186748664825));
 
-        lugares.add(new Lugar("Taruk", List.of(ExerciseType.musculacion), "Ubicacion A",-34.74976373083753,-58.58363723032326));
+        lugares.add(new Lugar("Taruk", "Ubicacion A",-34.74976373083753,-58.58363723032326));
 
-        lugares.add(new Lugar("Nitro", List.of(ExerciseType.musculacion), "Ubicacion A",-34.747968651909794, -58.58560155905591));
-        lugares.add(new Lugar("Vida Fit", List.of(ExerciseType.musculacion), "Ubicacion A",-34.75045468465815, -58.587086498772415));
+        lugares.add(new Lugar("Nitro",  "Ubicacion A",-34.747968651909794, -58.58560155905591));
+        lugares.add(new Lugar("Vida Fit",  "Ubicacion A",-34.75045468465815, -58.587086498772415));
 
         return lugares;
     }
