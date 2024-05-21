@@ -1,9 +1,9 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioFormulario;
+import com.tallerwebi.dominio.ServicioAptitudFisica;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
+import com.tallerwebi.dominio.AptitudFisica;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class ControladorAptitudFisicaTest {
     @Mock
-    private ServicioFormulario servicioFormularioMock;
+    private ServicioAptitudFisica servicioAptitudFisicaMock;
 
     @InjectMocks
     private ControladorAptitudFisica controladorFormulario;
@@ -34,9 +34,9 @@ public class ControladorAptitudFisicaTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        when(servicioFormularioMock.registrarDatos(aptitudFisica)).thenThrow(new DatosMalIngresadosException());
+        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica)).thenThrow(new DatosMalIngresadosException());
 
-        ModelAndView modelAndView = controladorFormulario.procesarFormulario(aptitudFisica, request);
+        ModelAndView modelAndView = controladorFormulario.procesarFormulario(1L,aptitudFisica, request);
 
         assertEquals("formularioAptitudFisica", modelAndView.getViewName());
         assertEquals("Faltan Datos", modelAndView.getModel().get("error"));
@@ -47,9 +47,9 @@ public class ControladorAptitudFisicaTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        when(servicioFormularioMock.registrarDatos(aptitudFisica)).thenThrow(new esMenorDeEdadException());
+        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica)).thenThrow(new esMenorDeEdadException());
 
-        ModelAndView modelAndView = controladorFormulario.procesarFormulario(aptitudFisica, request);
+        ModelAndView modelAndView = controladorFormulario.procesarFormulario(1L,aptitudFisica, request);
 
         assertEquals("formularioAptitudFisica", modelAndView.getViewName());
         assertEquals("Tiene menos de 18 Anos", modelAndView.getModel().get("error"));
@@ -60,9 +60,9 @@ public class ControladorAptitudFisicaTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        when(servicioFormularioMock.registrarDatos(aptitudFisica)).thenReturn(aptitudFisica);
+        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica)).thenReturn(aptitudFisica);
 
-        ModelAndView modelAndView = controladorFormulario.procesarFormulario(aptitudFisica, request);
+        ModelAndView modelAndView = controladorFormulario.procesarFormulario(1L,aptitudFisica, request);
 
         assertEquals("home", modelAndView.getViewName());
     }

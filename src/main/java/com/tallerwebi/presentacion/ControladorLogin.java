@@ -1,10 +1,11 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
+import com.tallerwebi.dominio.AptitudFisica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ControladorLogin {
 
     private ServicioLogin servicioLogin;
+    private RepositorioUsuario repositorioUsuario;
 
     @Autowired
     public ControladorLogin(ServicioLogin servicioLogin){
@@ -39,7 +42,9 @@ public class ControladorLogin {
 
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
         if (usuarioBuscado != null) {
-            request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+            HttpSession session = request.getSession();
+            session.setAttribute("Email", datosLogin.getEmail());
+            session.setAttribute("id", usuarioBuscado.getId());
             return new ModelAndView("redirect:/home");
         } else {
             model.put("error", "Usuario o clave incorrecta");
@@ -70,10 +75,18 @@ public class ControladorLogin {
         model.put("usuario", new Usuario());
         return new ModelAndView("nuevo-usuario", model);
     }
-
     @RequestMapping(path = "/home", method = RequestMethod.GET)
-    public ModelAndView irAHome() {
-        return new ModelAndView("home");
+    public ModelAndView irAHome(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        ModelMap model = new ModelMap();
+        if (session != null && session.getAttribute("id") != null) {
+           Usuario usuario = repositorioUsuario.buscarPorId((Long) session.getAttribute("id"));
+           model.put("usuario",usuario);
+            return new ModelAndView("home",model);
+        }else{
+            return new ModelAndView("redirect:/login");
+        }
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)

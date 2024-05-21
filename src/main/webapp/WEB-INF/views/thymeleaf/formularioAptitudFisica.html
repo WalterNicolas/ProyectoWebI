@@ -9,8 +9,9 @@
 
         <div class="col-sm-12">
             <div class="card d-flex h-100  secundario align-items-stretch">
-                <form class="p-3" action="#" th:action="@{/guardar-aptitud-fisica}"  method="POST" th:object="${aptitudFisica}">
+                <form class="p-3" action="#" th:action="@{/guardar-aptitud-fisica/{id}(id=${usuario.getId()})}"  method="POST" th:object="${aptitudFisica}">
                     <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física: <span th:if="${usuario != null}"  th:text="${usuario.getNombre()}"> </span> </h3>
+
                     <div class="row">
                         <div class="col-md-4">
                             <div data-mdb-input-init class="form-outline mb-3">

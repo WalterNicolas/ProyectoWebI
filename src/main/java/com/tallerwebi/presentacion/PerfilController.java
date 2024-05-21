@@ -1,8 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
-import com.tallerwebi.presentacion.DataModel.DetalleRutina;
+import com.tallerwebi.dominio.AptitudFisica;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
 import com.tallerwebi.presentacion.DataModel.DetalleRutina;
 import com.tallerwebi.presentacion.DataModel.Ejercicio;
 
