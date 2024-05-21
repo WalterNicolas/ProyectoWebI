@@ -27,7 +27,7 @@ border-color:transparent
     overflow: auto;
     height:auto;
     max-height: 400px;
-    width: 31.25rem;
+    width:  100%;;
     padding-right: 10px;
 }
 
@@ -89,4 +89,18 @@ img{
     background-color: #AB093F;
     border-radius: 10px;
     justify-content: center;
+}
+
+.buscadorContainer{
+    padding: 10px;
+    display: flex;
+}
+
+.btn{
+    background-color: #AB093F !important;
+     border-radius: 0px.375rem .375rem 0px!important;
+}
+
+.form-control{
+    border-radius:.375rem 0px 0px .375rem !important;
 }
