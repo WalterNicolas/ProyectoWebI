@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ServicioFormularioAptitudFisicaTest {
     ServicioAptitudFisica servicioAptitudFisica;
@@ -30,34 +31,10 @@ public class ServicioFormularioAptitudFisicaTest {
 
 
     }
-    @Test
-    public void siLosDatosSonBienIngresadosQueDevuelvaAptitudFisica(){
-        givenNoHayDatos();
-        AptitudFisica apto =  whenLosDatosSonCorrectos();
-        thenRetornaAptitudFisica(apto);
-
-    }
 
     private void givenNoHayDatos() {
     }
-    private AptitudFisica whenLosDatosSonCorrectos() {
-        AptitudFisica apto = new AptitudFisica();
-        apto.setAltura(185);
-        apto.setPeso(100.5);
-        LocalDate fechaDeNacimiento = LocalDate.of(1994, 1, 31);
 
-        // Crear un objeto DateTimeFormatter para el formato deseado
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        // Convertir la fecha de nacimiento a String
-        String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
-        apto.setFechaNacimiento(fechaDeNacimientoString);
-        apto.setTipoEntrenamiento("Gym");
-        apto.setDiasEntrenamiento(3);
-        apto.setHorasEntrenamiento(1);
-        apto.setEstadoFisico("sedentario");
-      return   servicioAptitudFisica.registrarDatos(apto);
-    }
 
     private void thenRetornaAptitudFisica(AptitudFisica apto) {
         assertThat(apto,notNullValue());

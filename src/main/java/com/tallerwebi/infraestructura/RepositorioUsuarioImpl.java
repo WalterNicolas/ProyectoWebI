@@ -8,6 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Repository("repositorioUsuario")
 public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
@@ -30,7 +32,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
     @Override
     public Usuario buscarPorId(Long id) {
-        return sessionFactory.getCurrentSession().find(Usuario.class,id);
+        return sessionFactory.getCurrentSession().find(Usuario.class, id);
     }
 
     @Override

@@ -155,6 +155,13 @@
 
   <div class = "container">
     <h2 class="titulo1">DashBoard</h2>
+    <div th:if="${Email != null}">
+      <div class="card">
+          <p class="card-text">Peso: <span th:text="${Email}"></span>  <span th:text="${id}"></span></p>
+          <!-- Agrega más campos aquí según tus necesidades -->
+        </div>
+      </div>
+    </div>
     <div th:if="${aptitudFisica != null}">
       <div class="card">
         <div class="card-body">

@@ -3,7 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
-import com.tallerwebi.infraestructura.RepositorioUsuarioImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 @Controller
-
 public class ControladorAptitudFisica {
+    @Autowired
     private final ServicioAptitudFisica servicioAptitudFisica;
+    @Autowired
     private final RepositorioUsuario repositorioUsuario;
     public ControladorAptitudFisica(ServicioAptitudFisica servicioAptitudFisica, RepositorioUsuario repositorioUsuario) {
+
         this.servicioAptitudFisica = servicioAptitudFisica;
         this.repositorioUsuario = repositorioUsuario;
     }
@@ -37,6 +39,9 @@ public class ControladorAptitudFisica {
         ModelMap model = new ModelMap();
         try {
             Usuario usuario = repositorioUsuario.buscarPorId(id);
+            if (usuario == null) {
+                return registroFallido(model, "Usuario no encontrado");
+            }
             aptitudFisica.setUsuario(usuario);
             AptitudFisica apto = servicioAptitudFisica.registrarDatos(aptitudFisica);
 
@@ -48,7 +53,7 @@ public class ControladorAptitudFisica {
         } catch (DatosMalIngresadosException ex) {
             return registroFallido(model, "Faltan Datos");
         } catch (esMenorDeEdadException ex) {
-            return registroFallido(model, "Tiene menos de 18 Anos");
+            return registroFallido(model, "Tiene menos de 18 Años");
         }
     }
 

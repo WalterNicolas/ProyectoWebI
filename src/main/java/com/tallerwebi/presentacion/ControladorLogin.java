@@ -25,8 +25,9 @@ public class ControladorLogin {
     private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin){
+    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario){
         this.servicioLogin = servicioLogin;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @RequestMapping("/login")
@@ -44,13 +45,14 @@ public class ControladorLogin {
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
         if (usuarioBuscado != null) {
             HttpSession session = request.getSession();
+            session.setAttribute("ROL", "ADMIN");
             session.setAttribute("Email", datosLogin.getEmail());
             session.setAttribute("id", usuarioBuscado.getId());
             return new ModelAndView("redirect:/home");
         } else {
             model.put("error", "Usuario o clave incorrecta");
+            return new ModelAndView("login", model);
         }
-        return new ModelAndView("login", model);
     }
 
     @RequestMapping(path = "/registrarme", method = RequestMethod.POST)
@@ -81,9 +83,9 @@ public class ControladorLogin {
         HttpSession session = request.getSession(false);
 
         ModelMap model = new ModelMap();
-        if (session != null && session.getAttribute("id") != null) {
-           Usuario usuario = repositorioUsuario.buscarPorId((Long) session.getAttribute("id"));
-           model.put("usuario",usuario);
+        if (session != null && session.getAttribute("Email") != null) {
+           model.put("Email",session.getAttribute("Email") );
+            model.put("id",session.getAttribute("id") );
             return new ModelAndView("home",model);
         }else{
             return new ModelAndView("redirect:/login");
