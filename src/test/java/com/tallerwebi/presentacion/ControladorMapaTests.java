@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 public class ControladorMapaTests {
 
-
+    private HttpServletRequest requestMock;
     private MapaController controller;
 
     @Mock
@@ -30,6 +32,7 @@ public class ControladorMapaTests {
     public void setUp() {
         servicioSearchMock = org.mockito.Mockito.mock(ServicioMapa.class);
         controller = new MapaController(servicioSearchMock);
+        requestMock = mock(HttpServletRequest.class);
     }
 
     @Test
@@ -38,7 +41,7 @@ public class ControladorMapaTests {
         when(servicioSearchMock.mockDatos()).thenReturn(Collections.emptyList());
         doThrow(new SearchException()).when(servicioSearchMock).buscarSitios();
 
-        ModelAndView modelAndView = controller.irASearch();
+        ModelAndView modelAndView = controller.irASearch(requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("No hay lugares disponibles"));
@@ -54,7 +57,7 @@ public class ControladorMapaTests {
         when(servicioSearchMock.mockDatos()).thenReturn(lugares);
         when(servicioSearchMock.buscarSitios()).thenReturn(lugares);
 
-        ModelAndView modelAndView = controller.irASearch();
+        ModelAndView modelAndView = controller.irASearch(requestMock);
 
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertEquals(lugares, modelAndView.getModel().get("lugares"));

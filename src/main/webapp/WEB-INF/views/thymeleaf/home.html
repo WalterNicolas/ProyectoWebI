@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="templates/head :: head">
 </head>
 <style>
@@ -154,30 +154,31 @@
 
 
   <div class = "container">
-    <h2 class="titulo1">DashBoard</h2>
-    <div th:if="${Email != null}">
-      <div class="card">
-          <p class="card-text">Peso: <span th:text="${Email}"></span>  <span th:text="${id}"></span></p>
-          <!-- Agrega más campos aquí según tus necesidades -->
-        </div>
-      </div>
+
+    <div th:if="${usuario != null}">
+      <h2 class="text-light" style="padding-top:50px">Bienvenido: <span th:text="${usuario.getNombre()}"></span>  <span  th:text="${usuario.getEmail()}"></h2>
     </div>
-    <div th:if="${aptitudFisica != null}">
+    </div>
+    <div th:if="${usuario.getAptitudFisica() != null}">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Datos de Aptitud Física</h5>
-          <p class="card-text">Altura: <span th:text="${aptitudFisica.altura}"></span> cm</p>
-          <p class="card-text">Peso: <span th:text="${aptitudFisica.peso}"></span> kg</p>
+          <p class="card-text">Altura: <span th:text="${usuario.getAptitudFisica().getAltura()}"></span> cm</p>
+         <!-- <p class="card-text">Peso: <span th:text="${aptitudFisica.peso}"></span> kg</p>
           <p class="card-text">Tipo entrenaminto: <span th:text="${aptitudFisica.tipoEntrenamiento}"></span> </p>
           <p class="card-text">Dias: <span th:text="${aptitudFisica.diasEntrenamiento}"></span> por Semana</p>
           <p class="card-text">Horas por día: <span th:text="${aptitudFisica.horasEntrenamiento}"></span> </p>
-          <p class="card-text">Peso: <span th:text="${aptitudFisica.estadoFisico}"></span> </p>
+          <p class="card-text">Peso: <span th:text="${aptitudFisica.estadoFisico}"></span> </p> -->
           <!-- Agrega más campos aquí según tus necesidades -->
         </div>
       </div>
     </div>
-    <div th:if="${aptitudFisica == null}">
-      <p class="text-light">No hay datos de aptitud física disponibles.</p>
+    <div th:if="${usuario.getAptitudFisica() == null}">
+      <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                                                               th:onclick="|window.location.href='@{/perfil}'|">Perfil
+      </a> </p>
+
+
     </div>
   </div>
   <div class="ag-format-container">

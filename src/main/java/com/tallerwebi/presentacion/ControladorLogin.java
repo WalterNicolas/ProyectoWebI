@@ -78,6 +78,7 @@ public class ControladorLogin {
         model.put("usuario", new Usuario());
         return new ModelAndView("nuevo-usuario", model);
     }
+    @Transactional
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public ModelAndView irAHome(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -86,10 +87,20 @@ public class ControladorLogin {
         if (session != null && session.getAttribute("Email") != null) {
            model.put("Email",session.getAttribute("Email") );
             model.put("id",session.getAttribute("id") );
+         Usuario usuario = repositorioUsuario.buscarPorId((Long)session.getAttribute("id"));
+            model.put("usuario",usuario);
             return new ModelAndView("home",model);
         }else{
             return new ModelAndView("redirect:/login");
         }
+    }
+    @RequestMapping(path ="/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/login?logout";
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)

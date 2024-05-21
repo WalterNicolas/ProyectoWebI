@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.mock;
@@ -13,11 +15,12 @@ public class MisRutinasControllerTest {
 
     private MisRutinasController myRoutinesController;
     private ServicioRutina servicioRutinaMock;
-
+    private HttpServletRequest requestMock;
     @BeforeEach
     public void init(){
         servicioRutinaMock = mock(ServicioRutina.class);
         myRoutinesController = new MisRutinasController(servicioRutinaMock);
+        requestMock = mock(HttpServletRequest.class);
     }
     @Test
     public void queMuestreElResumenDeRutina(){
@@ -35,7 +38,7 @@ public class MisRutinasControllerTest {
     }
 
     private ModelAndView whenVerMisRutinas() {
-        return  myRoutinesController.verMisRutinas();
+        return  myRoutinesController.verMisRutinas(requestMock);
     }
 
     private void thenVistaResumenRutinaExitosa(ModelAndView mav) {
