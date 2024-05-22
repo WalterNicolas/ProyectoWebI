@@ -21,6 +21,9 @@ public class Usuario {
     private AptitudFisica aptitudFisica;
     private Double latitud;
 
+    @Column(name = "access_level")
+    private Integer accessLevel;
+
     public AptitudFisica getAptitudFisica() {
         return aptitudFisica;
     }
@@ -94,6 +97,14 @@ public class Usuario {
 
     public String getApellido() {
         return apellido;
+    }
+
+    public Integer getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(Integer accessLevel) {
+        this.accessLevel = accessLevel;
     }
 
     public void setApellido(String apellido) {
