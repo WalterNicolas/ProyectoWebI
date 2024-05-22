@@ -18,10 +18,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 public class ControladorMapaTests {
-
     private HttpServletRequest requestMock;
     private MapaController controller;
     private HttpSession sessionMock;
@@ -30,7 +28,7 @@ public class ControladorMapaTests {
 
     @BeforeEach
     public void setUp() {
-        servicioSearchMock = org.mockito.Mockito.mock(ServicioMapa.class);
+        servicioSearchMock = mock(ServicioMapa.class);
         controller = new MapaController(servicioSearchMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
@@ -38,33 +36,35 @@ public class ControladorMapaTests {
 
     @Test
     public void whenNoSeEncuentranLugaresLanzarError() throws Exception {
-        when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com");
-        when(servicioSearchMock.mockDatos()).thenReturn(Collections.emptyList());
-        when(requestMock.getSession(false)).thenReturn(sessionMock);
-        doThrow(new SearchException()).when(servicioSearchMock).buscarSitios();
+        // Configurar el comportamiento del mock
+        when(servicioSearchMock.buscarSitios()).thenThrow(new SearchException());
 
-        ModelAndView modelAndView = controller.irASearch(requestMock);
+        // Ejecutar el método bajo prueba
+        ModelAndView modelAndView = controller.irASearch(null);
 
+        // Verificar el resultado
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("No hay lugares disponibles"));
+
+        // Verificar que se llamó al método correspondiente del servicio
+        verify(servicioSearchMock).buscarSitios();
     }
 
     @Test
     public void whenSeEncuentranLugaresLanzar() throws Exception {
         when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com");
         when(requestMock.getSession(false)).thenReturn(sessionMock);
-
         List<Lugar> lugares = new ArrayList<>();
-
         lugares.add(new Lugar());
 
-        when(servicioSearchMock.mockDatos()).thenReturn(lugares);
+        // Configurar el comportamiento del mock
         when(servicioSearchMock.buscarSitios()).thenReturn(lugares);
-
-        ModelAndView modelAndView = controller.irASearch(requestMock);
-
+        ModelAndView modelAndView = controller.irASearch(null);
+        // Verificar el resultado
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertEquals(lugares, modelAndView.getModel().get("lugares"));
-    }
 
+        // Verificar que se llamó al método correspondiente del servicio
+        verify(servicioSearchMock).buscarSitios();
+    }
 }
