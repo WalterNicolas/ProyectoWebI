@@ -81,6 +81,6 @@ public class ControladorAptitudFisicaTest {
 
         ModelAndView modelAndView = controladorAptitudFisica.procesarFormulario(1L, aptitudFisica, request);
 
-        assertEquals("home", modelAndView.getViewName());
+        assertEquals("redirect:/home", modelAndView.getViewName());
     }
 }

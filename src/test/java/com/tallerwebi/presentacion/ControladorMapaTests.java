@@ -24,7 +24,7 @@ public class ControladorMapaTests {
 
     private HttpServletRequest requestMock;
     private MapaController controller;
-
+    private HttpSession sessionMock;
     @Mock
     private ServicioMapa servicioSearchMock;
 
@@ -33,12 +33,14 @@ public class ControladorMapaTests {
         servicioSearchMock = org.mockito.Mockito.mock(ServicioMapa.class);
         controller = new MapaController(servicioSearchMock);
         requestMock = mock(HttpServletRequest.class);
+        sessionMock = mock(HttpSession.class);
     }
 
     @Test
     public void whenNoSeEncuentranLugaresLanzarError() throws Exception {
-
+        when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com");
         when(servicioSearchMock.mockDatos()).thenReturn(Collections.emptyList());
+        when(requestMock.getSession(false)).thenReturn(sessionMock);
         doThrow(new SearchException()).when(servicioSearchMock).buscarSitios();
 
         ModelAndView modelAndView = controller.irASearch(requestMock);
@@ -49,6 +51,8 @@ public class ControladorMapaTests {
 
     @Test
     public void whenSeEncuentranLugaresLanzar() throws Exception {
+        when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com");
+        when(requestMock.getSession(false)).thenReturn(sessionMock);
 
         List<Lugar> lugares = new ArrayList<>();
 
