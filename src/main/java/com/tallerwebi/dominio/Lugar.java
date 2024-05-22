@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.enums.ExerciseType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class Lugar {
     private Double latitud;
     private String distancia;
 
+    @Nullable
     public final double RADIUS_OF_EARTH_KM = 6371;
 
     // @Autowired

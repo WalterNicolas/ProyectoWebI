@@ -11,6 +11,6 @@ public interface ServicioMapa {
     List<Lugar> buscarSitios() throws SearchException;
     Lugar  filtroSitios(String input) throws  Exception;
     List<Lugar> mockDatos();
-
+    List<Lugar> buscarLugaresPorNombre(String nombre);
 
 }
