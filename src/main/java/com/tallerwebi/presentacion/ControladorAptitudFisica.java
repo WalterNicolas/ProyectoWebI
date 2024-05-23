@@ -1,25 +1,30 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioFormulario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 @Controller
-
 public class ControladorAptitudFisica {
-    private final ServicioFormulario servicioFormulario;
+    @Autowired
+    private final ServicioAptitudFisica servicioAptitudFisica;
+    @Autowired
+    private final RepositorioUsuario repositorioUsuario;
+    public ControladorAptitudFisica(ServicioAptitudFisica servicioAptitudFisica, RepositorioUsuario repositorioUsuario) {
 
-    public ControladorAptitudFisica(ServicioFormulario servicioFormulario) {
-        this.servicioFormulario = servicioFormulario;
+        this.servicioAptitudFisica = servicioAptitudFisica;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @RequestMapping("/formularioAptitudFisica")
@@ -28,18 +33,27 @@ public class ControladorAptitudFisica {
         modelo.put("aptitudFisica", new AptitudFisica());
         return new ModelAndView("formularioAptitudFisica", modelo);
     }
-
-    @RequestMapping(path = "/guardar-aptitud-fisica", method = RequestMethod.POST)
-    public ModelAndView procesarFormulario(@ModelAttribute("aptitudFisica") AptitudFisica aptitudFisica, HttpServletRequest request) {
+    @Transactional
+    @RequestMapping(path = "/guardar-aptitud-fisica/{id}", method = RequestMethod.POST)
+    public ModelAndView procesarFormulario(@PathVariable Long id, @ModelAttribute("aptitudFisica") AptitudFisica aptitudFisica, HttpServletRequest request) {
         ModelMap model = new ModelMap();
         try {
-            AptitudFisica apto = servicioFormulario.registrarDatos(aptitudFisica);
+            Usuario usuario = repositorioUsuario.buscarPorId(id);
+            if (usuario == null) {
+                return registroFallido(model, "Usuario no encontrado");
+            }
+            aptitudFisica.setUsuario(usuario);
+            AptitudFisica apto = servicioAptitudFisica.registrarDatos(aptitudFisica);
+
+            usuario.setAptitudFisica(aptitudFisica);
+            repositorioUsuario.guardar(usuario);
+
             model.put("aptitudFisica", apto);
             return registroExitoso(model);
         } catch (DatosMalIngresadosException ex) {
             return registroFallido(model, "Faltan Datos");
         } catch (esMenorDeEdadException ex) {
-            return registroFallido(model, "Tiene menos de 18 Anos");
+            return registroFallido(model, "Tiene menos de 18 Años");
         }
     }
 
@@ -49,6 +63,7 @@ public class ControladorAptitudFisica {
     }
 
     private ModelAndView registroExitoso(ModelMap model) {
-        return new ModelAndView("home", model);
+
+        return new ModelAndView("redirect:/home");
     }
 }

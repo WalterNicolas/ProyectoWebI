@@ -1,8 +1,9 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
-import com.tallerwebi.presentacion.DataModel.AptitudFisica;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +12,15 @@ import java.time.Period;
 
 @Service
 @Transactional
-public class ServicioFormularioImp implements ServicioFormulario{
+public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
+    @Autowired
+   private  RepositorioAptitudFisica repo;
+    @Autowired
+    private  RepositorioUsuario repoUsuario;
+    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repo){
+        this.repo = repo;
+    }
+
     @Override
     public AptitudFisica registrarDatos(AptitudFisica aptitudFisica)  {
         if (!sonParametrosValidos(aptitudFisica)) {
@@ -20,6 +29,7 @@ public class ServicioFormularioImp implements ServicioFormulario{
         if (!esMayorDeEdad(aptitudFisica.getFechaNacimiento())) {
             throw new esMenorDeEdadException();
         }
+        repo.guardar(aptitudFisica);
         return aptitudFisica;
     }
 

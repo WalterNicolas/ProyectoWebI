@@ -1,9 +1,11 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,12 +17,15 @@ public class ControladorFormAptitudFisicaTest {
     private ControladorAptitudFisica controladorFormulario;
     private ControladorLogin controladorLogin;
     private ServicioLogin servicioLoginMock;
+    @Mock
+    private RepositorioUsuario repositorioUsuarioMock;
 
 
     @BeforeEach
     public void init(){
         servicioLoginMock = mock(ServicioLogin.class);
-        controladorLogin = new ControladorLogin(servicioLoginMock);
+        repositorioUsuarioMock = mock(RepositorioUsuario.class);
+        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock);
     }
     @Test
     public void queLuegoDeRegistrarmeMeLLeveAlFormularioDeAptitudFisica(){

@@ -1,9 +1,8 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
 
 @Entity
 public class Usuario {
@@ -18,7 +17,17 @@ public class Usuario {
     private String apellido;
     private Boolean activo = false;
     private Double longitud;
+    @OneToOne
+    private AptitudFisica aptitudFisica;
     private Double latitud;
+
+    public AptitudFisica getAptitudFisica() {
+        return aptitudFisica;
+    }
+
+    public void setAptitudFisica(AptitudFisica aptitudFisica) {
+        this.aptitudFisica = aptitudFisica;
+    }
 
     public Long getId() {
         return id;

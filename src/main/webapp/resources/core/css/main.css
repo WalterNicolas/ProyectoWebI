@@ -1,6 +1,7 @@
 body{
     padding:0px;
     margin:0px;
+    margin-top: 23px;
 }
 .starter-template {
   padding: 3rem 1.5rem;
@@ -31,4 +32,8 @@ body {
 }
 texto2{
     color: grey !important;
+}
+
+.custom-width {
+        width: 81px;
 }

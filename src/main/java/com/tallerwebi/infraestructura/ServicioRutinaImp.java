@@ -1,7 +1,9 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.presentacion.DataModel.DetalleRutina;
-import com.tallerwebi.presentacion.DataModel.Ejercicio;
+import com.tallerwebi.dominio.ServicioRutina;
+import com.tallerwebi.dominio.excepcion.NoHayEjerciciosCargadosException;
+import com.tallerwebi.dominio.DetalleRutina;
+import com.tallerwebi.dominio.Ejercicio;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,8 +21,8 @@ public class ServicioRutinaImp implements ServicioRutina {
     }
 
     @Override
-    public Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina){
-        Integer ejerciciosCumplidos=0;
+    public Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
+        Integer ejerciciosCumplidos = 0;
 //        Ejercicio actual = new Ejercicio();
         if((detalleRutina.getListaEjercicios())!=null){
             for(Ejercicio actual : detalleRutina.getListaEjercicios()){
@@ -28,6 +30,9 @@ public class ServicioRutinaImp implements ServicioRutina {
                     ejerciciosCumplidos++;
                 }
             }
+        }
+        else {
+            throw new NoHayEjerciciosCargadosException("No hay ejercicios cargados");
         }
         return ejerciciosCumplidos;
     }
@@ -40,8 +45,8 @@ public class ServicioRutinaImp implements ServicioRutina {
     }
 
     @Override
-    public Integer contarEjerciciosporHacer(DetalleRutina detalleRutina){
-        Integer ejerciciosPorHacer=0;
+    public Integer contarEjerciciosporHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
+        Integer ejerciciosPorHacer = 0;
 //        Ejercicio actual = new Ejercicio();
         if((detalleRutina.getListaEjercicios())!=null) {
             for (Ejercicio actual : detalleRutina.getListaEjercicios()) {
@@ -49,6 +54,9 @@ public class ServicioRutinaImp implements ServicioRutina {
                     ejerciciosPorHacer++;
                 }
             }
+        }
+        else {
+            throw new NoHayEjerciciosCargadosException("No hay ejercicios cargados");
         }
         return ejerciciosPorHacer;
     }

@@ -4,31 +4,41 @@ import com.tallerwebi.dominio.enums.ExerciseType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
 @Data
+@Entity
 @NoArgsConstructor
 public class Lugar {
 
+    @javax.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int Id;
     private String nombre;
-    private List<ExerciseType> type;
+
+    //private List<ExerciseType> type;
     private String ubicacion;
     private Double longitud;
     private Double latitud;
     private String distancia;
 
+    @Nullable
     public final double RADIUS_OF_EARTH_KM = 6371;
 
-    @Autowired
-    private ServicioUsuario servicioUsuario;
+    // @Autowired
+    //private ServicioUsuario servicioUsuario;
 
-    @Autowired
-    private ServicioMapa servicioSearch;
+    //@Autowired
+    //private ServicioMapa servicioSearch;
 
-    public Lugar(String nombre, List<ExerciseType> type, String ubicacion, Double longitud, Double latitud) {
+    public Lugar(String nombre, String ubicacion, Double longitud, Double latitud) {
         this.nombre = nombre;
-        this.type = type;
         this.ubicacion = ubicacion;
         this.longitud = longitud;
         this.latitud = latitud;

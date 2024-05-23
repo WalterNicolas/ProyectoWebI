@@ -1,6 +1,12 @@
-package com.tallerwebi.presentacion.DataModel;
+package com.tallerwebi.dominio;
 
+import javax.persistence.*;
+
+@Entity
 public class AptitudFisica {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private int altura;
     private double peso;
     private String fechaNacimiento;
@@ -8,6 +14,8 @@ public class AptitudFisica {
     private int diasEntrenamiento;
     private int horasEntrenamiento;
     private String estadoFisico;
+    @OneToOne
+    private Usuario usuario;
 
     // Constructor vacío
     public AptitudFisica() {
@@ -20,6 +28,22 @@ public class AptitudFisica {
 
     public void setAltura(int altura) {
         this.altura = altura;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public double getPeso() {
