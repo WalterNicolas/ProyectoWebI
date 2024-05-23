@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository("repositorioRutina")
 public class RepositorioRutinaImp implements RepositorioRutina {
     private SessionFactory sessionFactory;
-    
+
     @Autowired
     public RepositorioRutinaImp(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

@@ -27,7 +27,7 @@ public class MisRutinasControllerTest {
     @BeforeEach
     public void init() {
         servicioRutinaMock = mock(ServicioRutina.class);
-        misRutinasController = new new ControladorLogin(servicioRutinaMock, repositorioRutinaMock);
+        misRutinasController = new MisRutinasController(servicioRutinaMock, repositorioRutinaMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
     }
@@ -59,7 +59,7 @@ public class MisRutinasControllerTest {
         thenRedireccionALogin(mav);
     }
 
-    private ModelAndView whenVerMisRutinas() {
+    private ModelAndView whenVerMisRutinas(HttpServletRequest requestMock) {
         // Aquí deberías llamar al método del controlador que estás probando
         // y pasarle el HttpServletRequest que has configurado
         return misRutinasController.verMisRutinas(requestMock);

@@ -22,7 +22,7 @@ public class ServicioRutinaImp implements ServicioRutina {
 
     @Override
     public Integer contarEjerciciosCumplidos(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
-        Integer ejerciciosCumplidos=0;
+        Integer ejerciciosCumplidos = 0;
 //        Ejercicio actual = new Ejercicio();
         if((detalleRutina.getListaEjercicios())!=null){
             for(Ejercicio actual : detalleRutina.getListaEjercicios()){
@@ -32,7 +32,7 @@ public class ServicioRutinaImp implements ServicioRutina {
             }
         }
         else {
-            throw new NoHayEjerciciosCargadosException();
+            throw new NoHayEjerciciosCargadosException("No hay ejercicios cargados");
         }
         return ejerciciosCumplidos;
     }
@@ -46,7 +46,7 @@ public class ServicioRutinaImp implements ServicioRutina {
 
     @Override
     public Integer contarEjerciciosporHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
-        Integer ejerciciosPorHacer=0;
+        Integer ejerciciosPorHacer = 0;
 //        Ejercicio actual = new Ejercicio();
         if((detalleRutina.getListaEjercicios())!=null) {
             for (Ejercicio actual : detalleRutina.getListaEjercicios()) {
@@ -56,7 +56,7 @@ public class ServicioRutinaImp implements ServicioRutina {
             }
         }
         else {
-            throw new NoHayEjerciciosCargadosException();
+            throw new NoHayEjerciciosCargadosException("No hay ejercicios cargados");
         }
         return ejerciciosPorHacer;
     }

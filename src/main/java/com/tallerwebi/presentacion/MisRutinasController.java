@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioRutina;
-import com.tallerwebi.dominio.DetalleRutina;
+import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,10 +14,12 @@ import javax.servlet.http.HttpSession;
 public class MisRutinasController {
 
     private ServicioRutina servicioRutina;
+    private RepositorioRutina repositorioRutina;
 
     @Autowired
-    public MisRutinasController(ServicioRutina servicioRutina) {
+    public MisRutinasController(ServicioRutina servicioRutina, RepositorioRutina repositorioRutina){
         this.servicioRutina = servicioRutina;
+        this.repositorioRutina = repositorioRutina;
     }
 
     @RequestMapping("/misRutinas")
@@ -34,6 +35,7 @@ public class MisRutinasController {
         }
     }
 }
+
 //    @RequestMapping("/routines-update", method = RequestMethod.POST)
 //    public ModelAndView actualizarMisRutinas() {
 //        ModelMap modelo = new ModelMap();

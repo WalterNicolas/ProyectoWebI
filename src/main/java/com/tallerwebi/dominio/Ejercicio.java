@@ -26,7 +26,7 @@ public class Ejercicio {
     }
 
     public Integer getRepeticiones() {
-        return repeticiones;
+        return this.repeticiones;
     }
 
     public void setRepeticiones(Integer repeticiones) {
@@ -34,7 +34,7 @@ public class Ejercicio {
     }
 
     public Boolean getRealizado() {
-        return realizado;
+        return this.realizado;
     }
 
     public void setRealizado(Boolean realizado) {

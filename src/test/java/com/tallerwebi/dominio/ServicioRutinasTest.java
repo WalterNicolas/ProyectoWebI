@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.NoHayEjerciciosCargadosException;
 import com.tallerwebi.infraestructura.ServicioRutinaImp;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,47 +37,12 @@ public class ServicioRutinasTest {
         thenRetornaListaDeEjercicios(listaEjercicios);
     }
 
-    private void givenNoExisteListaDeEjercicios() {
-    }
-
-
-    private List<Ejercicio> whenIngresarListaDeEjercicios() {
-        Ejercicio unEjercicio = new Ejercicio("abdominales", 30);
-        Ejercicio otroEjercicio = new Ejercicio("flexiones de brazos", 45);
-        Ejercicio algunEjercicio = new Ejercicio("sentadillas", 20);
-        DetalleRutina detalleRutina = new DetalleRutina();
-        detalleRutina.addEjercicio(unEjercicio);
-        detalleRutina.addEjercicio(otroEjercicio);
-        detalleRutina.addEjercicio(algunEjercicio);
-        return servicioRutina.cargarEjercicios(detalleRutina.getListaEjercicios());
-    }
-
-    private void thenRetornaListaDeEjercicios(List<Ejercicio> listaEjercicios) {
-        assertThat(listaEjercicios, notNullValue());
-    }
-
     @Test
     public void queSePuedaMarcarUnEjercicioComoRealizado() {
         List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
         Ejercicio unEjercicio = new Ejercicio("flexiones de brazos", 45);
         whenRealizarUnEjercicioDeLaLista(listaEjercicios, unEjercicio);
         thenRetornaListaDeEjercicios(listaEjercicios);
-    }
-
-    private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(List<Ejercicio> listaEjercicios, Ejercicio unEjercicio) {
-//        Ejercicio actual = new Ejercicio();
-        for (Ejercicio actual : listaEjercicios) {
-            if (actual.getDescripcionEjercicio().equals(unEjercicio.getDescripcionEjercicio())) {
-                actual.completarEjercicio();
-            }
-            return listaEjercicios;
-        }
-        return listaEjercicios;
-    }
-
-    private List<Ejercicio> givenExisteListaDeEjercicios() {
-        List<Ejercicio> listaEjercicios = whenIngresarListaDeEjercicios();
-        return listaEjercicios;
     }
 
     @Test
@@ -102,17 +68,33 @@ public class ServicioRutinasTest {
         whenRealizarUnEjercicioDeLaLista(listaEjercicios, unEjercicio);
         DetalleRutina detalleRutina = new DetalleRutina();
         detalleRutina.setListaEjercicios(listaEjercicios);
-        thenRetornaCantidadDeEjerciciosRealizados(servicioRutina, detalleRutina);
+        thenRetornaCantidadDeEjerciciosRealizados(detalleRutina);
     }
 
     @Test
     public void queSePuedanContarLosEjericiosPorHacer() throws NoHayEjerciciosCargadosException {
         List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
-        Ejercicio otroEjercicio = new Ejercicio("abdominales", 30);
-        whenRealizarUnEjercicioDeLaLista(listaEjercicios, otroEjercicio);
+        Ejercicio algunEjercicio = new Ejercicio("sentadillas", 20);
+        whenRealizarUnEjercicioDeLaLista(listaEjercicios, algunEjercicio);
         DetalleRutina detalleRutina = new DetalleRutina();
         detalleRutina.setListaEjercicios(listaEjercicios);
-        thenRetornaCantidadDeEjerciciosPorHacer(servicioRutina, detalleRutina);
+        thenRetornaCantidadDeEjerciciosPorHacer(detalleRutina);
+    }
+
+    private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(List<Ejercicio> listaEjercicios, Ejercicio unEjercicio) {
+//        Ejercicio actual = new Ejercicio();
+        for (Ejercicio actual : listaEjercicios) {
+            if (actual.getDescripcionEjercicio().equals(unEjercicio.getDescripcionEjercicio())) {
+                actual.completarEjercicio();
+            }
+            return listaEjercicios;
+        }
+        return listaEjercicios;
+    }
+
+    private List<Ejercicio> givenExisteListaDeEjercicios() {
+        List<Ejercicio> listaEjercicios = whenIngresarListaDeEjercicios();
+        return listaEjercicios;
     }
 
     private void givenExistenDatos() {
@@ -138,12 +120,30 @@ public class ServicioRutinasTest {
         assertThat(difPeso, notNullValue());
     }
 
-    private void thenRetornaCantidadDeEjerciciosPorHacer(ServicioRutina servicioRutina, DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
-        assertEquals(servicioRutina.contarEjerciciosporHacer(detalleRutina), 2);
+    private void thenRetornaCantidadDeEjerciciosPorHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
+        assertEquals(2,servicioRutina.contarEjerciciosporHacer(detalleRutina));
     }
 
-    private void thenRetornaCantidadDeEjerciciosRealizados(ServicioRutina servicioRutina, DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
-        assertEquals(servicioRutina.contarEjerciciosCumplidos(detalleRutina), 1);
+    private void thenRetornaCantidadDeEjerciciosRealizados(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException {
+        assertEquals(1,servicioRutina.contarEjerciciosCumplidos(detalleRutina));
+    }
+
+    private void givenNoExisteListaDeEjercicios() {
+    }
+
+
+    private List<Ejercicio> whenIngresarListaDeEjercicios() {
+        Ejercicio unEjercicio = new Ejercicio("abdominales", 30);
+        Ejercicio otroEjercicio = new Ejercicio("flexiones de brazos", 45);
+        Ejercicio algunEjercicio = new Ejercicio("sentadillas", 20);
+        DetalleRutina detalleRutina = new DetalleRutina();
+        detalleRutina.addEjercicio(unEjercicio);
+        detalleRutina.addEjercicio(otroEjercicio);
+        detalleRutina.addEjercicio(algunEjercicio);
+        return servicioRutina.cargarEjercicios(detalleRutina.getListaEjercicios());
+    }
+
+    private void thenRetornaListaDeEjercicios(List<Ejercicio> listaEjercicios) {
+        assertThat(listaEjercicios, notNullValue());
     }
 }
-
