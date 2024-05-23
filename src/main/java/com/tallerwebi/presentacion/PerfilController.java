@@ -19,6 +19,7 @@ public class PerfilController {
         if (session != null && session.getAttribute("Email") != null) {
             ModelMap modelo = new ModelMap();
             modelo.put("usuario", new Usuario());
+            modelo.put("Email", session.getAttribute("Email"));
             modelo.put("aptitudFisica", new AptitudFisica());
             return new ModelAndView("perfil", modelo);
         }else{

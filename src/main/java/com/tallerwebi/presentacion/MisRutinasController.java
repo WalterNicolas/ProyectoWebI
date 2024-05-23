@@ -28,6 +28,7 @@ public class MisRutinasController {
         if (session != null && session.getAttribute("Email") != null) {
             ModelMap modelo = new ModelMap();
             modelo.put("detalleRutina", new DetalleRutina());
+            modelo.put("Email", session.getAttribute("Email"));
             return new ModelAndView("misRutinas", modelo);
         } else {
             return new ModelAndView("redirect:/login");
