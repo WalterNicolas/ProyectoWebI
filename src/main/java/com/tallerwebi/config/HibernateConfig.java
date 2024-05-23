@@ -84,5 +84,6 @@ public class HibernateConfig {
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
         return properties;
     }
+
 }
 
