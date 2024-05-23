@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioRutina;
+import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
+import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,20 +12,22 @@ import javax.servlet.http.HttpSession;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MisRutinasControllerTest {
 
-    private MisRutinasController myRoutinesController;
+    private MisRutinasController misRutinasController;
     private ServicioRutina servicioRutinaMock;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
+    private RepositorioRutina repositorioRutinaMock;
 
     @BeforeEach
     public void init() {
         servicioRutinaMock = mock(ServicioRutina.class);
-        myRoutinesController = new MisRutinasController(servicioRutinaMock);
+        misRutinasController = new new ControladorLogin(servicioRutinaMock, repositorioRutinaMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
     }
@@ -55,10 +59,10 @@ public class MisRutinasControllerTest {
         thenRedireccionALogin(mav);
     }
 
-    private ModelAndView whenVerMisRutinas(HttpServletRequest request) {
+    private ModelAndView whenVerMisRutinas() {
         // Aquí deberías llamar al método del controlador que estás probando
         // y pasarle el HttpServletRequest que has configurado
-        return myRoutinesController.verMisRutinas(request);
+        return misRutinasController.verMisRutinas(requestMock);
     }
 
     private void thenVistaResumenRutinaExitosa(ModelAndView mav) {
@@ -70,5 +74,5 @@ public class MisRutinasControllerTest {
         // Verificar si la vista devuelta es una redirección a login
         assertThat(mav.getViewName(), equalToIgnoringCase("redirect:/login"));
     }
-
 }
+

@@ -1,4 +1,4 @@
-package com.tallerwebi.presentacion.DataModel;
+package com.tallerwebi.dominio;
 
 public class Ejercicio {
     private String descripcionEjercicio;
