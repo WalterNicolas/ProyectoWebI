@@ -23,6 +23,8 @@ import java.util.Properties;
 @PropertySources({
         @PropertySource("classpath:application.properties")
 })
+
+
 public class HibernateConfig {
 
     @Value("${spring.datasource.url}")
@@ -55,6 +57,17 @@ public class HibernateConfig {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(new ClassPathResource("data.sql"));
+
+        DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+        initializer.setDatabasePopulator(populator);
+
+        return initializer;
+    }
 
     @Bean
     public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
@@ -72,16 +85,5 @@ public class HibernateConfig {
         return properties;
     }
 
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("data.sql"));
-
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(populator);
-
-        return initializer;
-    }
 }
 

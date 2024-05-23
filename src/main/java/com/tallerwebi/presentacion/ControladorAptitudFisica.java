@@ -64,6 +64,6 @@ public class ControladorAptitudFisica {
 
     private ModelAndView registroExitoso(ModelMap model) {
 
-        return new ModelAndView("home", model);
+        return new ModelAndView("redirect:/home");
     }
 }
