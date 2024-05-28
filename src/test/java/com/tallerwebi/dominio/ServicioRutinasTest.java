@@ -39,7 +39,7 @@ public class ServicioRutinasTest {
     @Test
     public void queSePuedaMarcarUnEjercicioComoRealizado() {
         List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
-        Ejercicio unEjercicio = new Ejercicio("flexiones de brazos", 45);
+        Ejercicio unEjercicio = new Ejercicio();
         whenRealizarUnEjercicioDeLaLista(listaEjercicios, unEjercicio);
         thenRetornaListaDeEjercicios(listaEjercicios);
     }
@@ -83,8 +83,8 @@ public class ServicioRutinasTest {
     private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(@NotNull List<Ejercicio> listaEjercicios, Ejercicio unEjercicio) {
 //        Ejercicio actual = new Ejercicio();
         for (Ejercicio actual : listaEjercicios) {
-            if (actual.getDescripcionEjercicio().equals(unEjercicio.getDescripcionEjercicio())) {
-                actual.completarEjercicio();
+            if (actual.getDescripcion().equals(unEjercicio.getDescripcion())) {
+                actual.setRealizado(Boolean.TRUE);
             }
             return listaEjercicios;
         }
@@ -132,9 +132,12 @@ public class ServicioRutinasTest {
 
 
     private List<Ejercicio> whenIngresarListaDeEjercicios() {
-        Ejercicio unEjercicio = new Ejercicio("abdominales", 30);
-        Ejercicio otroEjercicio = new Ejercicio("flexiones de brazos", 45);
-        Ejercicio algunEjercicio = new Ejercicio("sentadillas", 20);
+        Ejercicio unEjercicio = new Ejercicio();
+        unEjercicio.setDescripcion("3 reps 4 series");
+        Ejercicio otroEjercicio = new Ejercicio();
+        otroEjercicio.setDescripcion("3 reps 4 series");
+        Ejercicio algunEjercicio = new Ejercicio();
+        algunEjercicio.setDescripcion("3 reps 4 series");
         DetalleRutina detalleRutina = new DetalleRutina();
         detalleRutina.addEjercicio(unEjercicio);
         detalleRutina.addEjercicio(otroEjercicio);

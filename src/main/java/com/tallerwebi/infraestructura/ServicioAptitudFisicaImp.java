@@ -14,11 +14,11 @@ import java.time.Period;
 @Transactional
 public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
     @Autowired
-   private  RepositorioAptitudFisica repo;
+   private  RepositorioAptitudFisica repositorioAptitudFisica;
     @Autowired
     private  RepositorioUsuario repoUsuario;
-    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repo){
-        this.repo = repo;
+    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repositorioAptitudFisica){
+        this.repositorioAptitudFisica = repositorioAptitudFisica;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
         if (!esMayorDeEdad(aptitudFisica.getFechaNacimiento())) {
             throw new esMenorDeEdadException();
         }
-        repo.guardar(aptitudFisica);
+        repositorioAptitudFisica.guardar(aptitudFisica);
         return aptitudFisica;
     }
 

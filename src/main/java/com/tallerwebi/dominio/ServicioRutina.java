@@ -11,4 +11,5 @@ public interface ServicioRutina {
     Double calcularDiferenciaDeKilos(Double pesoInicial, Double pesoActual);
     Integer contarEjerciciosporHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException;
     Double calcularIMC(Double peso,Double altura);
+    RutinaSemanal generarRutinaSemanal(Usuario usuario);
 }
