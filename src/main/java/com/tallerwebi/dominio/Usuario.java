@@ -3,6 +3,8 @@ package com.tallerwebi.dominio;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -19,9 +21,10 @@ public class Usuario {
     private Double longitud;
     @OneToOne
     private AptitudFisica aptitudFisica;
+    @OneToMany
+    private Set<Membresia> membresias = new HashSet<>();
     private Double latitud;
 
-    @Column(name = "access_level")
     private Integer accessLevel;
 
     public AptitudFisica getAptitudFisica() {
@@ -30,6 +33,14 @@ public class Usuario {
 
     public void setAptitudFisica(AptitudFisica aptitudFisica) {
         this.aptitudFisica = aptitudFisica;
+    }
+
+    public Set<Membresia> getMembresias() {
+        return membresias;
+    }
+
+    public void setMembresias(Set<Membresia> membresias) {
+        this.membresias = membresias;
     }
 
     public Long getId() {

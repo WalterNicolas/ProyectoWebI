@@ -1,7 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.AptitudFisica;
-import com.tallerwebi.dominio.DetalleRutina;
+import com.tallerwebi.dominio.RutinaSemanal;
 import com.tallerwebi.dominio.RepositorioRutina;
 import com.tallerwebi.dominio.Usuario;
 import org.hibernate.SessionFactory;
@@ -18,8 +18,8 @@ public class RepositorioRutinaImp implements RepositorioRutina {
     }
 
     @Override
-    public void guardar(DetalleRutina detalleRutina) {
-        sessionFactory.getCurrentSession().save(detalleRutina);
+    public void guardar(RutinaSemanal rutinaSemanal) {
+        sessionFactory.getCurrentSession().save(rutinaSemanal);
     }
 }
 
