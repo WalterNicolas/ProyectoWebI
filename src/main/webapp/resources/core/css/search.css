@@ -5,14 +5,10 @@
 }
 
 .btn:hover, .btn:focus{
-  background-color: var(--color-fondo);
   color: var(--blanco);
   text-decoration: none;
 }
 
-.btn:focus{
-border-color:transparent
-}
 
 .rose-button{
     gap:10px;
@@ -94,11 +90,6 @@ img{
 .buscadorContainer{
     padding: 10px;
     display: flex;
-}
-
-.btn{
-    background-color: #AB093F !important;
-     border-radius: 0px.375rem .375rem 0px!important;
 }
 
 .form-control{
