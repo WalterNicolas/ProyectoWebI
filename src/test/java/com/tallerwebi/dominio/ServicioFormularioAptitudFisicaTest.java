@@ -16,26 +16,21 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ServicioFormularioAptitudFisicaTest {
     ServicioAptitudFisica servicioAptitudFisica;
-    RepositorioAptitudFisica repo;
+    RepositorioAptitudFisica repositorioAptitudFisica;
     /*
     1. si es menor de edad que no se pueda registrar
     2.todos los datos deben estar correctos
      */
     @BeforeEach
     public void init(){
-        servicioAptitudFisica = new ServicioAptitudFisicaImp(repo);
-
-
+        servicioAptitudFisica = new ServicioAptitudFisicaImp(repositorioAptitudFisica);
     }
 
     private void givenNoHayDatos() {
     }
-
-
     private void thenRetornaAptitudFisica(AptitudFisica apto) {
         assertThat(apto,notNullValue());
         assertThat(apto.getAltura(),equalTo(185));
@@ -51,7 +46,6 @@ public class ServicioFormularioAptitudFisicaTest {
         apto.setAltura(185);
         apto.setPeso(100.5);
         LocalDate fechaDeNacimiento = LocalDate.of(2018, 1, 31);
-
         // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

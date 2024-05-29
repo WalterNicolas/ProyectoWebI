@@ -12,12 +12,14 @@ import java.util.*;
 @Transactional
 public class ServicioRutinaImp implements ServicioRutina {
     @Autowired
-    private EjerciciosRepositorio ejerciciosRepositorio;
-    @Autowired
-    private RepositorioRutina repositorioRutina;
+    private RepositorioEjercicio repositorioEjercicio;
     @Autowired
     private RepositorioRutinaSemanal repositorioRutinaSemanal;
 
+    public ServicioRutinaImp(RepositorioEjercicio repositorioEjercicio, RepositorioRutinaSemanal repositorioRutinaSemanal){
+        this.repositorioRutinaSemanal= repositorioRutinaSemanal;
+        this.repositorioEjercicio= repositorioEjercicio;
+    }
     @Override
     public List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios){
         DetalleRutina detalleRutina = new DetalleRutina();
@@ -92,9 +94,6 @@ public class ServicioRutinaImp implements ServicioRutina {
 
             rutinasDiarias.add(rutinaDiaria);
         }
-        System.out.println("----------------------");
-        System.out.println(rutinasDiarias);
-        System.out.println("----------------------");
         rutinaSemanal.setRutinaDiaria(rutinasDiarias);
 
         repositorioRutinaSemanal.guardar(rutinaSemanal);
@@ -102,8 +101,8 @@ public class ServicioRutinaImp implements ServicioRutina {
         return rutinaSemanal;
     }
 
-    private Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
-        List<Ejercicio> ejerciciosDisponibles = ejerciciosRepositorio.buscarTodosLosEjercicio();
+    public Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
+        List<Ejercicio> ejerciciosDisponibles = repositorioEjercicio.buscarTodosLosEjercicio();
         Set<Ejercicio> ejerciciosDia = new HashSet<>();
         Random random = new Random();
 

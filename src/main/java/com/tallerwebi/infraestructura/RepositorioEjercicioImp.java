@@ -3,9 +3,13 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.Ejercicio;
 import com.tallerwebi.dominio.RepositorioEjercicio;
 import com.tallerwebi.dominio.RutinaSemanal;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class RepositorioEjercicioImp implements RepositorioEjercicio {
@@ -22,5 +26,11 @@ public class RepositorioEjercicioImp implements RepositorioEjercicio {
     @Override
     public Ejercicio buscarPorId(Long id) {
         return   sessionFactory.getCurrentSession().find(Ejercicio.class, id);
+    }
+
+    @Override
+    public List<Ejercicio> buscarTodosLosEjercicio() { Session session = sessionFactory.openSession();
+        Query<Ejercicio> query = session.createQuery("SELECT e FROM Ejercicio e", Ejercicio.class);
+        return query.getResultList();
     }
 }

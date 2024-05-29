@@ -3,6 +3,7 @@ package com.tallerwebi.dominio;
 import com.tallerwebi.dominio.excepcion.NoHayEjerciciosCargadosException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ServicioRutina {
 
@@ -12,4 +13,5 @@ public interface ServicioRutina {
     Integer contarEjerciciosporHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException;
     Double calcularIMC(Double peso,Double altura);
     RutinaSemanal generarRutinaSemanal(Usuario usuario);
+    Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento);
 }
