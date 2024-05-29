@@ -1,7 +1,9 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class RutinaDiaria {
@@ -12,8 +14,14 @@ public class RutinaDiaria {
     @ManyToOne
     private RutinaSemanal rutinaSemanal;
 
+
     @ManyToMany
-    private List<Ejercicio> ejercicios;
+    @JoinTable(
+            name = "rutina_diaria_ejercicio",
+            joinColumns = @JoinColumn(name = "rutina_diaria_id"),
+            inverseJoinColumns = @JoinColumn(name = "ejercicio_id")
+    )
+    private Set<Ejercicio> ejercicios;
 
 
     public Long getId() {
@@ -32,11 +40,11 @@ public class RutinaDiaria {
         this.rutinaSemanal = rutinaSemanal;
     }
 
-    public List<Ejercicio> getEjercicios() {
+    public Set<Ejercicio> getEjercicios() {
         return ejercicios;
     }
 
-    public void setEjercicios(List<Ejercicio> ejercicios) {
+    public void setEjercicios(Set<Ejercicio> ejercicios) {
         this.ejercicios = ejercicios;
     }
 

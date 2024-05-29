@@ -43,7 +43,6 @@ public class ControladorMembresia {
             // Inmediatamentee que se Genera un Membresia se ve reflejada la rutina que fue generada con las aptitudes que puso en AptitudesFisicas
            RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
 
-           System.out.print(rutinaSemanal.getRutinasDiarias());
            modelo.put("Email", session.getAttribute("Email"));
            modelo.put("membresia",membresia);
            modelo.put("usuario",usuario);

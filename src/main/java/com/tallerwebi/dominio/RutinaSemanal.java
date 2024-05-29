@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class RutinaSemanal {
@@ -12,8 +13,8 @@ public class RutinaSemanal {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rutinaSemanal", fetch = FetchType.EAGER)
-    private List<RutinaDiaria> rutinasDiarias;
+    @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL)
+    private Set<RutinaDiaria> rutinaDiaria;
 
     public Long getId() {
         return id;
@@ -27,15 +28,15 @@ public class RutinaSemanal {
         return usuario;
     }
 
+    public Set<RutinaDiaria> getRutinaDiaria() {
+        return rutinaDiaria;
+    }
+
+    public void setRutinaDiaria(Set<RutinaDiaria> rutinaDiaria) {
+        this.rutinaDiaria = rutinaDiaria;
+    }
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public List<RutinaDiaria> getRutinasDiarias() {
-        return rutinasDiarias;
-    }
-
-    public void setRutinasDiarias(List<RutinaDiaria> rutinasDiarias) {
-        this.rutinasDiarias = rutinasDiarias;
     }
 }

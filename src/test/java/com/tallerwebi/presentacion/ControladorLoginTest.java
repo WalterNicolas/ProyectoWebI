@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.RepositorioRutinaSemanal;
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
@@ -25,7 +26,7 @@ public class ControladorLoginTest {
 	private HttpSession sessionMock;
 	private ServicioLogin servicioLoginMock;
 	private RepositorioUsuario repositorioUsuarioMock;
-
+	private RepositorioRutinaSemanal repositorioRutinaSemanalMock;
 	@BeforeEach
 	public void init(){
 		datosLoginMock = new DatosLogin("dami@unlam.com", "123");
@@ -34,7 +35,8 @@ public class ControladorLoginTest {
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
-		controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock);
+		repositorioRutinaSemanalMock = mock(RepositorioRutinaSemanal.class);
+		controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,repositorioRutinaSemanalMock);
 	}
 
 	@Test

@@ -1,11 +1,8 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.RepositorioUsuario;
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
-import com.tallerwebi.dominio.AptitudFisica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,17 +14,20 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Controller
 public class ControladorLogin {
 
     private ServicioLogin servicioLogin;
     private RepositorioUsuario repositorioUsuario;
+    private RepositorioRutinaSemanal repositorioRutinaSemanal;
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario){
+    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario,RepositorioRutinaSemanal repositorioRutinaSemanal){
         this.servicioLogin = servicioLogin;
         this.repositorioUsuario = repositorioUsuario;
+        this.repositorioRutinaSemanal = repositorioRutinaSemanal;
     }
 
     @RequestMapping("/login")
@@ -86,8 +86,10 @@ public class ControladorLogin {
         ModelMap model = new ModelMap();
         if (session != null && session.getAttribute("Email") != null) {
            model.put("Email",session.getAttribute("Email") );
-            model.put("id",session.getAttribute("id") );
+           model.put("id",session.getAttribute("id") );
          Usuario usuario = repositorioUsuario.buscarPorId((Long)session.getAttribute("id"));
+          RutinaSemanal  rutinaSemanal = repositorioRutinaSemanal.buscarPorIdDeUsuario(usuario.getId());
+            model.put("rutinaSemanal",rutinaSemanal);
             model.put("usuario",usuario);
             return new ModelAndView("home",model);
         }else{

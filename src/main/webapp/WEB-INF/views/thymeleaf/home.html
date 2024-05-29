@@ -156,10 +156,12 @@
   <div class = "container">
 
     <div th:if="${usuario != null}">
-      <h2 class="text-light" style="padding-top:50px">Bienvenido: <span th:text="${usuario.getNombre()}"></span>  <span  th:text="${usuario.getEmail()}"></span></h2>
+      <h2 class="text-light" style="padding-top:50px">Bienvenido: <span th:text="${usuario.getNombre()}"></span>  <span  th:text="${usuario.getApellido()}"></span></h2>
     </div>
     </div>
-
+    <div th:if="${usuario.getAptitudFisica() == null}">
+     <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
+    </div>
     <div th:if="${usuario.getAptitudFisica() != null}">
       <div class="card">
         <div class="card-body">
@@ -172,14 +174,14 @@
         </div>
       </div>
     </div>
-    <div th:if="${usuario.getAptitudFisica() == null}">
-      <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
-    </div>
+
   </div>
   <div th:if="${rutinaSemanal != null}">
     <div class="container">
-      <h1 class="mt-5">Rutina Semanal</h1>
-      <div th:each="rutinaDiaria : ${rutinaSemanal.rutinasDiarias}">
+      <h1 class="mt-5 text-light text-center">Rutina Semanal</h1>
+      <div  class="text-light text-center" th:each="rutinaDiaria, stat : ${rutinaSemanal.getRutinaDiaria()}">
+        <h3 th:text="'Dia: ' + (${stat.index} + 1)"></h3>
+
         <table class="table table-bordered mt-3 bg-opacity-75 text-light">
           <thead>
           <tr>
@@ -189,10 +191,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="ejercicio : ${rutinaDiaria.ejercicios}">
-            <td th:text="${ejercicio.duracion + ' minutos'}"></td>
-            <td th:text="${ejercicio.nombre}"></td>
-            <td th:text="${ejercicio.descripcion}"></td>
+          <tr th:each="ejercicio : ${rutinaDiaria.getEjercicios()}">
+            <td th:text="${ejercicio.getDuracion() + ' minutos'}"></td>
+            <td th:text="${ejercicio.getNombre()}"></td>
+            <td th:text="${ejercicio.getDescripcion()}"></td>
           </tr>
           </tbody>
         </table>
@@ -258,6 +260,9 @@
     </div>
   </div>
   </div>
+
+
+  <!--Modal para contratar rutina Gratuita-->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">

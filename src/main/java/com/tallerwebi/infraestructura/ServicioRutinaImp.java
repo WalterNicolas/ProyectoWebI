@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -17,6 +15,8 @@ public class ServicioRutinaImp implements ServicioRutina {
     private EjerciciosRepositorio ejerciciosRepositorio;
     @Autowired
     private RepositorioRutina repositorioRutina;
+    @Autowired
+    private RepositorioRutinaSemanal repositorioRutinaSemanal;
 
     @Override
     public List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios){
@@ -81,26 +81,30 @@ public class ServicioRutinaImp implements ServicioRutina {
         String tipoEntrenamiento = aptitudFisica.getTipoEntrenamiento();
         RutinaSemanal rutinaSemanal = new RutinaSemanal();
         rutinaSemanal.setUsuario(usuario);
-        List<RutinaDiaria> rutinasDiarias = new ArrayList<>();
+        Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
 
         for (int i = 0; i < diasEntrenamiento; i++) {
             RutinaDiaria rutinaDiaria = new RutinaDiaria();
             rutinaDiaria.setRutinaSemanal(rutinaSemanal);
 
-            List<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
+            Set<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
             rutinaDiaria.setEjercicios(ejerciciosDia);
 
             rutinasDiarias.add(rutinaDiaria);
         }
+        System.out.println("----------------------");
+        System.out.println(rutinasDiarias);
+        System.out.println("----------------------");
+        rutinaSemanal.setRutinaDiaria(rutinasDiarias);
 
-        rutinaSemanal.setRutinasDiarias(rutinasDiarias);
-        System.out.println(rutinaSemanal);
+        repositorioRutinaSemanal.guardar(rutinaSemanal);
+
         return rutinaSemanal;
     }
 
-    private List<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
+    private Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
         List<Ejercicio> ejerciciosDisponibles = ejerciciosRepositorio.buscarTodosLosEjercicio();
-        List<Ejercicio> ejerciciosDia = new ArrayList<>();
+        Set<Ejercicio> ejerciciosDia = new HashSet<>();
         Random random = new Random();
 
         int minutosDisponibles = horasPorSesion * 60;
@@ -154,13 +158,4 @@ public class ServicioRutinaImp implements ServicioRutina {
         return ejerciciosDia;
     }
 
-    public void clonarYGuardarRutinaSemanal(RutinaSemanal rutinaSemanal) {
-        // Clonar la rutina semanal
-        RutinaSemanal nuevaRutinaSemanal = new RutinaSemanal();
-        nuevaRutinaSemanal.setUsuario(rutinaSemanal.getUsuario());
-        nuevaRutinaSemanal.setRutinasDiarias(rutinaSemanal.getRutinasDiarias());
-
-        // Guardar la nueva rutina semanal en la base de datos
-        repositorioRutina.guardar(nuevaRutinaSemanal);
-    }
 }

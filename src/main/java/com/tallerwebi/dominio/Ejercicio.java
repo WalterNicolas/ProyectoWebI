@@ -1,9 +1,8 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Ejercicio {
@@ -16,7 +15,8 @@ public class Ejercicio {
     private String descripcion;
     private Boolean realizado;
     private Boolean primario;
-
+    @ManyToMany(mappedBy = "ejercicios")
+    private Set<RutinaDiaria> rutinaDiaria;
 
 
     public Long getId() {
@@ -43,6 +43,18 @@ public class Ejercicio {
         this.duracion = duracion;
     }
 
+    public void setPrimario(Boolean primario) {
+        this.primario = primario;
+    }
+
+    public Set<RutinaDiaria> getRutinaDiaria() {
+        return rutinaDiaria;
+    }
+
+    public void setRutinaDiaria(Set<RutinaDiaria> rutinaDiaria) {
+        this.rutinaDiaria = rutinaDiaria;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -65,10 +77,6 @@ public class Ejercicio {
 
     public Boolean getPrimario() {
         return primario;
-    }
-
-    public void setPrimario(Boolean primario) {
-        this.primario = primario;
     }
 
     public void setDescripcion(String descripcion) {

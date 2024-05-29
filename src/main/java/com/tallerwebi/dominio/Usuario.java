@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,6 +24,8 @@ public class Usuario {
     private AptitudFisica aptitudFisica;
     @OneToMany
     private Set<Membresia> membresias = new HashSet<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<RutinaSemanal> rutinaSemanal;
     private Double latitud;
 
     private Integer accessLevel;
@@ -84,6 +87,14 @@ public class Usuario {
 
     public Double getLatitud() {
         return latitud;
+    }
+
+    public List<RutinaSemanal> getRutinaSemanal() {
+        return rutinaSemanal;
+    }
+
+    public void setRutinaSemanal(List<RutinaSemanal> rutinaSemanal) {
+        this.rutinaSemanal = rutinaSemanal;
     }
 
     public void setLatitud(Double latitud) {
