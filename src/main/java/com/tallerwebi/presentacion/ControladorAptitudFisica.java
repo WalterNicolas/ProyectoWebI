@@ -34,7 +34,7 @@ public class ControladorAptitudFisica {
         return new ModelAndView("formularioAptitudFisica", modelo);
     }
     @Transactional
-    @RequestMapping(path = "/guardar-aptitud-fisica/{id}", method = RequestMethod.POST)
+    @RequestMapping(path = "/{id}/guardar-aptitud-fisica", method = RequestMethod.POST)
     public ModelAndView procesarFormulario(@PathVariable Long id, @ModelAttribute("aptitudFisica") AptitudFisica aptitudFisica, HttpServletRequest request) {
         ModelMap model = new ModelMap();
         try {

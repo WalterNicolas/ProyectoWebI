@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,6 +17,7 @@ public class ControladorFormAptitudFisicaTest {
     private ControladorAptitudFisica controladorFormulario;
     private ControladorLogin controladorLogin;
     private ServicioLogin servicioLoginMock;
+    @Mock
     private RepositorioUsuario repositorioUsuarioMock;
 
 

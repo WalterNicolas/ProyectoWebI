@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
+import com.tallerwebi.dominio.excepcion.UsuarioInexistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,16 @@ public class ServicioLoginImpl implements ServicioLogin {
     @Override
     public Usuario consultarUsuario (String email, String password) {
         return repositorioUsuario.buscarUsuario(email, password);
+    }
+
+    @Override
+    public Usuario buscarPorMail(String email) throws UsuarioInexistenteException {
+           Usuario usuario= repositorioUsuario.buscar(email);
+        if (usuario != null) {
+            return usuario;
+        } else {
+            throw new UsuarioInexistenteException("No existe un usuario con ese mail");
+        }
     }
 
     @Override

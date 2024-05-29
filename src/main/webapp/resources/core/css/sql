@@ -1,0 +1,56 @@
+-- Insertar datos en la tabla aptitudes_fisicas con las opciones permitidas
+INSERT INTO aptitudFisica (altura, diasEntrenamiento, estadoFisico, horasEntrenamiento, peso, tipoEntrenamiento)
+VALUES
+    (1.75, 5, 'entrenado', 2.0, 70.0, 'Cardio'),
+    (1.80, 3, 'entrenado', 1.5, 75.0, 'Musculacion'),
+    (1.65, 4, 'intermedio', 1.0, 60.0, 'Calistenia');
+
+-- Insertar datos en la tabla usuarios
+INSERT INTO usuario (accessLevel, activo, apellido, nombre, email, latitud, longitud, password, rol, aptitudFisica_id)
+VALUES
+    (1, TRUE, 'Garcia', 'Juan', 'ni@ni.com', 40.7128, -74.0060, '123', 'user', 1),
+    (2, TRUE, 'Lopez', 'Maria', 'da@da.com', 34.0522, -118.2437, '123', 'user', 2),
+    (1, TRUE, 'Perez', 'Carlos', 'le@le.com', 41.8781, -87.6298, '123', 'user', 3);
+
+-- Actualizar la tabla aptitudes_fisicas para establecer la relación con usuarios
+UPDATE aptitudFisica SET usuario_id = 1 WHERE id = 1;
+UPDATE aptitudFisica SET usuario_id = 2 WHERE id = 2;
+UPDATE aptitudFisica SET usuario_id = 3 WHERE id = 3;
+
+UPDATE usuario SET aptitudFisica_id = 1 WHERE id = 1;
+UPDATE usuario SET aptitudFisica_id = 2 WHERE id = 2;
+UPDATE usuario SET aptitudFisica_id = 3 WHERE id = 3;
+
+
+-- Insertar ejercicios
+INSERT INTO ejercicio (descripcion, duracion, nombre, realizado, tipo, primario) VALUES
+('Estiramiento de piernas. Ideal como calentamiento previo al ejercicio. Realiza 2 series de 10 repeticiones.', 10, 'Estiramiento de Piernas', 0, 'Calistenia', FALSE),
+('Flexiones de brazos. Ejercicio clásico para fortalecer brazos y pecho. Realiza 3 series de 10 repeticiones.', 15, 'Flexiones de Brazos', 0, 'Musculacion', FALSE),
+('Crunch abdominal. Excelente para trabajar los abdominales. Realiza 3 series de 15 repeticiones.', 10, 'Crunch Abdominal', 0, 'Calistenia', FALSE),
+('Sentadillas. Fundamental para fortalecer piernas y glúteos. Realiza 3 series de 12 repeticiones.', 15, 'Sentadillas', 0, 'Musculacion', FALSE),
+('Burpees. Completo ejercicio que involucra todo el cuerpo. Realiza 3 series de 10 repeticiones.', 20, 'Burpees', 0, 'Cardio', TRUE),
+('Plancha. Excelente ejercicio para fortalecer el core. Mantén la posición durante 20 segundos.', 20, 'Plancha', 0, 'Calistenia', TRUE),
+('Carrera en el sitio. Ejercicio de cardio para aumentar la frecuencia cardíaca. Realiza 3 pasadas de 10 segundos.', 10, 'Carrera en el Sitio', 0, 'Cardio', FALSE),
+('Saltos de tijera. Ejercicio dinámico para trabajar piernas y cardio. Realiza 3 series de 12 repeticiones.', 15, 'Saltos de Tijera', 0, 'Cardio', FALSE),
+('Flexiones de tríceps. Enfocado en fortalecer los tríceps. Realiza 3 series de 10 repeticiones.', 10, 'Flexiones de Tríceps', 0, 'Calistenia', FALSE),
+('Abdominales bicicleta. Excelente ejercicio para los abdominales oblicuos. Realiza 3 series de 15 repeticiones.', 15, 'Abdominales Bicicleta', 0, 'Calistenia', FALSE),
+('Plancha lateral. Fortalece los oblicuos y mejora el equilibrio. Mantén la posición durante 15 segundos por lado.', 15, 'Plancha Lateral', 0, 'Calistenia', TRUE),
+('Zancadas. Trabaja piernas y glúteos. Realiza 3 series de 12 repeticiones por pierna.', 15, 'Zancadas', 0, 'Musculacion', FALSE),
+('Skipping. Ejercicio de cardio para aumentar la frecuencia cardíaca. Realiza 3 pasadas de 10 segundos.', 10, 'Skipping', 0, 'Cardio', FALSE),
+('Flexiones diamante. Enfocado en fortalecer el tríceps. Realiza 3 series de 10 repeticiones.', 15, 'Flexiones Diamante', 0, 'Calistenia', TRUE),
+('Elevación de rodillas. Ejercicio de cardio para mejorar resistencia. Realiza 3 pasadas de 10 segundos.', 10, 'Elevación de Rodillas', 0, 'Cardio', FALSE),
+('Mountain climbers. Trabaja el core y mejora la resistencia cardiovascular. Realiza 3 series de 12 repeticiones.', 15, 'Mountain Climbers', 0, 'Cardio', TRUE),
+('Flexiones con palmada. Ejercicio avanzado para fortalecer brazos y pecho. Realiza 3 series de 10 repeticiones.', 10, 'Flexiones con Palmada', 0, 'Calistenia', TRUE),
+('Jumping jacks. Clásico ejercicio de cardio. Realiza 3 series de 15 repeticiones.', 15, 'Jumping Jacks', 0, 'Cardio', FALSE),
+('Plancha con elevación de piernas. Fortalece abdomen y piernas. Mantén la posición durante 20 segundos.', 10, 'Plancha con Elevación de Piernas', 0, 'Calistenia', FALSE),
+('Sentadillas sumo. Variación de sentadillas para trabajar diferentes músculos de las piernas. Realiza 3 series de 12 repeticiones.', 15, 'Sentadillas Sumo', 0, 'Musculacion', TRUE),
+('Burpees modificados. Versión modificada de burpees para principiantes. Realiza 3 series de 10 repeticiones.', 15, 'Burpees Modificados', 0, 'Cardio', FALSE),
+('Flexiones en pica. Ejercicio de calistenia para fortalecer tríceps y hombros. Realiza 3 series de 10 repeticiones.', 10, 'Flexiones en Pica', 0, 'Calistenia', FALSE),
+('Escaladores. Trabaja todo el cuerpo y mejora la resistencia cardiovascular. Realiza 3 series de 12 repeticiones.', 15, 'Escaladores', 0, 'Cardio', TRUE),
+('Estocadas laterales. Trabaja piernas y glúteos. Realiza 3 series de 15 repeticiones por lado.', 10, 'Estocadas Laterales', 0, 'Musculacion', FALSE),
+('Carrera en el sitio con rodillas altas. Ejercicio de cardio para mejorar resistencia y velocidad. Realiza 3 pasadas de 10 segundos.', 15, 'Carrera en el Sitio con Rodillas Altas', 0, 'Cardio', FALSE),
+('Sentadillas con salto. Intenso ejercicio para trabajar piernas y glúteos. Realiza 3 series de 12 repeticiones.', 10, 'Sentadillas con Salto', 0, 'Musculacion', TRUE),
+('Flexiones militares. Trabaja brazos, pecho y core. Realiza 3 series de 10 repeticiones.', 15, 'Flexiones Militares', 0, 'Calistenia', TRUE),
+('Abdominales bicicleta invertidos. Variante de abdominales bicicleta. Realiza 3 series de 15 repeticiones.', 10, 'Abdominales Bicicleta Invertidos', 0, 'Calistenia', FALSE),
+('Plancha con extensión de brazo. Fortalece brazos, hombros y core. Mantén la posición durante 20 segundos.', 15, 'Plancha con Extensión de Brazo', 0, 'Calistenia', FALSE),
+('Jump squats. Intenso ejercicio de cardio. Realiza 3 series de 12 repeticiones.', 10, 'Jump Squats', 0, 'Cardio', TRUE);
