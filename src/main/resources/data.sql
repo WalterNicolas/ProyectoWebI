@@ -18,6 +18,12 @@ CREATE TABLE Lugar (
     latitud DOUBLE
 );
 
+CREATE TABLE Pesaje (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fechaPesaje DATE,
+    peso DOUBLE
+);
+
 CREATE TABLE IF NOT EXISTS Lugar (
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
    nombre VARCHAR(255) NOT NULL,
@@ -36,6 +42,8 @@ INSERT INTO Lugar (nombre, ubicacion, latitud, longitud) VALUES
     ('Club Deportivo Alfa', 'Calle Urquiza 567', -34.755432, -58.590123),
     ('Estadio Omega', 'Avenida Belgrano 890', -34.749012, -58.576543);
 
+INSERT INTO Pesaje (fechaPesaje, peso) VALUES
+    ('2024-05-15', 75.5),('2024-05-16', 75.3),('2024-05-17', 75.2),('2024-05-18', 75.0),('2024-05-19', 75.1);
 
 INSERT INTO Usuario (email, password, rol, activo, latitud, longitud) VALUES
     ('admin@admin.com', 'password', 'ADMIN', true, -34.71133532026949, -58.60603627471634);*/
