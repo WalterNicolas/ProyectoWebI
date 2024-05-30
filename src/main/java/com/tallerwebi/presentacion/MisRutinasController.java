@@ -49,7 +49,7 @@ public class MisRutinasController {
         return actualizacionExitosa(modelo);
     }
 
-    private ModelAndView actualizacionExitosa(ModelMap model) {
+    protected ModelAndView actualizacionExitosa(ModelMap model) {
         model.put("confirmacion","La rutina ha sido actualizada exitosamente");
         return new ModelAndView("redirect:/misRutinas",model);
     }

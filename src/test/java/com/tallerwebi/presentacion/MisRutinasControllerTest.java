@@ -5,6 +5,8 @@ import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -73,6 +76,44 @@ public class MisRutinasControllerTest {
     private void thenRedireccionALogin(ModelAndView mav) {
         // Verificar si la vista devuelta es una redirección a login
         assertThat(mav.getViewName(), equalToIgnoringCase("redirect:/login"));
+    }
+
+    @Test
+    public void queSePuedanActualizarEjerciciosDesdeElResumenDeRutinas() {
+        // Crea un detalle de rutina de prueba
+        DetalleRutina detalleRutina = new DetalleRutina();
+
+        // Simula el comportamiento del servicio de rutina
+        Mockito.when(servicioRutinaMock.actualizarRutina(detalleRutina)).thenReturn(detalleRutina);
+
+        // Llama al método a probar
+        ModelAndView mav = misRutinasController.actualizarRutina(detalleRutina, requestMock);
+
+        // Verifica que se haya llamado al método actualizarRutina del servicio con los argumentos correctos
+        Mockito.verify(servicioRutinaMock).actualizarRutina(detalleRutina);
+
+        // Verifica que se devuelva una redirección a "/misRutinas"
+        assertEquals("redirect:/misRutinas", mav.getViewName());
+
+        // Verifica que el modelo contenga el mensaje de confirmación
+        assertTrue(mav.getModel().containsKey("confirmacion"));
+        assertEquals("La rutina ha sido actualizada exitosamente", mav.getModel().get("confirmacion"));
+    }
+
+    @Test
+    public void queSePuedaVerificarLaActualizacionExitosaDeEjerciciosDeUnaRutina() {
+        // Crea un ModelMap de prueba
+        ModelMap model = new ModelMap();
+
+        // Llama al método a probar
+        ModelAndView mav = misRutinasController.actualizacionExitosa(model);
+
+        // Verifica que se devuelva una redirección a "/misRutinas"
+        assertEquals("redirect:/misRutinas", mav.getViewName());
+
+        // Verifica que el modelo contenga el mensaje de confirmación
+        assertTrue(mav.getModel().containsKey("confirmacion"));
+        assertEquals("La rutina ha sido actualizada exitosamente", mav.getModel().get("confirmacion"));
     }
 }
 
