@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.AptitudFisica;
-import com.tallerwebi.dominio.RutinaSemanal;
-import com.tallerwebi.dominio.RepositorioRutina;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +17,11 @@ public class RepositorioRutinaImp implements RepositorioRutina {
     @Override
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
+    }
+
+    @Override
+    public void guardarRutinaActualizada(DetalleRutina detalleRutina) {
+        sessionFactory.getCurrentSession().save(detalleRutina);
     }
 }
 

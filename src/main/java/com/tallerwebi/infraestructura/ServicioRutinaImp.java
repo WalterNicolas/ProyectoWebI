@@ -162,7 +162,7 @@ public class ServicioRutinaImp implements ServicioRutina {
     @Override
     public DetalleRutina actualizarRutinas(DetalleRutina detalleRutina) {
         //Guarda el resumen de rutina actualizado
-        repositorioRutina.guardar(detalleRutina);
+        repositorioRutina.guardarRutinaActualizada(detalleRutina);
         return detalleRutina;
         }
 
