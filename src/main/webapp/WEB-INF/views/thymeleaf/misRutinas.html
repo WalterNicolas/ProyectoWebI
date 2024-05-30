@@ -22,19 +22,32 @@
                     <p class="user-name">Nombre-Usuario</p>
                 </div>
                 <div class="col-list ">
-                    <p class="to-do-list">Por hacer</p>
+                    <p class="to-do-list">Todos mis ejercicios</p>
                     <ul>
-                        <li>Calentamiento previo</li>
-                        <li>Hidratacion</li>
-                        <li>Ejercicios</li>
-                        <li>Repeticiones</li>
-                        <li>Elongamiento</li>
+                        <li th:each="ejercicio : ${detalleRutina.getListaEjercicios()}">
+                            <span th:text="${ejercicio.descripcion}"></span>
+                            <span th:if="${ejercicio.realizado}"> - Realizado</span>
+                            <span th:unless="${ejercicio.realizado}"> - Por Hacer</span>
+                        </li>
                     </ul>
                 </div>
             </div>
+    <h3>Actualizar Datos</h3>
+    <button class="btn" id="btnActualizar">Actualizar</button>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h3>Seleccionar ejercicios actualizados:</h3>
+            <form id="formActualizar" th:action="@{/actualizarRutina}" method="post">
+                <div th:each="ejercicio : ${ejercicios}">
+                    <input type="checkbox" th:id="${'ejercicio' + ejercicio.nombre}" th:name="${'ejercicio' + ejercicio.nombre}" th:value="${ejercicio.nombre}" th:checked="${!ejercicio.realizado}">
+                    <label th:for="${'ejercicio' + ejercicio.nombre}" th:text="${ejercicio.descripcion}"></label><br>
+                </div>
+                <button type="submit">Actualizar</button>
+            </form>
+        </div>
     </div>
 </div>
-
 <footer th:replace="templates/footer:: footer">
 </footer>
 </body>
