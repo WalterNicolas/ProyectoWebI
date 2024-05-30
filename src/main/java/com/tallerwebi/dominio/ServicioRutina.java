@@ -14,4 +14,5 @@ public interface ServicioRutina {
     Double calcularIMC(Double peso,Double altura);
     RutinaSemanal generarRutinaSemanal(Usuario usuario);
     Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento);
+    DetalleRutina actualizarRutina(DetalleRutina detalleRutina);
 }

@@ -12,6 +12,8 @@ import java.util.*;
 @Transactional
 public class ServicioRutinaImp implements ServicioRutina {
     @Autowired
+    private RepositorioRutina repositorioRutina;
+    @Autowired
     private RepositorioEjercicio repositorioEjercicio;
     @Autowired
     private RepositorioRutinaSemanal repositorioRutinaSemanal;
@@ -156,5 +158,12 @@ public class ServicioRutinaImp implements ServicioRutina {
 
         return ejerciciosDia;
     }
+
+    @Override
+    public DetalleRutina actualizarRutinas(DetalleRutina detalleRutina) {
+        //Guarda el resumen de rutina actualizado
+        repositorioRutina.guardar(detalleRutina);
+        return detalleRutina;
+        }
 
 }
