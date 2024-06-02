@@ -6,18 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
 public class ServicioRutinaImp implements ServicioRutina {
     @Autowired
-    private EjerciciosRepositorio ejerciciosRepositorio;
+    private RepositorioEjercicio repositorioEjercicio;
     @Autowired
-    private RepositorioRutina repositorioRutina;
+    private RepositorioRutinaSemanal repositorioRutinaSemanal;
 
+    public ServicioRutinaImp(RepositorioEjercicio repositorioEjercicio, RepositorioRutinaSemanal repositorioRutinaSemanal){
+        this.repositorioRutinaSemanal= repositorioRutinaSemanal;
+        this.repositorioEjercicio= repositorioEjercicio;
+    }
     @Override
     public List<Ejercicio> cargarEjercicios(List<Ejercicio> listaEjercicios){
         DetalleRutina detalleRutina = new DetalleRutina();
@@ -81,7 +83,7 @@ public class ServicioRutinaImp implements ServicioRutina {
         String tipoEntrenamiento = aptitudFisica.getTipoEntrenamiento();
         RutinaSemanal rutinaSemanal = new RutinaSemanal();
         rutinaSemanal.setUsuario(usuario);
-        List<RutinaDiaria> rutinasDiarias = new ArrayList<>();
+        Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
 
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
@@ -91,31 +93,21 @@ public class ServicioRutinaImp implements ServicioRutina {
             rutinaDiaria.setRutinaSemanal(rutinaSemanal);
             rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
 
-            List<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
+            Set<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
             rutinaDiaria.setEjercicios(ejerciciosDia);
 
             rutinasDiarias.add(rutinaDiaria);
         }
+        rutinaSemanal.setRutinaDiaria(rutinasDiarias);
 
-        rutinaSemanal.setRutinasDiarias(rutinasDiarias);
-        usuario.getRutinaSemanal().add(rutinaSemanal);
+        repositorioRutinaSemanal.guardar(rutinaSemanal);
 
         return rutinaSemanal;
     }
 
-    @Override
-    public List<RutinaDiaria> getListadoDeRutinasDiarias(Long rutinaSemanal) {
-        return null;
-    }
-
-    @Override
-    public RutinaSemanal getRutinaSemanal(Long usuarioId) {
-        return null;
-    }
-
-    private List<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
-        List<Ejercicio> ejerciciosDisponibles = ejerciciosRepositorio.buscarTodosLosEjercicio();
-        List<Ejercicio> ejerciciosDia = new ArrayList<>();
+    public Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
+        List<Ejercicio> ejerciciosDisponibles = repositorioEjercicio.buscarTodosLosEjercicio();
+        Set<Ejercicio> ejerciciosDia = new HashSet<>();
         Random random = new Random();
 
         int minutosDisponibles = horasPorSesion * 60;
@@ -136,7 +128,7 @@ public class ServicioRutinaImp implements ServicioRutina {
         }
 
         // Agregar hasta 2 ejercicios primarios
-        int maxPrimarios = 2;
+            int maxPrimarios = 2;
         while (maxPrimarios > 0 && minutosAsignados < minutosDisponibles && !ejerciciosPrimarios.isEmpty()) {
             int index = random.nextInt(ejerciciosPrimarios.size());
             Ejercicio ejercicio = ejerciciosPrimarios.get(index);
@@ -169,13 +161,4 @@ public class ServicioRutinaImp implements ServicioRutina {
         return ejerciciosDia;
     }
 
-    public void clonarYGuardarRutinaSemanal(RutinaSemanal rutinaSemanal) {
-        // Clonar la rutina semanal
-        RutinaSemanal nuevaRutinaSemanal = new RutinaSemanal();
-        nuevaRutinaSemanal.setUsuario(rutinaSemanal.getUsuario());
-        nuevaRutinaSemanal.setRutinasDiarias(rutinaSemanal.getRutinasDiarias());
-
-        // Guardar la nueva rutina semanal en la base de datos
-        repositorioRutina.guardar(nuevaRutinaSemanal);
-    }
 }

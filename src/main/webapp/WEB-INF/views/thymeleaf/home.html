@@ -156,31 +156,40 @@
   <div class = "container">
 
     <div th:if="${usuario != null}">
-      <h2 class="text-light" style="padding-top:50px">Bienvenido: <span th:text="${usuario.getNombre()}"></span>  <span  th:text="${usuario.getEmail()}"></span></h2>
+      <h2 class="text-light text-center" style="padding-top:50px">Bienvenid@: <span th:text="${usuario.getNombre()}"></span>  <span  th:text="${usuario.getApellido()}"></span></h2>
     </div>
-    </div>
-
-    <div th:if="${usuario.getAptitudFisica() != null}">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Datos de Aptitud Física</h5>
-          <p class="card-text">Altura: <span th:text="${usuario.getAptitudFisica().getAltura()}"></span> cm</p>
-          <p class="card-text">Dias Entrenamiento: <span th:text="${usuario.getAptitudFisica().getDiasEntrenamiento()}"></span> </p>
-          <p class="card-text">Tipo entrenamiento: <span th:text="${usuario.getAptitudFisica().getTipoEntrenamiento()}"></span> </p>
-          <p class="card-text">Peso: <span th:text="${usuario.getAptitudFisica().getPeso()}"></span> Kg</p>
-          <!-- Agrega más campos aquí según tus necesidades -->
-        </div>
-      </div>
     </div>
     <div th:if="${usuario.getAptitudFisica() == null}">
-      <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
+     <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
     </div>
+  <div th:if="${usuario.getAptitudFisica() != null}" class="d-flex justify-content-center">
+    <div class="card text-center" style="padding-left:100px;padding-right:100px;background-color: rgba(255, 255, 255, 0.75);">
+      <div class="card-body">
+        <h5 class="card-title">Datos de Aptitud Física</h5>
+        <p class="card-text">Altura: <span th:text="${usuario.getAptitudFisica().getAltura()}"></span> cm</p>
+        <p class="card-text">Dias Entrenamiento: <span th:text="${usuario.getAptitudFisica().getDiasEntrenamiento()}"></span> </p>
+        <p class="card-text">Tipo entrenamiento: <span th:text="${usuario.getAptitudFisica().getTipoEntrenamiento()}"></span> </p>
+        <p class="card-text">Peso: <span th:text="${usuario.getAptitudFisica().getPeso()}"></span> Kg</p>
+      </div>
+    </div>
+  </div>
+
+
   </div>
   <div th:if="${rutinaSemanal != null}">
     <div class="container">
-      <h1 class="mt-5">Rutina Semanal</h1>
-      <div th:each="rutinaDiaria : ${rutinaSemanal.rutinasDiarias}">
-        <table class="table table-bordered mt-3 bg-opacity-75 text-light">
+      <div class="d-flex justify-content-center align-items-center">
+        <h1 class="mt-2 text-light text-center">Rutina Semanal</h1>
+        <form th:action="@{/generarRutina}" method="get">
+          <input type="hidden" id="rutinaSemanalId" name="rutinaSemanalId" th:value="${usuario.getId()}">
+          <button type="submit" class="btn btn-primary ml-3">Generar Excel</button>
+        </form>
+      </div>
+
+      <div  class="text-light text-center" th:each="rutinaDiaria, stat : ${rutinaSemanal.getRutinaDiaria()}">
+        <h3 th:text="'Dia: ' + (${stat.index} + 1)"></h3>
+
+        <table class="table table-bordered mt-3 text-light" style="background-color: rgba(0, 0, 0, 0.75);">
           <thead>
           <tr>
             <th>Duración</th>
@@ -189,13 +198,14 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="ejercicio : ${rutinaDiaria.ejercicios}">
-            <td th:text="${ejercicio.duracion + ' minutos'}"></td>
-            <td th:text="${ejercicio.nombre}"></td>
-            <td th:text="${ejercicio.descripcion}"></td>
+          <tr th:each="ejercicio : ${rutinaDiaria.getEjercicios()}">
+            <td th:text="${ejercicio.getDuracion() + ' minutos'}"></td>
+            <td th:text="${ejercicio.getNombre()}"></td>
+            <td th:text="${ejercicio.getDescripcion()}"></td>
           </tr>
           </tbody>
         </table>
+
       </div>
     </div>
   </div>
@@ -215,7 +225,7 @@
           </div>
         </a>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Launch demo modal
+          Obtener Pack gratuito
         </button>
       </div>
 
@@ -258,11 +268,14 @@
     </div>
   </div>
   </div>
+
+
+  <!--Modal para contratar rutina Gratuita-->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Cuando Durara tu rutina?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -270,20 +283,21 @@
             <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
           </div>
           <div th:if="${usuario.getAptitudFisica() != null}">
-          <form th:action="@{/asignarMembresia}" method="post">
-            <div class="form-group">
-              <input type="hidden" id="email" name="email" th:value="${usuario.getEmail()}">
-              <input type="hidden" id="tipo" name="tipo" th:value="GRATUITO">
-              <label for="duracion">Cuántos meses de rutina?</label>
-              <select class="form-control" id="duracion" name="duracion">
-                <option value="">Seleccionar</option>
-                <option value="1">Uno</option>
-                <option value="2">Dos</option>
-                <option value="3">Tres</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Suscribirse</button>
-          </form>
+            <form th:action="@{/asignarMembresia}" method="post">
+              <div class="form-group mb-3"> <!-- Agrega la clase "mb-3" para agregar espacio en la parte inferior -->
+                <input type="hidden" id="email" name="email" th:value="${usuario.getEmail()}">
+                <input type="hidden" id="tipo" name="tipo" th:value="GRATUITO">
+                <label for="duracion" class="mb-2">Cuántos meses de rutina?</label> <!-- Agrega la clase "mb-2" para agregar espacio en la parte inferior -->
+                <select class="form-control" id="duracion" name="duracion">
+                  <option value="">Seleccionar</option>
+                  <option value="1">Uno</option>
+                  <option value="2">Dos</option>
+                  <option value="3">Tres</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Suscribirse</button> <!-- Agrega la clase "mt-3" para agregar espacio en la parte superior -->
+            </form>
+
           </div>
       </div>
     </div>

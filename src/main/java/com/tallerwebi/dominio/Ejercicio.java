@@ -1,6 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Ejercicio {
@@ -13,11 +15,8 @@ public class Ejercicio {
     private String descripcion;
     private Boolean realizado;
     private Boolean primario;
-
-    @ManyToOne
-    @JoinColumn(name = "rutina_diaria_id")
-    private RutinaDiaria rutinaDiaria;
-
+    @ManyToMany(mappedBy = "ejercicios")
+    private Set<RutinaDiaria> rutinaDiaria;
 
 
     public Long getId() {
@@ -44,6 +43,18 @@ public class Ejercicio {
         this.duracion = duracion;
     }
 
+    public void setPrimario(Boolean primario) {
+        this.primario = primario;
+    }
+
+    public Set<RutinaDiaria> getRutinaDiaria() {
+        return rutinaDiaria;
+    }
+
+    public void setRutinaDiaria(Set<RutinaDiaria> rutinaDiaria) {
+        this.rutinaDiaria = rutinaDiaria;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -66,10 +77,6 @@ public class Ejercicio {
 
     public Boolean getPrimario() {
         return primario;
-    }
-
-    public void setPrimario(Boolean primario) {
-        this.primario = primario;
     }
 
     public void setDescripcion(String descripcion) {

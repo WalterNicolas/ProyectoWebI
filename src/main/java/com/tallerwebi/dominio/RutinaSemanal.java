@@ -3,6 +3,7 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class RutinaSemanal {
@@ -14,8 +15,9 @@ public class RutinaSemanal {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RutinaDiaria> rutinasDiarias = new ArrayList<>();
+    @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL)
+    private Set<RutinaDiaria> rutinaDiaria;
+
     public Long getId() {
         return id;
     }
@@ -28,15 +30,15 @@ public class RutinaSemanal {
         return usuario;
     }
 
+    public Set<RutinaDiaria> getRutinaDiaria() {
+        return rutinaDiaria;
+    }
+
+    public void setRutinaDiaria(Set<RutinaDiaria> rutinaDiaria) {
+        this.rutinaDiaria = rutinaDiaria;
+    }
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public List<RutinaDiaria> getRutinasDiarias() {
-        return rutinasDiarias;
-    }
-
-    public void setRutinasDiarias(List<RutinaDiaria> rutinasDiarias) {
-        this.rutinasDiarias = rutinasDiarias;
     }
 }

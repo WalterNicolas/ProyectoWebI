@@ -26,6 +26,8 @@ public class Usuario {
     private AptitudFisica aptitudFisica;
     @OneToMany
     private Set<Membresia> membresias = new HashSet<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<RutinaSemanal> rutinaSemanal;
     private Double latitud;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -90,6 +92,14 @@ public class Usuario {
 
     public Double getLatitud() {
         return latitud;
+    }
+
+    public List<RutinaSemanal> getRutinaSemanal() {
+        return rutinaSemanal;
+    }
+
+    public void setRutinaSemanal(List<RutinaSemanal> rutinaSemanal) {
+        this.rutinaSemanal = rutinaSemanal;
     }
 
     public void setLatitud(Double latitud) {

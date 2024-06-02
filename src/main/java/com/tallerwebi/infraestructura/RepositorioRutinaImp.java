@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@Repository("repositorioRutina")
+@Repository
+
 public class RepositorioRutinaImp implements RepositorioRutina {
 
     @Autowired

@@ -23,6 +23,12 @@ public class ControladorMembresia {
     private ServicioMembresia servicioMembresia;
     @Autowired
     private ServicioRutina servicioRutina;
+    @Autowired
+    public ControladorMembresia(ServicioLogin servicioLogin, ServicioMembresia servicioMembresia,ServicioRutina servicioRutina){
+        this.servicioLogin = servicioLogin;
+        this.servicioMembresia = servicioMembresia;
+        this.servicioRutina = servicioRutina;
+    }
     @Transactional
     @RequestMapping(path = "/asignarMembresia", method = RequestMethod.POST)
     public ModelAndView asignarMembresia(@RequestParam String tipo,  @RequestParam String email,@RequestParam int duracion,HttpServletRequest request) throws UsuarioInexistenteException {
@@ -43,14 +49,14 @@ public class ControladorMembresia {
             // Inmediatamentee que se Genera un Membresia se ve reflejada la rutina que fue generada con las aptitudes que puso en AptitudesFisicas
            RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
 
-           System.out.print(rutinaSemanal.getRutinasDiarias());
+           System.out.println(membresia);
            modelo.put("Email", session.getAttribute("Email"));
            modelo.put("membresia",membresia);
            modelo.put("usuario",usuario);
            modelo.put("rutinaSemanal", rutinaSemanal);
             return new ModelAndView("home",modelo);
         } catch (UsuarioInexistenteException ex) {
-            modelo.put("error", ex.getMessage());
+            modelo.put("error", "Usuario no encontrado");
             return new ModelAndView("home", modelo);
         }
     }

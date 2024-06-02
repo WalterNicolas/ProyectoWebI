@@ -15,12 +15,6 @@ public class ServicioMembresiaImp implements ServicioMembresia {
     public ServicioMembresiaImp (RepositorioMembresia repositorioMembresia){
         this.repositorioMembresia = repositorioMembresia;
     }
-
-    @Override
-    public Membresia buscarPorTipo(String tipo) {
-        return null;
-    }
-
     @Override
     public List<Membresia> membresiasPorId(Long usuarioId) {
         return repositorioMembresia.buscarPorUsuario(usuarioId);

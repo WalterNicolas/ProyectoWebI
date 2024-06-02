@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.RepositorioRutinaSemanal;
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
@@ -17,7 +18,9 @@ public class ControladorFormAptitudFisicaTest {
     private ControladorAptitudFisica controladorFormulario;
     private ControladorLogin controladorLogin;
     private ServicioLogin servicioLoginMock;
+
     @Mock
+    private RepositorioRutinaSemanal repositorioRutinaSemanalMock;
     private RepositorioUsuario repositorioUsuarioMock;
 
 
@@ -25,7 +28,7 @@ public class ControladorFormAptitudFisicaTest {
     public void init(){
         servicioLoginMock = mock(ServicioLogin.class);
         repositorioUsuarioMock = mock(RepositorioUsuario.class);
-        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock);
+        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,repositorioRutinaSemanalMock);
     }
     @Test
     public void queLuegoDeRegistrarmeMeLLeveAlFormularioDeAptitudFisica(){
