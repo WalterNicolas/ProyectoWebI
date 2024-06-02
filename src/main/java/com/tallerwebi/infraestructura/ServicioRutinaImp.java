@@ -124,7 +124,7 @@ public class ServicioRutinaImp implements ServicioRutina {
         }
 
         // Agregar hasta 2 ejercicios primarios
-        int maxPrimarios = 2;
+            int maxPrimarios = 2;
         while (maxPrimarios > 0 && minutosAsignados < minutosDisponibles && !ejerciciosPrimarios.isEmpty()) {
             int index = random.nextInt(ejerciciosPrimarios.size());
             Ejercicio ejercicio = ejerciciosPrimarios.get(index);
