@@ -64,7 +64,6 @@
     }
 
     .falseLeftPanel{
-        margin-top: 24px;
         width: 30%;
         background-color: white;
         margin-left: 40px;
@@ -72,15 +71,54 @@
     }
 
     .leftPanel{
-        margin-top: 24px;
-        position: absolute;
-        width: 30%;
-        background-color: white;
-        margin-left: 40px;
+       display: flex;
+       margin-top: 24px;
+       position: absolute;
+       width: 30%;
+       padding-left: 40px;
+       flex-direction: column;
+       align-items: center;
     }
 
     .rightPanel{
         width:  70%;
+    }
+
+    .cardLevel{
+        width: 66%;
+        margin-top: 60px;
+        background-color: bisque;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 10px;
+        background: rgb(189, 176, 252);
+        background: linear-gradient(119deg, rgba(189, 176, 252, 1) 0%, rgba(249, 154, 124, 1) 35%, rgba(108, 201, 237, 1) 100%);
+    }
+
+     .cardLevel h4{
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .cardHeader{
+        width: 100%;
+        display: flex;
+        padding-right: 10px;
+        justify-content: space-between;
+    }
+
+    .btnProgreso{
+        margin-top: 10px;
+        width: 135px;
+        height: 40px;
+    }
+
+
+    .btnModal{
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 0 !important;
     }
 
 </style>
@@ -95,7 +133,13 @@
     </div>
 
     <div class="leftPanel">
-
+        <img th:src="@{/img/avatar.png}"/>
+        <h3 th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"></h3>
+        <div class="cardLevel">
+            <h4 th:text="'Nivel de acceso: ' + ${membresia.tipo}"></h4>
+            <p>1234 3123 4231 3</p>
+            <span th:text="'Pase disponible hasta el: ' + ${membresia.fechaFin}"></span>
+        </div>
     </div>
     <div class="rightPanel">
         <div class="chartContainer">
@@ -115,15 +159,51 @@
         </div>
         <div class="chartContainerBottom">
             <div class="exerciseContainer chartJs">
-                <h1 class="charJsTitle">Progreso</h1>
+                <div class="cardHeader">
+                    <h1 class="charJsTitle">Progreso</h1>
+                    <button type="button" class="btn btn-primary btnProgreso" data-toggle="modal" data-target="#addPesoModal">
+                        Agregar Peso
+                    </button>
+                </div>
+
                 <div class="charts">
                     <canvas id="ProgresChart" width="700" height="400"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="addPesoModal" tabindex="-1" role="dialog" aria-labelledby="addPesoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPesoModalLabel">Agregar Peso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAgregarPeso" th:action="@{/cargar-peso}" method="POST" th:object="${datosPeso}">
+                        <div class="form-group">
+                            <label for="inputPeso">Peso</label>
+                            <input th:field="*{peso}" type="number" class="form-control" id="inputPeso" name="peso" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFecha">Fecha</label>
+                            <input th:field="*{fecha}" type="date" class="form-control" id="inputFecha" name="fecha" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btnModal">Agregar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
-<script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
     let backgroundColor = ['#9181E2','#F99A7C','#6CC9ED','#F26A4B','#F5CEFB','#BBE4DE'];
 
     let options = {
@@ -194,7 +274,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         var ctx = document.getElementById('ProgresChart').getContext('2d');
 
-        var data = /*[[${data}]]*/ '[12, 19, 3, 5, 2]';
+         var registroPeso = /*[[${registroPeso}]]*/;
 
         var myChart = new Chart(ctx, {
             type: 'line',
@@ -202,7 +282,7 @@
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto','Septiembre', 'Octubre', 'Noviembre','Diciembre'],
                 datasets: [{
                     label: 'Dias de la semana',
-                    data: JSON.parse(data),
+                    data: registroPeso,
                     backgroundColor:['#7357E8','#F99A7C','#6CC9ED','#F26A4B','#F5CEFB','#BBE4DE'] ,
                     borderColor: ['#7357E8','#F99A7C','#6CC9ED','#F26A4B','#F5CEFB','#BBE4DE'],
                     borderWidth: 1

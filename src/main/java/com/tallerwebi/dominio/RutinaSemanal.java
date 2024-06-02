@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,11 +11,11 @@ public class RutinaSemanal {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rutinaSemanal", fetch = FetchType.EAGER)
-    private List<RutinaDiaria> rutinasDiarias;
-
+    @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RutinaDiaria> rutinasDiarias = new ArrayList<>();
     public Long getId() {
         return id;
     }

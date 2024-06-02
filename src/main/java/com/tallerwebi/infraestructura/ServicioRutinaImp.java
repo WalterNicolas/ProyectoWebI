@@ -83,9 +83,13 @@ public class ServicioRutinaImp implements ServicioRutina {
         rutinaSemanal.setUsuario(usuario);
         List<RutinaDiaria> rutinasDiarias = new ArrayList<>();
 
+
+        String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
+
         for (int i = 0; i < diasEntrenamiento; i++) {
             RutinaDiaria rutinaDiaria = new RutinaDiaria();
             rutinaDiaria.setRutinaSemanal(rutinaSemanal);
+            rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
 
             List<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
             rutinaDiaria.setEjercicios(ejerciciosDia);
@@ -94,8 +98,19 @@ public class ServicioRutinaImp implements ServicioRutina {
         }
 
         rutinaSemanal.setRutinasDiarias(rutinasDiarias);
-        System.out.println(rutinaSemanal);
+        usuario.getRutinaSemanal().add(rutinaSemanal);
+
         return rutinaSemanal;
+    }
+
+    @Override
+    public List<RutinaDiaria> getListadoDeRutinasDiarias(Long rutinaSemanal) {
+        return null;
+    }
+
+    @Override
+    public RutinaSemanal getRutinaSemanal(Long usuarioId) {
+        return null;
     }
 
     private List<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {

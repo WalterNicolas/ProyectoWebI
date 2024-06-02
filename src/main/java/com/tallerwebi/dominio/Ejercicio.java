@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Ejercicio {
@@ -16,6 +13,10 @@ public class Ejercicio {
     private String descripcion;
     private Boolean realizado;
     private Boolean primario;
+
+    @ManyToOne
+    @JoinColumn(name = "rutina_diaria_id")
+    private RutinaDiaria rutinaDiaria;
 
 
 

@@ -12,4 +12,6 @@ public interface ServicioRutina {
     Integer contarEjerciciosporHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException;
     Double calcularIMC(Double peso,Double altura);
     RutinaSemanal generarRutinaSemanal(Usuario usuario);
+    List<RutinaDiaria> getListadoDeRutinasDiarias(Long rutinaSemanal);
+    RutinaSemanal getRutinaSemanal(Long usuarioId);
 }
