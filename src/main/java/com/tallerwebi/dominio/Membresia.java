@@ -12,14 +12,16 @@ public class Membresia {
     private String tipo;
     private Integer duracion;
     private double valor;
+
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
+
     @Column(name = "fecha_fin")
     private LocalDate fechaFin;
-    // Constructor vacío
     public Membresia() {
     }
 
@@ -45,14 +47,6 @@ public class Membresia {
 
     public void setDuracion(Integer duracion) {
         this.duracion = duracion;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public LocalDate getFechaInicio() {

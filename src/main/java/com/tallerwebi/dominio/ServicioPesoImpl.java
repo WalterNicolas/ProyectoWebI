@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.presentacion.DatosDiasYEjercicios;
 import com.tallerwebi.presentacion.DatosPeso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

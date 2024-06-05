@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
+import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,7 +80,7 @@ public class ControladorLogin {
     }
     @Transactional
     @RequestMapping(path = "/home", method = RequestMethod.GET)
-    public ModelAndView irAHome(HttpServletRequest request) {
+    public ModelAndView irAHome(HttpServletRequest request) throws RutinaSemanalVacia {
         HttpSession session = request.getSession(false);
 
         ModelMap model = new ModelMap();

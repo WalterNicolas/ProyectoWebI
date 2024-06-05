@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ControladorDatos {
@@ -21,16 +24,19 @@ public class ControladorDatos {
     private final ServicioPeso servicioPeso;
     private final ServicioMembresia servicioMembresia;
 
+    private final ServicioRutina servicioRutina;
+
     @Autowired
-    public ControladorDatos(ServicioUsuario servicioUsuario, ServicioPeso servicioPeso, ServicioMembresia servicioMembresia) {
+    public ControladorDatos(ServicioUsuario servicioUsuario, ServicioPeso servicioPeso, ServicioMembresia servicioMembresia,ServicioRutina servicioRutina) {
         this.servicioUsuario = servicioUsuario;
         this.servicioPeso = servicioPeso;
         this.servicioMembresia = servicioMembresia;
+        this.servicioRutina = servicioRutina;
     }
 
     @Transactional
     @RequestMapping("/datos")
-    public ModelAndView mostrarDatos(HttpServletRequest request) {
+    public ModelAndView mostrarDatos(HttpServletRequest request) throws RutinaSemanalVacia {
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
 
@@ -39,10 +45,23 @@ public class ControladorDatos {
             modelo.put("id", session.getAttribute("id"));
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
             ArrayList pesosRegistro = servicioPeso.obtenerPesosPorMes(usuario.getId());
-            Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId()).get(0);
+            Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
+
+            if ("Nivel 0".equals(membresia.getTipo())) {
+                modelo.put("error", "No tienes acceso a esta sección.");
+                return new ModelAndView("datos", modelo);
+            }
+
+            DatosDiasYEjercicios datos = servicioRutina.procesarRutinas(usuario.getId());
+
+
             modelo.put("registroPeso", pesosRegistro);
             modelo.put("usuario", usuario);
             modelo.put("membresia", membresia);
+            modelo.put("dias", datos.getDias());
+            modelo.put("ejercicios", datos.getEjercicios());
+            modelo.put("labelDias", datos.getLabelDias());
+            modelo.put("labelEjercicios", datos.getLabelEjercicios());
             modelo.put("datosPeso", new DatosPeso());
             return new ModelAndView("datos", modelo);
         }

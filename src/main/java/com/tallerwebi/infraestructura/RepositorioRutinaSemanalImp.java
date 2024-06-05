@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.RutinaDiaria;
 import com.tallerwebi.dominio.RutinaSemanal;
 import com.tallerwebi.dominio.RepositorioRutinaSemanal;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +17,6 @@ import java.util.List;
 @Repository
 public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     private SessionFactory sessionFactory;
-
     @Autowired
     public RepositorioRutinaSemanalImp(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
@@ -24,9 +24,8 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     @Override
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
-
     }
-    public RutinaSemanal buscarPorIdDeUsuario(Long idUsuario) {
+    public RutinaSemanal buscarPorIdDeUsuario(Long idUsuario) throws RutinaSemanalVacia {
         Session session = sessionFactory.openSession();
         Query<RutinaSemanal> query = session.createQuery("SELECT rs FROM Usuario u " +
                 "JOIN u.rutinaSemanal rs " +
@@ -34,7 +33,22 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
                 "JOIN FETCH rd.ejercicios " +
                 "WHERE u.id = :idUsuario", RutinaSemanal.class);
         query.setParameter("idUsuario", idUsuario);
-        return query.uniqueResult();
+        var results = query.uniqueResult();
+        if  (results == null) throw new RutinaSemanalVacia("No se encontró una rutina");
+        return results ;
+    }
+
+    @Override
+    public List<RutinaSemanal> obtenerTodasLasRutinasById(Long idUsuario) throws RutinaSemanalVacia {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<RutinaSemanal> criteriaQuery = criteriaBuilder.createQuery(RutinaSemanal.class);
+        Root<RutinaSemanal> root = criteriaQuery.from(RutinaSemanal.class);
+        Join<RutinaSemanal, Usuario> usuarioJoin = root.join("usuario");
+        criteriaQuery.select(root).where(criteriaBuilder.equal(usuarioJoin.get("id"), idUsuario));
+        var results = session.createQuery(criteriaQuery).getResultList();
+        if  (results == null || results.size() == 0) throw new RutinaSemanalVacia("No se encontró una rutina");
+        return results ;
     }
 
 }

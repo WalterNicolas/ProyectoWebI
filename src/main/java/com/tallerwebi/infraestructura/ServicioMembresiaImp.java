@@ -16,7 +16,7 @@ public class ServicioMembresiaImp implements ServicioMembresia {
         this.repositorioMembresia = repositorioMembresia;
     }
     @Override
-    public List<Membresia> membresiasPorId(Long usuarioId) {
+    public Membresia membresiasPorId(Long usuarioId) {
         return repositorioMembresia.buscarPorUsuario(usuarioId);
     }
 

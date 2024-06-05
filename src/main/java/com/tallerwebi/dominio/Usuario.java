@@ -22,17 +22,15 @@ public class Usuario {
     private String apellido;
     private Boolean activo = false;
     private Double longitud;
+    private Double latitud;
     @OneToOne
     private AptitudFisica aptitudFisica;
-    @OneToMany
-    private Set<Membresia> membresias = new HashSet<>();
-    private Double latitud;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RutinaSemanal> rutinaSemanal = new ArrayList<>();
-    @Column(name = "access_level")
+    @OneToMany(mappedBy = "usuario")
+    private List<RutinaSemanal> rutinaSemanal;
+    @Column(name = "accessLevel")
     private Integer accessLevel;
-
+    @ManyToOne
+    private Membresia membresias;
     public AptitudFisica getAptitudFisica() {
         return aptitudFisica;
     }
@@ -41,11 +39,11 @@ public class Usuario {
         this.aptitudFisica = aptitudFisica;
     }
 
-    public Set<Membresia> getMembresias() {
+    public Membresia getMembresias() {
         return membresias;
     }
 
-    public void setMembresias(Set<Membresia> membresias) {
+    public void setMembresias(Membresia membresias) {
         this.membresias = membresias;
     }
 
