@@ -9,7 +9,7 @@ public interface RepositorioRutina {
     void guardar(RutinaSemanal rutinaSemanal);
 
     @Query("SELECT r FROM RutinaSemanal r WHERE r.usuario.id = :usuarioId")
-    List<RutinaSemanal> findByUsuarioId(Long usuarioId);
+    RutinaSemanal findByUsuarioId(Long usuarioId);
 
     void guardarRutinaActualizada(DetalleRutina detalleRutina);
 }

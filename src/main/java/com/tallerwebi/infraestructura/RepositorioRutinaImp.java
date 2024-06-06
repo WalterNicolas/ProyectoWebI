@@ -30,7 +30,7 @@ public class RepositorioRutinaImp implements RepositorioRutina {
     }
 
     @Override
-    public List<RutinaSemanal> findByUsuarioId(Long id) {
+    public RutinaSemanal findByUsuarioId(Long id) {
         return null;
       }
     
