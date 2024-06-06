@@ -19,6 +19,8 @@ public class ServicioRutinasTest {
     ServicioRutina servicioRutina;
     RepositorioEjercicio repositorioEjercicioMock;
     RepositorioRutinaSemanal repositorioRutinaSemanalMock;
+    RepositorioPeso repositorioPesoMock;
+    ServicioPeso servicioPeso;
     RutinaSemanal rutinalSemanal;
     /*
     1. que se pueda crear una lista de ejercicios
@@ -35,6 +37,7 @@ public class ServicioRutinasTest {
         repositorioRutinaSemanalMock = mock(RepositorioRutinaSemanal.class);
         servicioRutina = new ServicioRutinaImp(repositorioEjercicioMock,repositorioRutinaSemanalMock);
         rutinalSemanal = mock(RutinaSemanal.class);
+        servicioPeso = new ServicioPesoImpl();
     }
 
     @Test
@@ -70,25 +73,27 @@ public class ServicioRutinasTest {
 
     @Test
     public void queSePuedanContarLosEjericiosRealizados() throws NoHayEjerciciosCargadosException {
-//        List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
-//        Ejercicio unEjercicio = new Ejercicio("flexiones de brazos", 45);
-//        whenRealizarUnEjercicioDeLaLista(listaEjercicios, unEjercicio);
-//        DetalleRutina detalleRutina = new DetalleRutina();
-//        detalleRutina.setListaEjercicios(listaEjercicios);
-//        thenRetornaCantidadDeEjerciciosRealizados(detalleRutina);
+        List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
+        Ejercicio unEjercicio = new Ejercicio();
+        unEjercicio.setDescripcion("3 reps 4 series");
+        whenRealizarUnEjercicioDeLaLista(listaEjercicios, unEjercicio);
+        DetalleRutina detalleRutina = new DetalleRutina();
+        detalleRutina.setListaEjercicios(listaEjercicios);
+        thenRetornaCantidadDeEjerciciosRealizados(detalleRutina);
     }
 
     @Test
     public void queSePuedanContarLosEjericiosPorHacer() throws NoHayEjerciciosCargadosException {
-//        List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
-//        Ejercicio algunEjercicio = new Ejercicio("sentadillas", 20);
-//        whenRealizarUnEjercicioDeLaLista(listaEjercicios, algunEjercicio);
-//        DetalleRutina detalleRutina = new DetalleRutina();
-//        detalleRutina.setListaEjercicios(listaEjercicios);
-//        thenRetornaCantidadDeEjerciciosPorHacer(detalleRutina);
+        List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
+        Ejercicio algunEjercicio = new Ejercicio();
+        algunEjercicio.setDescripcion("3 reps 4 series");
+        whenRealizarUnEjercicioDeLaLista(listaEjercicios, algunEjercicio);
+        DetalleRutina detalleRutina = new DetalleRutina();
+        detalleRutina.setListaEjercicios(listaEjercicios);
+        thenRetornaCantidadDeEjerciciosPorHacer(detalleRutina);
     }
 
-    private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(@NotNull List<Ejercicio> listaEjercicios, Ejercicio unEjercicio) {
+    private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(List<Ejercicio> listaEjercicios, Ejercicio unEjercicio) {
 //        Ejercicio actual = new Ejercicio();
         for (Ejercicio actual : listaEjercicios) {
             if (actual.getDescripcion().equals(unEjercicio.getDescripcion())) {
@@ -146,10 +151,15 @@ public class ServicioRutinasTest {
         otroEjercicio.setDescripcion("3 reps 4 series");
         Ejercicio algunEjercicio = new Ejercicio();
         algunEjercicio.setDescripcion("3 reps 4 series");
+        unEjercicio.setRealizado(Boolean.FALSE);
+        otroEjercicio.setRealizado(Boolean.FALSE);
+        algunEjercicio.setRealizado(Boolean.FALSE);
         DetalleRutina detalleRutina = new DetalleRutina();
-        detalleRutina.addEjercicio(unEjercicio);
-        detalleRutina.addEjercicio(otroEjercicio);
-        detalleRutina.addEjercicio(algunEjercicio);
+        List <Ejercicio> listaEjercicios = new ArrayList<>();
+        listaEjercicios.add(unEjercicio);
+        listaEjercicios.add(otroEjercicio);
+        listaEjercicios.add(algunEjercicio);
+        detalleRutina.setListaEjercicios(listaEjercicios);
         return servicioRutina.cargarEjercicios(detalleRutina.getListaEjercicios());
     }
 

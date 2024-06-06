@@ -7,17 +7,20 @@ import java.util.List;
 
 @Entity
 public class DetalleRutina {
-    private List<Ejercicio> listaEjercicios;
+    private List<Ejercicio> listaEjercicios = new ArrayList<>();
     @OneToMany
-    private List<Pesaje> listaPesajes;
+    private List<Pesaje> listaPesajes = new ArrayList<>();
     Double pesoInicial;
     Double pesoActual;
 
     // Constructores
 
+//    public DetalleRutina() {
+//        this.listaEjercicios = new ArrayList<Ejercicio>();
+//        this.listaPesajes = new ArrayList<Pesaje>();
+//    }
+
     public DetalleRutina() {
-        this.listaEjercicios = new ArrayList<Ejercicio>();
-        this.listaPesajes = new ArrayList<Pesaje>();
     }
 
     // Getters y Setters
