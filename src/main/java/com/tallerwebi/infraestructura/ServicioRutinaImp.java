@@ -195,8 +195,8 @@ public class ServicioRutinaImp implements ServicioRutina {
     public DatosDiasYEjercicios procesarRutinas(Long idUsuario) throws RutinaSemanalVacia {
         DatosDiasYEjercicios datos =  obtenerDatosDiasYEjercicios(idUsuario);
 
-        List<Integer> dias = new ArrayList<>();
-        List<Integer> ejercicios = new ArrayList<>();
+        ArrayList<Integer> dias = new ArrayList<>();
+        ArrayList<Integer> ejercicios = new ArrayList<>();
 
         List<String> labelDias = new ArrayList<>();
         List<String> labelEjercicios = new ArrayList<>();

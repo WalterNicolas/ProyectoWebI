@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,8 @@ public class DatosDiasYEjercicios {
     private Map<String, Integer> dias;
     private Map<String, Integer> ejercicios;
 
-    private List<Integer> diasList;
-    private List<Integer> ejerciciosList;
+    private ArrayList<Integer> diasList;
+    private ArrayList<Integer> ejerciciosList;
     private List<String> labelDias;
     private List<String> labelEjercicios;
 
@@ -60,15 +61,15 @@ public class DatosDiasYEjercicios {
         return diasList;
     }
 
-    public void setDiasList(List<Integer> diasList) {
+    public void setDiasList(ArrayList<Integer> diasList) {
         this.diasList = diasList;
     }
 
-    public List<Integer> getEjerciciosList() {
+    public ArrayList<Integer> getEjerciciosList() {
         return ejerciciosList;
     }
 
-    public void setEjerciciosList(List<Integer> ejerciciosList) {
+    public void setEjerciciosList(ArrayList<Integer> ejerciciosList) {
         this.ejerciciosList = ejerciciosList;
     }
 

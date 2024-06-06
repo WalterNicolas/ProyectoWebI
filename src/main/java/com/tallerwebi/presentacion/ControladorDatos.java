@@ -48,7 +48,7 @@ public class ControladorDatos {
             ArrayList pesosRegistro = servicioPeso.obtenerPesosPorMes(usuario.getId());
             Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
 
-            if ("Nivel 0".equals(membresia.getTipo())) {
+            if ("Nivel 1".equals(membresia.getTipo())) {
                 modelo.put("error", "No tienes acceso a esta sección.");
                 return new ModelAndView("datos", modelo);
             }
@@ -59,8 +59,8 @@ public class ControladorDatos {
             modelo.put("registroPeso", pesosRegistro);
             modelo.put("usuario", usuario);
             modelo.put("membresia", membresia);
-            modelo.put("dias", datos.getDias());
-            modelo.put("ejercicios", datos.getEjercicios());
+            modelo.put("dias", datos.getDiasList());
+            modelo.put("ejercicios", datos.getEjerciciosList());
             modelo.put("labelDias", datos.getLabelDias());
             modelo.put("labelEjercicios", datos.getLabelEjercicios());
             modelo.put("datosPeso", new DatosPeso());
