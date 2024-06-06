@@ -1,13 +1,15 @@
 package com.tallerwebi.dominio;
 
-import com.sun.istack.NotNull;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
 public class Usuario {
 
     @Id
@@ -24,10 +26,11 @@ public class Usuario {
     private AptitudFisica aptitudFisica;
     @OneToMany
     private Set<Membresia> membresias = new HashSet<>();
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<RutinaSemanal> rutinaSemanal;
     private Double latitud;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RutinaSemanal> rutinaSemanal = new ArrayList<>();
+    @Column(name = "access_level")
     private Integer accessLevel;
 
     public AptitudFisica getAptitudFisica() {
@@ -89,10 +92,6 @@ public class Usuario {
         return latitud;
     }
 
-    public List<RutinaSemanal> getRutinaSemanal() {
-        return rutinaSemanal;
-    }
-
     public void setRutinaSemanal(List<RutinaSemanal> rutinaSemanal) {
         this.rutinaSemanal = rutinaSemanal;
     }
@@ -131,5 +130,9 @@ public class Usuario {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public List<RutinaSemanal> getRutinaSemanal() {
+        return this.rutinaSemanal;
     }
 }

@@ -12,6 +12,7 @@ public class RutinaDiaria {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "rutina_semanal_id")
     private RutinaSemanal rutinaSemanal;
 
 
@@ -23,6 +24,7 @@ public class RutinaDiaria {
     )
     private Set<Ejercicio> ejercicios;
 
+    private String diaSemana;
 
     public Long getId() {
         return id;
@@ -48,6 +50,13 @@ public class RutinaDiaria {
         this.ejercicios = ejercicios;
     }
 
+    public String getDiaSemana() {
+        return diaSemana;
+    }
+
+    public void setDiaSemana(String diaSemana) {
+        this.diaSemana = diaSemana;
+    }
 
 }
 

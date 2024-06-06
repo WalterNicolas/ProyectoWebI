@@ -15,7 +15,9 @@ public class Membresia {
     @ManyToOne
     private Usuario usuario;
 
+    @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
+    @Column(name = "fecha_fin")
     private LocalDate fechaFin;
     // Constructor vacío
     public Membresia() {
