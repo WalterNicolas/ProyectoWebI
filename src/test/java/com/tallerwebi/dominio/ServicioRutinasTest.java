@@ -159,7 +159,6 @@ public class ServicioRutinasTest {
 
     @Test
     public void queSePuedaGenerarRutinaSemanal() {
-        // Arrange
         Usuario usuario = new Usuario();
         AptitudFisica aptitudFisica = new AptitudFisica();
         aptitudFisica.setDiasEntrenamiento(3);
@@ -172,10 +171,9 @@ public class ServicioRutinasTest {
         when(repositorioEjercicioMock.buscarTodosLosEjercicio()).thenReturn(listEjercicios);
         doNothing().when(repositorioRutinaSemanalMock).guardar(any(RutinaSemanal.class));
 
-        // Act
         RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
 
-        // Assert
+
         assertNotNull(rutinaSemanal);
         assertEquals(usuario, rutinaSemanal.getUsuario());
         assertEquals(3, rutinaSemanal.getRutinaDiaria().size());

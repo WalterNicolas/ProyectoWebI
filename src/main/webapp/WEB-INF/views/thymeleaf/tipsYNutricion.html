@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head th:replace="templates/head :: head">
+    <style>
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="templates/header :: header">
+</div>
+<h2 class="text-light text-center pt-4" th:text="'Tips de Nutricion y mas para : '+${tipoEntrenamiento} ">Titulo Seccion</h2>
+<div class="container">
+    <div class="row">
+        <div th:each="articulo : ${articulos}" class="col-md-4">
+            <div class="card">
+                <img class="profile-img" th:src="@{/img/ZonaRyp.jpg}" alt="">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${articulo.getTitulo()}">Título del Artículo</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${articulo.getSubtitulo()}">Subtítulo del Artículo</h6>
+                    <button type="button" class="btn btn-primary" th:attr="data-id=${articulo.getId()}" data-toggle="modal" data-target="#exampleModal">Ver más</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tips para tu rutina</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="templates/footer:: footer">
+</footer>
+</body>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.btn-primary').click(function () {
+            var id = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "/tipsYNutricion/" + id,
+                dataType: "json",
+                success: function (articulo) {
+                    console.log(articulo);
+                    mostrarDetalleArticulo(articulo);
+                },
+                error: function () {
+                    alert("Error al cargar los detalles del artículo.");
+                }
+            });
+        });
+        function mostrarDetalleArticulo(articulo) {
+            console.log("Título del artículo: " + articulo.titulo);
+            console.log("Contenido del artículo: " + articulo.contenido);
+            $('#modalContent').html('<h5>' + articulo.titulo + '</h5><p>' + articulo.contenido + '</p>');
+            $('#exampleModal').modal('show');
+        }
+    });
+</script>
+</html>
