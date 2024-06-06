@@ -157,8 +157,6 @@ public class ServicioRutinaImp implements ServicioRutina {
             ejerciciosNoPrimarios.remove(index);
         }
 
-        System.out.println("Ejercicios asignados para el día: " + ejerciciosDia.size());
-        System.out.println("Minutos asignados: " + minutosAsignados);
 
         return ejerciciosDia;
     }
