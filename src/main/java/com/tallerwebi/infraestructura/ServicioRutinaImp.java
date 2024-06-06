@@ -12,6 +12,8 @@ import java.util.*;
 @Transactional
 public class ServicioRutinaImp implements ServicioRutina {
     @Autowired
+    private RepositorioRutina repositorioRutina;
+    @Autowired
     private RepositorioEjercicio repositorioEjercicio;
     @Autowired
     private RepositorioRutinaSemanal repositorioRutinaSemanal;
@@ -155,10 +157,15 @@ public class ServicioRutinaImp implements ServicioRutina {
             ejerciciosNoPrimarios.remove(index);
         }
 
-        System.out.println("Ejercicios asignados para el día: " + ejerciciosDia.size());
-        System.out.println("Minutos asignados: " + minutosAsignados);
 
         return ejerciciosDia;
     }
+
+    @Override
+    public DetalleRutina actualizarRutina(DetalleRutina detalleRutina) {
+        //Guarda el resumen de rutina actualizado
+        repositorioRutina.guardarRutinaActualizada(detalleRutina);
+        return detalleRutina;
+        }
 
 }

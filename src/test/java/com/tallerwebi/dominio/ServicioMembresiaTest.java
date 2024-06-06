@@ -28,10 +28,10 @@ public class ServicioMembresiaTest {
         Long usuarioId = 1L;
         Membresia membresia1 = new Membresia();
         Membresia membresia2 = new Membresia();
-        List<Membresia> expectedMembresias = Arrays.asList(membresia1, membresia2);
-        when(repositorioMembresiaMock.buscarPorUsuario(usuarioId)).thenReturn(expectedMembresias);
+        List<Membresia> membresiasMock = Arrays.asList(membresia1, membresia2);
+        when(repositorioMembresiaMock.buscarPorUsuario(usuarioId)).thenReturn(membresiasMock);
         List<Membresia> actualMembresias = servicioMembresia.membresiasPorId(usuarioId);
-        assertEquals(expectedMembresias, actualMembresias);
+        assertEquals(membresiasMock, actualMembresias);
         verify(repositorioMembresiaMock, times(1)).buscarPorUsuario(usuarioId);
     }
 

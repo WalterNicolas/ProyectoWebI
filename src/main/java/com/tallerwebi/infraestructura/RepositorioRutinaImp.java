@@ -2,6 +2,7 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.RutinaSemanal;
 import com.tallerwebi.dominio.RepositorioRutina;
+import com.tallerwebi.dominio.*;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -31,6 +32,10 @@ public class RepositorioRutinaImp implements RepositorioRutina {
     @Override
     public List<RutinaSemanal> findByUsuarioId(Long id) {
         return null;
+      }
+    
+    @Override
+    public void guardarRutinaActualizada(DetalleRutina detalleRutina) {
+        sessionFactory.getCurrentSession().save(detalleRutina);
     }
 }
-

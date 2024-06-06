@@ -11,5 +11,6 @@ public interface RepositorioRutina {
     @Query("SELECT r FROM RutinaSemanal r WHERE r.usuario.id = :usuarioId")
     List<RutinaSemanal> findByUsuarioId(Long usuarioId);
 
+    void guardarRutinaActualizada(DetalleRutina detalleRutina);
 }
 

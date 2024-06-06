@@ -4,9 +4,13 @@ import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -35,12 +39,19 @@ public class MisRutinasController {
 
         }
     }
-}
 
-//    @RequestMapping("/routines-update", method = RequestMethod.POST)
-//    public ModelAndView actualizarMisRutinas() {
-//        ModelMap modelo = new ModelMap();
-//        modelo.put("detalleRutina", new DetalleRutina());
-//        return new ModelAndView("redirect:/misRutinas", modelo);
-//    }
+    @Transactional
+    @RequestMapping(path = "/actualizarRutina", method = RequestMethod.POST)
+    public ModelAndView actualizarRutina(@RequestBody DetalleRutina detalleRutina, HttpServletRequest request) {
+        ModelMap modelo = new ModelMap();
+        // Actualiza las rutinas en la base de datos
+        servicioRutina.actualizarRutina(detalleRutina);
+        return actualizacionExitosa(modelo);
+    }
+
+    protected ModelAndView actualizacionExitosa(ModelMap model) {
+        model.put("confirmacion","La rutina ha sido actualizada exitosamente");
+        return new ModelAndView("redirect:/misRutinas",model);
+    }
+}
 
