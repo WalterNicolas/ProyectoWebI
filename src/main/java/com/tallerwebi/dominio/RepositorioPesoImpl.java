@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.ErrorPesoRegistroIsEmpty;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,13 @@ public class RepositorioPesoImpl implements RepositorioPeso {
     }
 
     @Override
-    public List<PesoRegistro> findByUsuarioId(Long usuarioId) {
+    public List<PesoRegistro> findByUsuarioId(Long usuarioId) throws ErrorPesoRegistroIsEmpty {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM PesoRegistro WHERE usuario.id = :usuarioId";
-        return session.createQuery(hql, PesoRegistro.class)
+        var result = session.createQuery(hql, PesoRegistro.class)
                 .setParameter("usuarioId", usuarioId)
                 .list();
+        if (result.size() == 0) throw new ErrorPesoRegistroIsEmpty("No hay registros disponibles");
+        return result;
     }
 }

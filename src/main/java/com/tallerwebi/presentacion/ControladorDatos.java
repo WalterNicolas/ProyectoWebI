@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.ErrorPesoRegistroIsEmpty;
 import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class ControladorDatos {
 
     @Transactional
     @RequestMapping("/datos")
-    public ModelAndView mostrarDatos(HttpServletRequest request) throws RutinaSemanalVacia {
+    public ModelAndView mostrarDatos(HttpServletRequest request) throws RutinaSemanalVacia, ErrorPesoRegistroIsEmpty {
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
 
@@ -71,7 +72,7 @@ public class ControladorDatos {
 
     @Transactional
     @RequestMapping(value = "/cargar-peso", method = RequestMethod.POST)
-    public ModelAndView postPeso(@ModelAttribute("datosPeso") DatosPeso datosPeso, HttpServletRequest request) {
+    public ModelAndView postPeso(@ModelAttribute("datosPeso") DatosPeso datosPeso, HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Email") != null) {

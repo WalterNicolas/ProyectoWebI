@@ -1,6 +1,6 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.presentacion.DatosDiasYEjercicios;
+import com.tallerwebi.dominio.excepcion.ErrorPesoRegistroIsEmpty;
 import com.tallerwebi.presentacion.DatosPeso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,22 @@ import java.util.Map;
 @Service
 public class ServicioPesoImpl implements ServicioPeso{
 
-    @Autowired
+
     public RepositorioPeso repositorioPeso;
 
+    @Autowired
+    public ServicioPesoImpl(RepositorioPeso repositorioPeso){
+        this.repositorioPeso = repositorioPeso;
+    }
+
     @Override
-    public ArrayList<Double> obtenerPesosPorMes(Long usuarioId) {
-        List<PesoRegistro> pesoRegistro = this.repositorioPeso.findByUsuarioId(usuarioId);
+    public ArrayList<Double> obtenerPesosPorMes(Long usuarioId) throws ErrorPesoRegistroIsEmpty {
+        List<PesoRegistro> pesoRegistro;
+        try {
+            pesoRegistro = this.repositorioPeso.findByUsuarioId(usuarioId);
+        } catch (ErrorPesoRegistroIsEmpty e) {
+            throw new ErrorPesoRegistroIsEmpty(e.getMessage());
+        }
 
         Map<Integer, Double> pesosPorMes = new HashMap<>();
 
@@ -54,10 +64,9 @@ public class ServicioPesoImpl implements ServicioPeso{
         return pesosOrdenadosPorMes;
     }
 
-
     @Override
-    public void postPeso(Usuario usuario, DatosPeso datos) {
+    public void postPeso(Usuario usuario, DatosPeso datos) throws ErrorPesoRegistroIsEmpty {
         PesoRegistro newRegistro = new PesoRegistro(usuario,datos.getFecha(),datos.getPeso());
-        this.repositorioPeso.save(newRegistro);
+            this.repositorioPeso.save(newRegistro);
     }
 }
