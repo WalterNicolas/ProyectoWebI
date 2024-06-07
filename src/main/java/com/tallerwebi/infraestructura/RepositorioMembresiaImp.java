@@ -34,7 +34,7 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
     }
 
     @Override
-    public List<Membresia> buscarPorUsuario(Long usuarioId) {
+    public Membresia buscarPorUsuario(Long usuarioId) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Membresia> criteriaQuery = criteriaBuilder.createQuery(Membresia.class);
@@ -42,7 +42,8 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
         Root<Membresia> root = criteriaQuery.from(Membresia.class);
         Join<Membresia, Usuario> usuarioJoin = root.join("usuario");
         criteriaQuery.select(root).where(criteriaBuilder.equal(usuarioJoin.get("id"), usuarioId));
-        return session.createQuery(criteriaQuery).getResultList();
+
+        return session.createQuery(criteriaQuery).uniqueResult();
     }
 
     @Override

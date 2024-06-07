@@ -3,7 +3,6 @@
 body{
     padding:0px;
     margin:0px;
-    margin-top: 23px;
 }
 .starter-template {
   padding: 3rem 1.5rem;
@@ -39,3 +38,9 @@ texto2{
 .custom-width {
         width: 81px;
 }
+
+.navbar{
+    padding-top:0;
+    padding-bottom: 0;
+}
+

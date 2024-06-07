@@ -44,7 +44,7 @@ public class ControladorMembresia {
             membresia.setFechaInicio(fechaActual);
             membresia.setDuracion(duracion);
             membresia.setTipo(tipo);
-            membresia.setUsuario(usuario);
+            // membresia.setUsuario(usuario);
             servicioMembresia.crearMembresia(membresia);
             // Inmediatamentee que se Genera un Membresia se ve reflejada la rutina que fue generada con las aptitudes que puso en AptitudesFisicas
            RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);

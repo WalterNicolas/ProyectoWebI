@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,8 +16,9 @@ public class Ejercicio {
     private String descripcion;
     private Boolean realizado;
     private Boolean primario;
+
     @ManyToMany(mappedBy = "ejercicios")
-    private Set<RutinaDiaria> rutinaDiaria;
+    private Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
 
 
     public Long getId() {
@@ -48,11 +50,11 @@ public class Ejercicio {
     }
 
     public Set<RutinaDiaria> getRutinaDiaria() {
-        return rutinaDiaria;
+        return rutinasDiarias;
     }
 
     public void setRutinaDiaria(Set<RutinaDiaria> rutinaDiaria) {
-        this.rutinaDiaria = rutinaDiaria;
+        this.rutinasDiarias = rutinaDiaria;
     }
 
     public String getTipo() {
