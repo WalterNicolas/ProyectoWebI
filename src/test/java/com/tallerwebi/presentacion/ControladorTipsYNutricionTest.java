@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class ControladorTipsYNutricionTest {
 
@@ -45,15 +47,21 @@ class ControladorTipsYNutricionTest {
     }
 
     private void givenUsuarioExistenteYExistenRegistros() throws UsuarioInexistenteException, NoHayArticulosDeEseTipo {
+        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        entrenamientosLis.add(entrenamiento);
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
-        when(aptitudFisicaMock.getTipoEntrenamiento()).thenReturn("Musculacion");
+        when(aptitudFisicaMock.getTipoEntrenamiento()).thenReturn(entrenamientosLis);
         when(servicioLoginMock.buscarPorMail(anyString())).thenReturn(usuarioEncontradoMock);
         when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento("Musculacion")).thenReturn(mockArticulos);
     }
 
     private void givenUsuarioExistenteYNoExistenRegistros() throws UsuarioInexistenteException, NoHayArticulosDeEseTipo {
+        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        entrenamientosLis.add(entrenamiento);
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
-        when(aptitudFisicaMock.getTipoEntrenamiento()).thenReturn("Musculacion");
+        when(aptitudFisicaMock.getTipoEntrenamiento()).thenReturn(entrenamientosLis);
         when(servicioLoginMock.buscarPorMail(anyString())).thenReturn(usuarioEncontradoMock);
         when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento(any())).thenThrow(new NoHayArticulosDeEseTipo());
     }

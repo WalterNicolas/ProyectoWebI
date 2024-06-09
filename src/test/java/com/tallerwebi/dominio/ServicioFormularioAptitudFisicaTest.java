@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -49,10 +51,13 @@ public class ServicioFormularioAptitudFisicaTest {
         // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        entrenamientosLis.add(entrenamiento);
         // Convertir la fecha de nacimiento a String
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
         apto.setFechaNacimiento(fechaDeNacimientoString);
-        apto.setTipoEntrenamiento("Gym");
+        apto.setTipoEntrenamiento(entrenamientosLis);
         apto.setDiasEntrenamiento(3);
         apto.setHorasEntrenamiento(1);
         apto.setEstadoFisico("sedentario");
@@ -75,10 +80,14 @@ public class ServicioFormularioAptitudFisicaTest {
         // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        entrenamientosLis.add(entrenamiento);
+
         // Convertir la fecha de nacimiento a String
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
         apto.setFechaNacimiento(fechaDeNacimientoString);
-        apto.setTipoEntrenamiento("Gym");
+        apto.setTipoEntrenamiento(entrenamientosLis);
         apto.setDiasEntrenamiento(3);
         apto.setEstadoFisico("sedentario");
         assertThrows(DatosMalIngresadosException.class,

@@ -1,6 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class AptitudFisica {
@@ -10,12 +12,21 @@ public class AptitudFisica {
     private int altura;
     private double peso;
     private String fechaNacimiento;
-    private String tipoEntrenamiento;
     private int diasEntrenamiento;
     private int horasEntrenamiento;
     private String estadoFisico;
     @OneToOne
     private Usuario usuario;
+
+    @ManyToMany
+    @JoinTable(
+            name = "AptitudFisicaTipoEntrenamiento",
+            joinColumns = @JoinColumn(name = "aptitudFisica_id"),
+            inverseJoinColumns = @JoinColumn(name = "tipoEntrenamiento_id")
+
+    )
+    private Set<TipoEntrenamiento> tiposEntrenamiento = new HashSet<>();
+
 
     // Constructor vacío
     public AptitudFisica() {
@@ -62,12 +73,12 @@ public class AptitudFisica {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getTipoEntrenamiento() {
-        return tipoEntrenamiento;
+    public Set<TipoEntrenamiento> getTipoEntrenamiento() {
+        return tiposEntrenamiento;
     }
 
-    public void setTipoEntrenamiento(String tipoEntrenamiento) {
-        this.tipoEntrenamiento = tipoEntrenamiento;
+    public void setTipoEntrenamiento(Set<TipoEntrenamiento> tipoEntrenamiento) {
+        this.tiposEntrenamiento = tipoEntrenamiento;
     }
 
     public int getDiasEntrenamiento() {
