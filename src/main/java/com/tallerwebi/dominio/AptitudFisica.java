@@ -1,6 +1,10 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class AptitudFisica {
@@ -10,12 +14,21 @@ public class AptitudFisica {
     private int altura;
     private double peso;
     private String fechaNacimiento;
-    private String tipoEntrenamiento;
     private int diasEntrenamiento;
     private int horasEntrenamiento;
     private String estadoFisico;
     @OneToOne
     private Usuario usuario;
+
+    @ManyToMany
+    @JoinTable(
+            name = "AptitudFisicaTipoEntrenamiento",
+            joinColumns = @JoinColumn(name = "aptitudFisica_id"),
+            inverseJoinColumns = @JoinColumn(name = "tipoEntrenamiento_id")
+
+    )
+    private List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
+
 
     // Constructor vacío
     public AptitudFisica() {
@@ -62,12 +75,12 @@ public class AptitudFisica {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getTipoEntrenamiento() {
-        return tipoEntrenamiento;
+    public List<TipoEntrenamiento> getTipoEntrenamiento() {
+        return tiposEntrenamiento;
     }
 
-    public void setTipoEntrenamiento(String tipoEntrenamiento) {
-        this.tipoEntrenamiento = tipoEntrenamiento;
+    public void setTipoEntrenamiento(List<TipoEntrenamiento> tipoEntrenamiento) {
+        this.tiposEntrenamiento = tipoEntrenamiento;
     }
 
     public int getDiasEntrenamiento() {

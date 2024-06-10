@@ -82,7 +82,8 @@ public class ServicioRutinaImp implements ServicioRutina {
         AptitudFisica aptitudFisica = usuario.getAptitudFisica();
         int diasEntrenamiento = aptitudFisica.getDiasEntrenamiento();
         int horasPorSesion = aptitudFisica.getHorasEntrenamiento();
-        String tipoEntrenamiento = aptitudFisica.getTipoEntrenamiento();
+        var entrenamiento = aptitudFisica.getTipoEntrenamiento();
+        String tipoEntrenamiento = entrenamiento.iterator().next().getDescripcion();
         RutinaSemanal rutinaSemanal = new RutinaSemanal();
         rutinaSemanal.setUsuario(usuario);
         Set<RutinaDiaria> rutinasDiarias = new HashSet<>();

@@ -160,10 +160,15 @@ public class ServicioRutinasTest {
     @Test
     public void queSePuedaGenerarRutinaSemanal() {
         Usuario usuario = new Usuario();
+
+        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        entrenamientosLis.add(entrenamiento);
+
         AptitudFisica aptitudFisica = new AptitudFisica();
         aptitudFisica.setDiasEntrenamiento(3);
         aptitudFisica.setHorasEntrenamiento(1);
-        aptitudFisica.setTipoEntrenamiento("Cardio");
+        aptitudFisica.setTipoEntrenamiento(entrenamientosLis);
         usuario.setAptitudFisica(aptitudFisica);
 
         List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios()); // Convertir Set a List

@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -17,12 +22,28 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
    private  RepositorioAptitudFisica repositorioAptitudFisica;
     @Autowired
     private  RepositorioUsuario repoUsuario;
-    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repositorioAptitudFisica){
+
+    @Autowired
+    private  RepositorioTipoEntrenamiento repoEntrenamiento;
+    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repositorioAptitudFisica, RepositorioTipoEntrenamiento repoEntrenamiento){
         this.repositorioAptitudFisica = repositorioAptitudFisica;
+        this.repoEntrenamiento = repoEntrenamiento;
     }
 
     @Override
-    public AptitudFisica registrarDatos(AptitudFisica aptitudFisica)  {
+    public AptitudFisica registrarDatos(AptitudFisica aptitudFisica,String[] tiposDeEntrenamiento)  {
+
+        List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
+        if (tiposDeEntrenamiento != null) {
+            for (String tipoNombre : tiposDeEntrenamiento) {
+                TipoEntrenamiento tipo = repoEntrenamiento.findByNombre(tipoNombre);
+                if (tipo != null) {
+                    tiposEntrenamiento.add(tipo);
+                }
+            }
+            aptitudFisica.setTipoEntrenamiento(tiposEntrenamiento);
+        }
+
         if (!sonParametrosValidos(aptitudFisica)) {
             throw new DatosMalIngresadosException();
         }
@@ -59,4 +80,6 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
         }
         return false;
     }
+
+
 }
