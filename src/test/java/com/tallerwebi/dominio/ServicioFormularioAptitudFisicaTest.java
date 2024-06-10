@@ -52,6 +52,7 @@ public class ServicioFormularioAptitudFisicaTest {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        String[] arrayEntrenamiento = {"prueba"};
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
         // Convertir la fecha de nacimiento a String
@@ -62,7 +63,7 @@ public class ServicioFormularioAptitudFisicaTest {
         apto.setHorasEntrenamiento(1);
         apto.setEstadoFisico("sedentario");
         assertThrows(esMenorDeEdadException.class,
-                ()-> servicioAptitudFisica.registrarDatos(apto));
+                ()-> servicioAptitudFisica.registrarDatos(apto,arrayEntrenamiento));
 
     }
     @Test
@@ -79,7 +80,7 @@ public class ServicioFormularioAptitudFisicaTest {
 
         // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+        String[] arrayEntrenamiento = {"prueba"};
         Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
@@ -91,7 +92,7 @@ public class ServicioFormularioAptitudFisicaTest {
         apto.setDiasEntrenamiento(3);
         apto.setEstadoFisico("sedentario");
         assertThrows(DatosMalIngresadosException.class,
-                ()-> servicioAptitudFisica.registrarDatos(apto));
+                ()-> servicioAptitudFisica.registrarDatos(apto,arrayEntrenamiento));
 
     }
 }

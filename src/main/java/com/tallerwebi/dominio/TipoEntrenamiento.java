@@ -9,6 +9,7 @@ public class TipoEntrenamiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     public Set<AptitudFisica> getAptitudesFisicas() {
         return aptitudesFisicas;
     }
@@ -24,6 +25,12 @@ public class TipoEntrenamiento {
     private Set<AptitudFisica> aptitudesFisicas;
 
     public TipoEntrenamiento(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
+    public TipoEntrenamiento(Long id, String nombre, String descripcion) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
