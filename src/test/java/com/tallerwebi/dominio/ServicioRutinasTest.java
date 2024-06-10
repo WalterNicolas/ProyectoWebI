@@ -161,7 +161,7 @@ public class ServicioRutinasTest {
     public void queSePuedaGenerarRutinaSemanal() {
         Usuario usuario = new Usuario();
 
-        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
 

@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,7 +53,7 @@ public class ServicioFormularioAptitudFisicaTest {
         // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         String[] arrayEntrenamiento = {"prueba"};
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
@@ -81,7 +83,7 @@ public class ServicioFormularioAptitudFisicaTest {
         // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String[] arrayEntrenamiento = {"prueba"};
-        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
 

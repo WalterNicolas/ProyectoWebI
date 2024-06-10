@@ -1,7 +1,9 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,7 @@ public class AptitudFisica {
             inverseJoinColumns = @JoinColumn(name = "tipoEntrenamiento_id")
 
     )
-    private Set<TipoEntrenamiento> tiposEntrenamiento = new HashSet<>();
+    private List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
 
 
     // Constructor vacío
@@ -73,11 +75,11 @@ public class AptitudFisica {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Set<TipoEntrenamiento> getTipoEntrenamiento() {
+    public List<TipoEntrenamiento> getTipoEntrenamiento() {
         return tiposEntrenamiento;
     }
 
-    public void setTipoEntrenamiento(Set<TipoEntrenamiento> tipoEntrenamiento) {
+    public void setTipoEntrenamiento(List<TipoEntrenamiento> tipoEntrenamiento) {
         this.tiposEntrenamiento = tipoEntrenamiento;
     }
 

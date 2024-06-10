@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -31,7 +32,7 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
     @Override
     public AptitudFisica registrarDatos(AptitudFisica aptitudFisica,String[] tiposDeEntrenamiento)  {
 
-        Set<TipoEntrenamiento> tiposEntrenamiento = new HashSet<>();
+        List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
         if (tiposDeEntrenamiento != null) {
             for (String tipoNombre : tiposDeEntrenamiento) {
                 TipoEntrenamiento tipo = repoEntrenamiento.findByNombre(tipoNombre);

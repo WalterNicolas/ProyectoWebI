@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,7 @@ class ControladorTipsYNutricionTest {
     }
 
     private void givenUsuarioExistenteYExistenRegistros() throws UsuarioInexistenteException, NoHayArticulosDeEseTipo {
-        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
@@ -57,7 +58,7 @@ class ControladorTipsYNutricionTest {
     }
 
     private void givenUsuarioExistenteYNoExistenRegistros() throws UsuarioInexistenteException, NoHayArticulosDeEseTipo {
-        Set<TipoEntrenamiento> entrenamientosLis = new HashSet<TipoEntrenamiento>();
+        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);

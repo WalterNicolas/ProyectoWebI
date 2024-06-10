@@ -45,7 +45,7 @@ public class ControladorTipsYNutricion {
         if (session != null && mailLogeado != null) {
             try {
                 Usuario usuario = servicioLogin.buscarPorMail(mailLogeado);
-                Set<TipoEntrenamiento> tiposEntrenamiento = usuario.getAptitudFisica().getTipoEntrenamiento();
+                List<TipoEntrenamiento> tiposEntrenamiento = usuario.getAptitudFisica().getTipoEntrenamiento();
                 List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tiposEntrenamiento.iterator().next().getDescripcion());
                 modelo.put("articulos", listaArticulos);
                 modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTipoEntrenamiento() );

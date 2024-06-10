@@ -33,23 +33,12 @@
                         </div>
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-3">
-                        <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
-                        <select id="tipoEntrenamiento" class="form-select" th:field="*{tipoEntrenamiento}" required>
-                            <option value="">Seleccione...</option>
-                            <option value="calistenia">Calistenia</option>
-                            <option value="musculacion">Musculación</option>
-                            <option value="cardio">Cardio</option>
-                            <option value="natacion">Natación</option>
-                        </select>
-                    </div>
-
                     <div class="form-outline mb-3">
-                        <label class="form-label text-light" for="tipoEntrenamiento">Tipos de entrenamiento</label>
+                        <label class="form-label text-light" for="tiposEntrenamientoContainer">Tipos de entrenamiento</label>
                         <div id="tiposEntrenamientoContainer">
                             <div class="input-group mb-3 tipo-entrenamiento">
-                                <select class="form-select" th:field="*{tiposEntrenamiento[0].nombre}" required>
-                                    <option value="">Seleccione...</option>
+                                <select class="form-select" name="tiposDeEntrenamiento" required>
+                                <option value="">Seleccione...</option>
                                     <option value="calistenia">Calistenia</option>
                                     <option value="musculacion">Musculación</option>
                                     <option value="cardio">Cardio</option>
@@ -105,12 +94,14 @@
 </footer>
 
 <script>
+    let tipoEntrenamientoIndex = 1;
+
     function addTipoEntrenamiento() {
         const container = document.getElementById('tiposEntrenamientoContainer');
-        const newTipoEntrenamiento = document.createElement('div');
-        newTipoEntrenamiento.className = 'input-group mb-3 tipo-entrenamiento';
-        newTipoEntrenamiento.innerHTML = `
-            <select class="form-select" name="tiposEntrenamiento" required>
+        const newField = document.createElement('div');
+        newField.className = 'input-group mb-3 tipo-entrenamiento';
+        newField.innerHTML = `
+            <select class="form-select" name="tiposDeEntrenamiento" required>
                 <option value="">Seleccione...</option>
                 <option value="calistenia">Calistenia</option>
                 <option value="musculacion">Musculación</option>
@@ -119,12 +110,14 @@
             </select>
             <button type="button" class="btn btn-danger" onclick="removeTipoEntrenamiento(this)">Eliminar</button>
         `;
-        container.appendChild(newTipoEntrenamiento);
+        container.appendChild(newField);
+        tipoEntrenamientoIndex++;
     }
 
     function removeTipoEntrenamiento(button) {
-        const container = document.getElementById('tiposEntrenamientoContainer');
-        container.removeChild(button.parentElement);
+        const field = button.parentNode;
+        field.parentNode.removeChild(field);
+        tipoEntrenamientoIndex--;
     }
 </script>
 </body>

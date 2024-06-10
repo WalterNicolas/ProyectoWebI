@@ -46,7 +46,7 @@ public class ControladorAptitudFisica {
                 return registroFallido(model, "Usuario no encontrado");
             }
 
-            String[] tiposEntrenamiento = request.getParameterValues("tiposEntrenamiento");
+            String[] tiposEntrenamiento = request.getParameterValues("tiposDeEntrenamiento");
 
 
             aptitudFisica.setUsuario(usuario);
