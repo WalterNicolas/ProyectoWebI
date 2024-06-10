@@ -40,6 +40,11 @@ public class RepositorioEjercicioTest {
         thenObtengoElEjercicio(ejercicioBuscado);
     }
 
+    private void givenExisteUnEjercicio() {
+        Ejercicio ejercicio = new Ejercicio();
+        sessionFactory.getCurrentSession().save(ejercicio);
+    }
+
 
     public Ejercicio whenBuscoUnEjercicioPorId(Long id){
         return  repositorioEjercicio.buscarPorId(id);
@@ -66,8 +71,5 @@ public class RepositorioEjercicioTest {
 //        assertThat(lista.size(), equalTo(3));
 //    }
 //
-    private void givenExisteUnEjercicio() {
-        Ejercicio ejercicio = new Ejercicio();
-        sessionFactory.getCurrentSession().save(ejercicio);
-    }
+
 }

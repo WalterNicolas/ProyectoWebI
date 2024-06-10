@@ -10,6 +10,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.tallerwebi.infraestructura.ServicioAptitudFisicaImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
+import org.mockito.Mock;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,13 +26,17 @@ import static org.mockito.Mockito.mock;
 public class ServicioFormularioAptitudFisicaTest {
     ServicioAptitudFisica servicioAptitudFisica;
     RepositorioAptitudFisica repositorioAptitudFisica;
-    /*
-    1. si es menor de edad que no se pueda registrar
-    2.todos los datos deben estar correctos
-     */
+
+
+    RepositorioTipoEntrenamiento repositorioTipoEntrenamiento;
+
     @BeforeEach
     public void init(){
-        servicioAptitudFisica = new ServicioAptitudFisicaImp(repositorioAptitudFisica);
+        // Mock del repositorio de tipo de entrenamiento
+        repositorioTipoEntrenamiento = mock(RepositorioTipoEntrenamiento.class);
+
+        // Inicialización del servicio con los mocks
+        servicioAptitudFisica = new ServicioAptitudFisicaImp(repositorioAptitudFisica, repositorioTipoEntrenamiento);
     }
 
     private void givenNoHayDatos() {
@@ -50,12 +56,11 @@ public class ServicioFormularioAptitudFisicaTest {
         apto.setAltura(185);
         apto.setPeso(100.5);
         LocalDate fechaDeNacimiento = LocalDate.of(2018, 1, 31);
-        // Crear un objeto DateTimeFormatter para el formato deseado
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         String[] arrayEntrenamiento = {"prueba"};
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        when(repositorioTipoEntrenamiento.findByNombre("prueba")).thenReturn(entrenamiento);
         entrenamientosLis.add(entrenamiento);
         // Convertir la fecha de nacimiento a String
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
@@ -84,7 +89,7 @@ public class ServicioFormularioAptitudFisicaTest {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String[] arrayEntrenamiento = {"prueba"};
         List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
-        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento();
         entrenamientosLis.add(entrenamiento);
 
         // Convertir la fecha de nacimiento a String

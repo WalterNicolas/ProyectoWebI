@@ -25,8 +25,9 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
 
     @Autowired
     private  RepositorioTipoEntrenamiento repoEntrenamiento;
-    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repositorioAptitudFisica){
+    public ServicioAptitudFisicaImp (RepositorioAptitudFisica repositorioAptitudFisica, RepositorioTipoEntrenamiento repoEntrenamiento){
         this.repositorioAptitudFisica = repositorioAptitudFisica;
+        this.repoEntrenamiento = repoEntrenamiento;
     }
 
     @Override
