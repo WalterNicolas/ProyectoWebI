@@ -14,7 +14,7 @@ public interface ServicioRutina {
     Double calcularDiferenciaDeKilos(Double pesoInicial, Double pesoActual);
     Integer contarEjerciciosporHacer(DetalleRutina detalleRutina) throws NoHayEjerciciosCargadosException;
     Double calcularIMC(Double peso,Double altura);
-    RutinaSemanal generarRutinaSemanal(Usuario usuario);
+    List<RutinaSemanal> generarRutinaSemanal(Usuario usuario);
     Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento);
     List<RutinaSemanal> obtenerTodasLasRutinasById(Long idUsuario) throws RutinaSemanalVacia;
 

@@ -18,6 +18,7 @@ public class RutinaSemanal {
 
     @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL)
     private Set<RutinaDiaria> rutinaDiaria = new HashSet<>();
+    private String tipoRutina;
 
     public Long getId() {
         return id;
@@ -37,6 +38,14 @@ public class RutinaSemanal {
 
     public void setRutinaDiaria(Set<RutinaDiaria> rutinaDiaria) {
         this.rutinaDiaria = rutinaDiaria;
+    }
+
+    public String getTipoRutina() {
+        return tipoRutina;
+    }
+
+    public void setTipoRutina(String tipoRutina) {
+        this.tipoRutina = tipoRutina;
     }
 
     public void setUsuario(Usuario usuario) {

@@ -14,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ControladorExcel {
@@ -24,7 +25,7 @@ public class ControladorExcel {
 
     @RequestMapping("/generarRutina")
     public ModelAndView generarRutina(@RequestParam Long rutinaSemanalId, HttpServletResponse response, HttpServletRequest request) throws RutinaSemanalVacia {
-        RutinaSemanal rutinaSemanal = respositorioRutinaSemanal.buscarPorIdDeUsuario(rutinaSemanalId);
+        List<RutinaSemanal> rutinaSemanal = respositorioRutinaSemanal.buscarPorIdDeUsuario(rutinaSemanalId);
         System.out.println("existe rutina?");
         System.out.println(rutinaSemanal);
         try (ServletOutputStream outputStream = response.getOutputStream()) {

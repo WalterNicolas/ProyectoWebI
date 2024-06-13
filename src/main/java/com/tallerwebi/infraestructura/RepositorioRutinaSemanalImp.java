@@ -25,17 +25,21 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
     }
-    public RutinaSemanal buscarPorIdDeUsuario(Long idUsuario) throws RutinaSemanalVacia {
+    public List<RutinaSemanal> buscarPorIdDeUsuario(Long idUsuario){
         Session session = sessionFactory.openSession();
-        Query<RutinaSemanal> query = session.createQuery("SELECT rs FROM Usuario u " +
-                "JOIN u.rutinaSemanal rs " +
-                "JOIN FETCH rs.rutinaDiaria rd " +
-                "JOIN FETCH rd.ejercicios " +
-                "WHERE u.id = :idUsuario", RutinaSemanal.class);
-        query.setParameter("idUsuario", idUsuario);
-        var results = query.uniqueResult();
-        if  (results == null) throw new RutinaSemanalVacia("No se encontró una rutina");
-        return results ;
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<RutinaSemanal> criteriaQuery = builder.createQuery(RutinaSemanal.class);
+        Root<RutinaSemanal> rutinaSemanalRoot = criteriaQuery.from(RutinaSemanal.class);
+
+        // Crear un join con Usuario para establecer la condición
+        Join<RutinaSemanal, Usuario> usuarioJoin = rutinaSemanalRoot.join("usuario");
+
+        // Establecer la condición WHERE
+        criteriaQuery.where(builder.equal(usuarioJoin.get("id"), idUsuario));
+
+        // Ejecutar la consulta y obtener los resultados
+        Query<RutinaSemanal> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     @Override

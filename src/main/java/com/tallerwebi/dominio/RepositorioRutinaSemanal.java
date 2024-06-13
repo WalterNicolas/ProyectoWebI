@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RepositorioRutinaSemanal {
     void guardar(RutinaSemanal rutinaSemanal);
-    RutinaSemanal buscarPorIdDeUsuario(Long id) throws RutinaSemanalVacia;
+    List<RutinaSemanal> buscarPorIdDeUsuario(Long id);
 
     public List<RutinaSemanal> obtenerTodasLasRutinasById(Long idUsuario) throws RutinaSemanalVacia;
 }

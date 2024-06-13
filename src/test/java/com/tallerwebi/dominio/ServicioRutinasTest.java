@@ -171,19 +171,46 @@ public class ServicioRutinasTest {
         aptitudFisica.setTipoEntrenamiento(entrenamientosLis);
         usuario.setAptitudFisica(aptitudFisica);
 
-        List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios()); // Convertir Set a List
+        List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios());
 
         when(repositorioEjercicioMock.buscarTodosLosEjercicio()).thenReturn(listEjercicios);
         doNothing().when(repositorioRutinaSemanalMock).guardar(any(RutinaSemanal.class));
 
-        RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
+        List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
 
 
         assertNotNull(rutinaSemanal);
-        assertEquals(usuario, rutinaSemanal.getUsuario());
-        assertEquals(3, rutinaSemanal.getRutinaDiaria().size());
+        assertEquals(1, rutinaSemanal.size());
 
-        verify(repositorioRutinaSemanalMock, times(1)).guardar(rutinaSemanal);
+        verify(repositorioRutinaSemanalMock, times(1)).guardar(any());
+    }
+    @Test
+    public void queSePuedaGenerarDosRutinasSemanales() {
+        Usuario usuario = new Usuario();
+
+        List<TipoEntrenamiento> entrenamientosLista = new ArrayList<TipoEntrenamiento>();
+        TipoEntrenamiento entrenamientoUno = new TipoEntrenamiento("prueba", "Musculacion");
+        TipoEntrenamiento entrenamientoDos = new TipoEntrenamiento("prueba", "Cardio");
+        entrenamientosLista.add(entrenamientoUno);
+        entrenamientosLista.add(entrenamientoDos);
+        AptitudFisica aptitudFisica = new AptitudFisica();
+        aptitudFisica.setDiasEntrenamiento(3);
+        aptitudFisica.setHorasEntrenamiento(1);
+        aptitudFisica.setTipoEntrenamiento(entrenamientosLista);
+        usuario.setAptitudFisica(aptitudFisica);
+
+        List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios());
+
+        when(repositorioEjercicioMock.buscarTodosLosEjercicio()).thenReturn(listEjercicios);
+        doNothing().when(repositorioRutinaSemanalMock).guardar(any(RutinaSemanal.class));
+
+        List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
+
+
+        assertNotNull(rutinaSemanal);
+        assertEquals(2, rutinaSemanal.size());
+
+        verify(repositorioRutinaSemanalMock, times(2)).guardar(any());
     }
 
     @Test

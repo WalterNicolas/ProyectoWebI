@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public
 class ServicioExcel {
 
-    public void getRutinaExcel(RutinaSemanal rutinaSemanal, ServletOutputStream nombreExcel) {
+    public void getRutinaExcel(List<RutinaSemanal> rutinaSemanalList, ServletOutputStream nombreExcel) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Rutina Semanal");
 
@@ -28,40 +29,49 @@ class ServicioExcel {
         // Encabezados
         Row headerRow = sheet.createRow(rowNum++);
         Cell cell = headerRow.createCell(0);
-        cell.setCellValue("Duración");
+        cell.setCellValue("Semana");
         cell.setCellStyle(headerCellStyle);
 
         cell = headerRow.createCell(1);
-        cell.setCellValue("Ejercicio");
+        cell.setCellValue("Duración");
         cell.setCellStyle(headerCellStyle);
 
         cell = headerRow.createCell(2);
+        cell.setCellValue("Ejercicio");
+        cell.setCellStyle(headerCellStyle);
+
+        cell = headerRow.createCell(3);
         cell.setCellValue("Descripción");
         cell.setCellStyle(headerCellStyle);
 
-
         // Datos
-        int i = 1;
-        for (RutinaDiaria rutinaDiaria : rutinaSemanal.getRutinaDiaria()) {
-            Row row2 = sheet.createRow(rowNum++);
-            row2.createCell(0).setCellValue("dia"+ i);
-            i++;
-            for (Ejercicio ejercicio : rutinaDiaria.getEjercicios()) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(ejercicio.getDuracion() + "min");
-                System.out.println(ejercicio.getDuracion());
-                row.createCell(1).setCellValue(ejercicio.getNombre());
-                System.out.println(ejercicio.getNombre());
-                row.createCell(2).setCellValue(ejercicio.getDescripcion());
-                System.out.println(ejercicio.getDescripcion());
+        int semanaIndex = 1;
+        for (RutinaSemanal rutinaSemanal : rutinaSemanalList) {
+            int diaIndex = 1;
+            for (RutinaDiaria rutinaDiaria : rutinaSemanal.getRutinaDiaria()) {
+                Row diaRow = sheet.createRow(rowNum++);
+                diaRow.createCell(0).setCellValue("Semana " + semanaIndex);
+                diaRow.createCell(1).setCellValue("Día " + diaIndex++);
+                diaRow.createCell(2).setCellValue("");
+                diaRow.createCell(3).setCellValue("");
+
+                for (Ejercicio ejercicio : rutinaDiaria.getEjercicios()) {
+                    Row row = sheet.createRow(rowNum++);
+                    row.createCell(0).setCellValue("");
+                    row.createCell(1).setCellValue(ejercicio.getDuracion() + " min");
+                    row.createCell(2).setCellValue(ejercicio.getNombre());
+                    row.createCell(3).setCellValue(ejercicio.getDescripcion());
+                }
             }
+            semanaIndex++;
         }
 
         // Auto-ajustar columnas
-        sheet.autoSizeColumn(0);
-        sheet.autoSizeColumn(1);
-        sheet.autoSizeColumn(2);
+        for (int i = 0; i < 4; i++) {
+            sheet.autoSizeColumn(i);
+        }
 
+        // Escribir el archivo Excel
         try {
             workbook.write(nombreExcel);
         } catch (IOException e) {

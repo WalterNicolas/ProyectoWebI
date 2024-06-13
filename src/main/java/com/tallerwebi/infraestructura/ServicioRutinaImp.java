@@ -78,44 +78,43 @@ public class ServicioRutinaImp implements ServicioRutina {
     }
     /*Se necesita la AptitudFisica Cargada por el usuario para armar la rutina...  */
 
-    public RutinaSemanal generarRutinaSemanal(Usuario usuario) {
+    public List<RutinaSemanal> generarRutinaSemanal(Usuario usuario) {
         AptitudFisica aptitudFisica = usuario.getAptitudFisica();
         int diasEntrenamiento = aptitudFisica.getDiasEntrenamiento();
         int horasPorSesion = aptitudFisica.getHorasEntrenamiento();
-        var entrenamiento = aptitudFisica.getTipoEntrenamiento();
-        String tipoEntrenamiento = entrenamiento.iterator().next().getDescripcion();
-        RutinaSemanal rutinaSemanal = new RutinaSemanal();
-        rutinaSemanal.setUsuario(usuario);
-        Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
-
+        List<TipoEntrenamiento> tiposEntrenamientos = aptitudFisica.getTipoEntrenamiento();
+       List<RutinaSemanal> rutinas = new ArrayList<>();
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
+        for (TipoEntrenamiento tipoEntrenamiento : tiposEntrenamientos) {
+            RutinaSemanal rutinaSemanal = new RutinaSemanal();
+            rutinaSemanal.setUsuario(usuario);
+            Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
+            for (int i = 0; i < diasEntrenamiento; i++) {
+                RutinaDiaria rutinaDiaria = new RutinaDiaria();
+                rutinaDiaria.setRutinaSemanal(rutinaSemanal);
+                rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
 
-        for (int i = 0; i < diasEntrenamiento; i++) {
-            RutinaDiaria rutinaDiaria = new RutinaDiaria();
-            rutinaDiaria.setRutinaSemanal(rutinaSemanal);
-            rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
+                Set<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento.getNombre());
+                rutinaDiaria.setEjercicios(ejerciciosDia);
 
-            Set<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
-            rutinaDiaria.setEjercicios(ejerciciosDia);
+                rutinasDiarias.add(rutinaDiaria);
+            }
+            rutinaSemanal.setRutinaDiaria(rutinasDiarias);
+            rutinaSemanal.setTipoRutina(tipoEntrenamiento.getNombre());
+            rutinas.add(rutinaSemanal);
+            repositorioRutinaSemanal.guardar(rutinaSemanal);
 
-            rutinasDiarias.add(rutinaDiaria);
         }
-        rutinaSemanal.setRutinaDiaria(rutinasDiarias);
-
-        repositorioRutinaSemanal.guardar(rutinaSemanal);
-
-        return rutinaSemanal;
+        return rutinas;
     }
 
     public Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
         List<Ejercicio> ejerciciosDisponibles = repositorioEjercicio.buscarTodosLosEjercicio();
         Set<Ejercicio> ejerciciosDia = new HashSet<>();
         Random random = new Random();
-
         int minutosDisponibles = horasPorSesion * 60;
         int minutosAsignados = 0;
-
         // Filtrar ejercicios primarios y no primarios
         List<Ejercicio> ejerciciosPrimarios = new ArrayList<>();
         List<Ejercicio> ejerciciosNoPrimarios = new ArrayList<>();
@@ -157,8 +156,6 @@ public class ServicioRutinaImp implements ServicioRutina {
 
             ejerciciosNoPrimarios.remove(index);
         }
-
-
         return ejerciciosDia;
     }
 

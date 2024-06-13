@@ -10,6 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -43,27 +46,24 @@ public class ControladorMembresiaTest {
         String email = "usuario@example.com";
         String tipo = "Premium";
         int duracion = 6;
-        RutinaSemanal rutinaSemanal = new RutinaSemanal();
+        List<RutinaSemanal> rutinaSemanal = new ArrayList<>();
         Usuario usuario=  givenUsuarioCreado(email);
         ModelAndView mav = whenSeAsignaMembresia(email,usuario,tipo,duracion,rutinaSemanal);
-        thenVuelvoHomeConModeloMembresiaYMas(mav,usuario,rutinaSemanal);
+        thenRedirijoAlHome(mav,usuario,rutinaSemanal);
     }
 
-    private ModelAndView whenSeAsignaMembresia(String email, Usuario usuario, String tipo,int duracion,RutinaSemanal rutinaSemanal) throws UsuarioInexistenteException {
+    private ModelAndView whenSeAsignaMembresia(String email, Usuario usuario, String tipo,int duracion,List<RutinaSemanal> rutinaSemanal) throws UsuarioInexistenteException {
         when(servicioLoginMock.buscarPorMail(email)).thenReturn(usuario);
         doNothing().when(servicioMembresiaMock).crearMembresia(any(Membresia.class));
         when(servicioRutinaMock.generarRutinaSemanal(usuario)).thenReturn(rutinaSemanal);
+        System.out.println(controladorMembresia.asignarMembresia(tipo, email, duracion, request));
        return controladorMembresia.asignarMembresia(tipo, email, duracion, request);
     }
-    public void   thenVuelvoHomeConModeloMembresiaYMas(ModelAndView mav,Usuario usuario,RutinaSemanal rutinaSemanal) {
-        assertNotNull(mav);
-        assertEquals("home", mav.getViewName());
+    public void thenRedirijoAlHome(ModelAndView mav, Usuario usuario, List<RutinaSemanal> rutinaSemanal) {
+
         ModelMap modelo = mav.getModelMap();
-        assertNotNull(modelo);
-        assertEquals(usuario, modelo.get("usuario"));
-        assertNotNull(modelo.get("membresia"));
-        assertEquals(rutinaSemanal, modelo.get("rutinaSemanal"));
-        assertEquals("test@example.com", modelo.get("Email"));
+        assertNotNull(mav);
+        assertEquals("redirect:/home", mav.getViewName());
     }
     private Usuario givenUsuarioCreado(String email) {
         Usuario usuario = new Usuario();

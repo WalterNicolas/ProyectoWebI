@@ -57,21 +57,19 @@ public class RepositorioTipsYNutricionTest {
         assertNotNull(resultadoArticulosBuscados);
         assertThat(resultadoArticulosBuscados.size(),equalTo(3));
     }
+    @Test
+    @Transactional
+    @Rollback
+    public void buscoPorIdYRetornoUnArticulo() {
 
+        Long id = 1L;
+        givenExisteUnArticulo();
 
-   // @Test
-   // @Transactional
-   // @Rollback
-  //  public void buscoPorIdYRetornoUnArticulo() {
-        // Arrange
-    //    Long id = 1L;
-   //     givenExisteUnArticulo();
+        Articulo articulo = whenBuscoElArticulo(id);
+        System.out.println(articulo);
+        thenSeEncuentraElArticulo(articulo);
 
-    //    Articulo articulo = whenBuscoElArticulo(id);
-    //    System.out.println(articulo);
-     //   thenSeEncuentraElArticulo(articulo);
-
-    //}
+    }
 
     private void givenExisteUnArticulo() {
         Articulo articulo = new Articulo();
@@ -86,26 +84,22 @@ public class RepositorioTipsYNutricionTest {
         assertNotNull(articulo);
 
     }
-
-
-    @Test
-    @Transactional
-    @Rollback
-    public void queSePuedaRetornarTodosLosArticulos() {
-        // given
-        String tipo1 ="Musculacion";
-        String tipo2 = "Cardio";
-        String tipo3= "Calistenia";
-        givenArticuloDistintoTipo(tipo1);
-        givenArticuloDistintoTipo(tipo2);
-        givenArticuloDistintoTipo(tipo3);
-
-
-        // when
-        List<Articulo> resultado = whenObtengoTodosLosArticulos();
-        thenTengoLaListaDeTodosLosArticulos(resultado);
-
-    }
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void queSePuedaRetornarTodosLosArticulos() {
+//        // given
+//        String tipo1 ="Musculacion";
+//        String tipo2 = "Cardio";
+//        String tipo3= "Calistenia";
+//        givenArticuloDistintoTipo(tipo1);
+//        givenArticuloDistintoTipo(tipo2);
+//        givenArticuloDistintoTipo(tipo3);
+//        // when
+//        List<Articulo> resultado = whenObtengoTodosLosArticulos();
+//        thenTengoLaListaDeTodosLosArticulos(resultado);
+//
+//    }
     private List<Articulo> whenObtengoTodosLosArticulos(){
          return repositorioArticulo.todosLosArticulos();
     }

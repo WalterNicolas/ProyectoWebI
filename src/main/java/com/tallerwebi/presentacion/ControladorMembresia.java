@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class ControladorMembresia {
@@ -44,13 +46,11 @@ public class ControladorMembresia {
             membresia.setFechaInicio(fechaActual);
             membresia.setDuracion(duracion);
             membresia.setTipo(tipo);
-            // membresia.setUsuario(usuario);
+             membresia.setUsuario(usuario);
             servicioMembresia.crearMembresia(membresia);
 
             // Se genera la rutina a partir de la Aptitud Fisica del Usuario
-            RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
-
-            System.out.println(membresia);
+            List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
             session.setAttribute("Email", email);
             session.setAttribute("membresia", membresia);
             session.setAttribute("usuario", usuario);
