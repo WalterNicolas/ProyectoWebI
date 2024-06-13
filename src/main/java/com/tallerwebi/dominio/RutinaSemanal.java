@@ -1,6 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,10 +13,11 @@ public class RutinaSemanal {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL)
-    private Set<RutinaDiaria> rutinaDiaria;
+    private Set<RutinaDiaria> rutinaDiaria = new HashSet<>();
 
     public Long getId() {
         return id;

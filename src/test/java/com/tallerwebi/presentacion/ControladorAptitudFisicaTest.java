@@ -26,6 +26,14 @@ public class ControladorAptitudFisicaTest {
     @InjectMocks
     private ControladorAptitudFisica controladorAptitudFisica;
 
+    RepositorioTipoEntrenamiento repositorioTipoEntrenamiento;
+
+    @BeforeEach
+    public void init(){
+        // Mock del repositorio de tipo de entrenamiento
+        repositorioTipoEntrenamiento = mock(RepositorioTipoEntrenamiento.class);
+    }
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -36,12 +44,15 @@ public class ControladorAptitudFisicaTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
         Usuario usuario = new Usuario();
+        String[] arrayEntrenamiento = {"prueba"};
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
 
-        // Configura el mock del repositorio para devolver un usuario
         when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(usuario);
+        when(request.getParameterValues("tiposDeEntrenamiento")).thenReturn(arrayEntrenamiento);
+        when(repositorioTipoEntrenamiento.findByNombre("prueba")).thenReturn(entrenamiento);
 
         // Configura el mock del servicio para lanzar una excepción
-        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica)).thenThrow(new DatosMalIngresadosException());
+        when(servicioAptitudFisicaMock.registrarDatos(any(AptitudFisica.class), any(String[].class))).thenThrow(new DatosMalIngresadosException());
 
         ModelAndView modelAndView = controladorAptitudFisica.procesarFormulario(1L, aptitudFisica, request);
 
@@ -54,12 +65,16 @@ public class ControladorAptitudFisicaTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
         Usuario usuario = new Usuario();
-
+        String[] arrayEntrenamiento = {"prueba"};
         // Configura el mock del repositorio para devolver un usuario
         when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(usuario);
+        TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+
+        when(request.getParameterValues("tiposDeEntrenamiento")).thenReturn(arrayEntrenamiento);
+        when(repositorioTipoEntrenamiento.findByNombre("prueba")).thenReturn(entrenamiento);
 
         // Configura el mock del servicio para lanzar una excepción
-        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica)).thenThrow(new esMenorDeEdadException());
+        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica,arrayEntrenamiento)).thenThrow(new esMenorDeEdadException());
 
         ModelAndView modelAndView = controladorAptitudFisica.procesarFormulario(1L, aptitudFisica, request);
 
@@ -72,12 +87,12 @@ public class ControladorAptitudFisicaTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         HttpServletRequest request = mock(HttpServletRequest.class);
         Usuario usuario = new Usuario();
-
+        String[] arrayEntrenamiento = {"prueba"};
         // Configura el mock del repositorio para devolver un usuario
         when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(usuario);
 
         // Configura el mock del servicio para devolver la aptitud física
-        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica)).thenReturn(aptitudFisica);
+        when(servicioAptitudFisicaMock.registrarDatos(aptitudFisica,arrayEntrenamiento)).thenReturn(aptitudFisica);
 
         ModelAndView modelAndView = controladorAptitudFisica.procesarFormulario(1L, aptitudFisica, request);
 

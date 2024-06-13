@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class ControladorAptitudFisica {
@@ -33,8 +35,9 @@ public class ControladorAptitudFisica {
         modelo.put("aptitudFisica", new AptitudFisica());
         return new ModelAndView("formularioAptitudFisica", modelo);
     }
-    @Transactional
+
     @RequestMapping(path = "/{id}/guardar-aptitud-fisica", method = RequestMethod.POST)
+    @Transactional
     public ModelAndView procesarFormulario(@PathVariable Long id, @ModelAttribute("aptitudFisica") AptitudFisica aptitudFisica, HttpServletRequest request) {
         ModelMap model = new ModelMap();
         try {
@@ -42,8 +45,12 @@ public class ControladorAptitudFisica {
             if (usuario == null) {
                 return registroFallido(model, "Usuario no encontrado");
             }
+
+            String[] tiposEntrenamiento = request.getParameterValues("tiposDeEntrenamiento");
+
+
             aptitudFisica.setUsuario(usuario);
-            AptitudFisica apto = servicioAptitudFisica.registrarDatos(aptitudFisica);
+            AptitudFisica apto = servicioAptitudFisica.registrarDatos(aptitudFisica,tiposEntrenamiento);
 
             usuario.setAptitudFisica(aptitudFisica);
             repositorioUsuario.guardar(usuario);

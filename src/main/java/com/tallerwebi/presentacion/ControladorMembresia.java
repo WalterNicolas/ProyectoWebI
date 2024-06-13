@@ -44,7 +44,7 @@ public class ControladorMembresia {
             membresia.setFechaInicio(fechaActual);
             membresia.setDuracion(duracion);
             membresia.setTipo(tipo);
-            membresia.setUsuario(usuario);
+            // membresia.setUsuario(usuario);
             servicioMembresia.crearMembresia(membresia);
 
             // Se genera la rutina a partir de la Aptitud Fisica del Usuario

@@ -2,6 +2,8 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.NoHayEjerciciosCargadosException;
+import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
+import com.tallerwebi.presentacion.DatosDiasYEjercicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,14 +82,19 @@ public class ServicioRutinaImp implements ServicioRutina {
         AptitudFisica aptitudFisica = usuario.getAptitudFisica();
         int diasEntrenamiento = aptitudFisica.getDiasEntrenamiento();
         int horasPorSesion = aptitudFisica.getHorasEntrenamiento();
-        String tipoEntrenamiento = aptitudFisica.getTipoEntrenamiento();
+        var entrenamiento = aptitudFisica.getTipoEntrenamiento();
+        String tipoEntrenamiento = entrenamiento.iterator().next().getDescripcion();
         RutinaSemanal rutinaSemanal = new RutinaSemanal();
         rutinaSemanal.setUsuario(usuario);
         Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
 
+
+        String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
+
         for (int i = 0; i < diasEntrenamiento; i++) {
             RutinaDiaria rutinaDiaria = new RutinaDiaria();
             rutinaDiaria.setRutinaSemanal(rutinaSemanal);
+            rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
 
             Set<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
             rutinaDiaria.setEjercicios(ejerciciosDia);
@@ -153,6 +160,64 @@ public class ServicioRutinaImp implements ServicioRutina {
 
 
         return ejerciciosDia;
+    }
+
+    @Override
+    public List<RutinaSemanal> obtenerTodasLasRutinasById(Long idUsuario) throws RutinaSemanalVacia {
+        return this.repositorioRutinaSemanal.obtenerTodasLasRutinasById(idUsuario);
+    }
+    @Override
+    public DatosDiasYEjercicios obtenerDatosDiasYEjercicios(Long idUsuario) throws RutinaSemanalVacia {
+        List<RutinaSemanal> rutinaSemanalList = this.obtenerTodasLasRutinasById(idUsuario);
+        DatosDiasYEjercicios datos = new DatosDiasYEjercicios();
+
+        for (RutinaSemanal rutinaSemanal : rutinaSemanalList) {
+            Set<RutinaDiaria> rutinaDiariaList = rutinaSemanal.getRutinaDiaria();
+
+            for (RutinaDiaria rutinaDiaria : rutinaDiariaList) {
+                String dia = rutinaDiaria.getDiaSemana();
+
+                datos.agregarDia(dia);
+
+                Set<Ejercicio> ejercicios = rutinaDiaria.getEjercicios();
+
+                for (Ejercicio ejercicio : ejercicios) {
+                    String nombreEjercicio = ejercicio.getNombre();
+
+                    datos.agregarEjercicio(nombreEjercicio);
+                }
+            }
+        }
+
+        return datos;
+    }
+
+    @Override
+    public DatosDiasYEjercicios procesarRutinas(Long idUsuario) throws RutinaSemanalVacia {
+        DatosDiasYEjercicios datos =  obtenerDatosDiasYEjercicios(idUsuario);
+
+        ArrayList<Integer> dias = new ArrayList<>();
+        ArrayList<Integer> ejercicios = new ArrayList<>();
+
+        List<String> labelDias = new ArrayList<>();
+        List<String> labelEjercicios = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : datos.getDias().entrySet()) {
+            dias.add(entry.getValue());
+            labelDias.add(entry.getKey());
+        }
+
+        for (Map.Entry<String, Integer> entry : datos.getEjercicios().entrySet()) {
+            ejercicios.add(entry.getValue());
+            labelEjercicios.add(entry.getKey());
+        }
+
+        datos.setDiasList(dias);
+        datos.setEjerciciosList(ejercicios);
+        datos.setLabelDias(labelDias);
+        datos.setLabelEjercicios(labelEjercicios);
+
+        return datos;
     }
 
 }

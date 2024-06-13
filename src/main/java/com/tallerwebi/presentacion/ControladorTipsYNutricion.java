@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Articulo;
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.ServicioTipsYNutricion;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.NoHayArticulosDeEseTipo;
 import com.tallerwebi.dominio.excepcion.NoHayInformacionDelArticulo;
 import com.tallerwebi.dominio.excepcion.UsuarioInexistenteException;
@@ -23,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Transactional
@@ -47,7 +45,8 @@ public class ControladorTipsYNutricion {
         if (session != null && mailLogeado != null) {
             try {
                 Usuario usuario = servicioLogin.buscarPorMail(mailLogeado);
-                List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(usuario.getAptitudFisica().getTipoEntrenamiento());
+                List<TipoEntrenamiento> tiposEntrenamiento = usuario.getAptitudFisica().getTipoEntrenamiento();
+                List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tiposEntrenamiento.iterator().next().getDescripcion());
                 modelo.put("articulos", listaArticulos);
                 modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTipoEntrenamiento() );
             } catch (NoHayArticulosDeEseTipo e) {

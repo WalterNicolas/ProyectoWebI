@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
-
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -23,8 +23,6 @@ import java.util.Properties;
 @PropertySources({
         @PropertySource("classpath:application.properties")
 })
-
-
 public class HibernateConfig {
 
     @Value("${spring.datasource.url}")
@@ -57,6 +55,7 @@ public class HibernateConfig {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
+
     @Bean
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
@@ -76,6 +75,11 @@ public class HibernateConfig {
         return txManager;
     }
 
+    @Bean
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
@@ -84,6 +88,4 @@ public class HibernateConfig {
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
         return properties;
     }
-
 }
-

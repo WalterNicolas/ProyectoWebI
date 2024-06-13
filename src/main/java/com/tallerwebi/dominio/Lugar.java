@@ -28,8 +28,10 @@ public class Lugar {
     private Double latitud;
     private String distancia;
 
-    @Nullable
-    public final double RADIUS_OF_EARTH_KM = 6371;
+
+    //TODO : DEBERIA SER UNA CONSTATNTE POR ENDE NO DEBE CARGARSE EN LA BASE DE DATOS
+    //@Nullable
+    //public final double RADIUS_OF_EARTH_KM = 6371;
 
     // @Autowired
     //private ServicioUsuario servicioUsuario;
@@ -62,7 +64,7 @@ public class Lugar {
                 Math.cos(lat1Rad) * Math.cos(lat2Rad) *
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distancia = RADIUS_OF_EARTH_KM * c;
+        double distancia = 6371 * c;
 
         double roundedDistance = Math.round(distancia * 100.0) / 100.0;
         this.distancia =  roundedDistance + " km";

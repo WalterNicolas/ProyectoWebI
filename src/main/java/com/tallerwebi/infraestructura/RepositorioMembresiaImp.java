@@ -35,11 +35,11 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
     }
 
     @Override
-    public List<Membresia> buscarPorUsuario(Long usuarioId) {
+    public Membresia buscarPorUsuario(Long usuarioId) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Membresia where usuario_id = :usuarioId", Membresia.class)
                 .setParameter("usuarioId", usuarioId)
-                .list();
+                .uniqueResult();
     }
 
     @Override

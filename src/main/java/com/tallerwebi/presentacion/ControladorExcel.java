@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.RepositorioRutinaSemanal;
 import com.tallerwebi.dominio.RutinaSemanal;
+import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import com.tallerwebi.infraestructura.ServicioExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class ControladorExcel {
     RepositorioRutinaSemanal respositorioRutinaSemanal;
 
     @RequestMapping("/generarRutina")
-    public ModelAndView generarRutina(@RequestParam Long rutinaSemanalId, HttpServletResponse response, HttpServletRequest request) {
+    public ModelAndView generarRutina(@RequestParam Long rutinaSemanalId, HttpServletResponse response, HttpServletRequest request) throws RutinaSemanalVacia {
         RutinaSemanal rutinaSemanal = respositorioRutinaSemanal.buscarPorIdDeUsuario(rutinaSemanalId);
         System.out.println("existe rutina?");
         System.out.println(rutinaSemanal);
