@@ -72,8 +72,6 @@
             });
         });
         function mostrarDetalleArticulo(articulo) {
-            console.log("Título del artículo: " + articulo.titulo);
-            console.log("Contenido del artículo: " + articulo.contenido);
             $('#modalContent').html('<h5>' + articulo.titulo + '</h5><p>' + articulo.contenido + '</p>');
             $('#exampleModal').modal('show');
         }

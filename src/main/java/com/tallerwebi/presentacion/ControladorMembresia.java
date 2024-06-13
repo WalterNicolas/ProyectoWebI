@@ -17,11 +17,11 @@ import java.time.LocalDate;
 
 @Controller
 public class ControladorMembresia {
-    @Autowired
+
     private ServicioLogin servicioLogin;
-    @Autowired
+
     private ServicioMembresia servicioMembresia;
-    @Autowired
+
     private ServicioRutina servicioRutina;
     @Autowired
     public ControladorMembresia(ServicioLogin servicioLogin, ServicioMembresia servicioMembresia,ServicioRutina servicioRutina){
@@ -31,12 +31,12 @@ public class ControladorMembresia {
     }
     @Transactional
     @RequestMapping(path = "/asignarMembresia", method = RequestMethod.POST)
-    public ModelAndView asignarMembresia(@RequestParam String tipo,  @RequestParam String email,@RequestParam int duracion,HttpServletRequest request) throws UsuarioInexistenteException {
+    public ModelAndView asignarMembresia(@RequestParam String tipo, @RequestParam String email, @RequestParam int duracion, HttpServletRequest request) throws UsuarioInexistenteException {
         ModelMap modelo = new ModelMap();
-       try {
-           HttpSession session = request.getSession(false);
-           Usuario usuario = servicioLogin.buscarPorMail(email);
-           Membresia membresia = new Membresia();
+        try {
+            HttpSession session = request.getSession(false);
+            Usuario usuario = servicioLogin.buscarPorMail(email);
+            Membresia membresia = new Membresia();
             LocalDate fechaActual = LocalDate.now();
             LocalDate fechaFutura = fechaActual.plusMonths(duracion);
 
@@ -46,18 +46,21 @@ public class ControladorMembresia {
             membresia.setTipo(tipo);
             membresia.setUsuario(usuario);
             servicioMembresia.crearMembresia(membresia);
-            // Inmediatamentee que se Genera un Membresia se ve reflejada la rutina que fue generada con las aptitudes que puso en AptitudesFisicas
-           RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
 
-           System.out.println(membresia);
-           modelo.put("Email", session.getAttribute("Email"));
-           modelo.put("membresia",membresia);
-           modelo.put("usuario",usuario);
-           modelo.put("rutinaSemanal", rutinaSemanal);
-            return new ModelAndView("home",modelo);
+            // Se genera la rutina a partir de la Aptitud Fisica del Usuario
+            RutinaSemanal rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
+
+            System.out.println(membresia);
+            session.setAttribute("Email", email);
+            session.setAttribute("membresia", membresia);
+            session.setAttribute("usuario", usuario);
+            session.setAttribute("rutinaSemanal", rutinaSemanal);
+
+            return new ModelAndView("redirect:/home");
         } catch (UsuarioInexistenteException ex) {
             modelo.put("error", "Usuario no encontrado");
             return new ModelAndView("home", modelo);
         }
     }
+
 }

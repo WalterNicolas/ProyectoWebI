@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Articulo;
 import com.tallerwebi.dominio.Membresia;
 import com.tallerwebi.dominio.RepositorioMembresia;
 import com.tallerwebi.dominio.Usuario;
@@ -36,13 +37,9 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
     @Override
     public List<Membresia> buscarPorUsuario(Long usuarioId) {
         Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Membresia> criteriaQuery = criteriaBuilder.createQuery(Membresia.class);
-
-        Root<Membresia> root = criteriaQuery.from(Membresia.class);
-        Join<Membresia, Usuario> usuarioJoin = root.join("usuario");
-        criteriaQuery.select(root).where(criteriaBuilder.equal(usuarioJoin.get("id"), usuarioId));
-        return session.createQuery(criteriaQuery).getResultList();
+        return session.createQuery("from Membresia where usuario_id = :usuarioId", Membresia.class)
+                .setParameter("usuarioId", usuarioId)
+                .list();
     }
 
     @Override
