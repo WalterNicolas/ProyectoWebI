@@ -17,6 +17,7 @@ public class RutinaSemanal {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "rutinaSemanal", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private Set<RutinaDiaria> rutinaDiaria = new HashSet<>();
     private String tipoRutina;
 

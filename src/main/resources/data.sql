@@ -237,13 +237,47 @@ VALUES ('Press de Banca. Realiza 3 series de 12 repeticiones.', 15, 'Press de Ba
 -- ('Nivel 2', 90, 100, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 90 DAY),3);
 
 -- Insertar datos de prueba en pesoRegistro
-INSERT INTO pesoRegistro (usuario_id, fecha, peso)
-VALUES (1, '2024-01-01', 71.0),
-       (1, '2024-02-01', 70.5),
-       (1, '2024-03-01', 70.0),
-       (2, '2024-01-01', 76.0),
-       (2, '2024-02-01', 75.5),
-       (2, '2024-03-01', 75.0),
-       (3, '2024-01-01', 61.0),
-       (3, '2024-02-01', 60.5),
-       (3, '2024-03-01', 60.0)
+    INSERT INTO pesoregistro (usuario_id, fecha, peso)
+VALUES
+    (1, '2024-01-01', 71.0),
+    (1, '2024-02-01', 70.5),
+    (1, '2024-03-01', 70.0),
+    (2, '2024-01-01', 76.0),
+    (2, '2024-02-01', 75.5),
+    (2, '2024-03-01', 75.0),
+    (3, '2024-01-01', 61.0),
+    (3, '2024-02-01', 60.5),
+    (3, '2024-03-01', 60.0);
+
+
+    INSERT INTO articulo (titulo, subtitulo, imagen, contenido, tipoEntrenamiento) VALUES
+    ('Guía Completa para el Entrenamiento de Fuerza', 'Mejora tu fuerza y masa muscular con estos consejos', '/img/ejervicioDos.png', 'El entrenamiento de fuerza es esencial para desarrollar músculo y mejorar tu salud general. Comienza con ejercicios básicos como el press de banca, sentadillas y peso muerto. Asegúrate de aumentar gradualmente el peso para evitar lesiones. Mantén una técnica adecuada y enfócate en la forma correcta durante cada repetición. No te olvides de incluir un calentamiento adecuado antes de cada sesión y de enfriar después del entrenamiento para facilitar la recuperación muscular y prevenir lesiones.', 'Musculacio	n'),
+
+    ('Beneficios del Entrenamiento con Pesas', 'Más allá de los músculos: mejora tu salud', '/img/ejervicioUno.png', 'Levantar pesas no solo aumenta la masa muscular, sino que también mejora la densidad ósea, acelera el metabolismo y reduce el riesgo de enfermedades crónicas. Incorpora pesas en tu rutina para ver estos beneficios. Además, el entrenamiento con pesas puede mejorar tu estado de ánimo y aumentar tu energía diaria, haciéndote sentir más fuerte y seguro.', 'Musculacion'),
+
+    ('Rutina de Hipertrofia para Principiantes', 'Cómo empezar en el mundo de la musculación', '/img/ejervicioTres.png', 'Si eres nuevo en la musculación, una rutina de hipertrofia es ideal para ganar músculo. Enfócate en ejercicios compuestos y realiza de 3 a 4 series de 8 a 12 repeticiones. No olvides calentar antes de entrenar y estirar después. Con el tiempo, podrás aumentar el peso y la intensidad de tus entrenamientos, asegurándote de progresar de manera segura y efectiva.', 'Musculacion'),
+
+    ('Entrenamiento de Cuerpo Completo', 'Ejercicios efectivos para trabajar todos los músculos', '/img/ejervicioCuatro.png', 'Una rutina de cuerpo completo es excelente para aquellos con tiempo limitado. Incluye ejercicios como el press militar, dominadas y remo con barra. Realiza esta rutina 3 veces por semana para obtener mejores resultados. Además, asegúrate de descansar adecuadamente entre sesiones para permitir que tus músculos se recuperen y crezcan.', 'Musculacion'),
+
+    ('Importancia del Descanso en la Musculación', 'Por qué tu cuerpo necesita recuperarse', '/img/ejervicioCinco.png', 'El descanso es crucial para el crecimiento muscular. Asegúrate de dormir al menos 7-8 horas por noche y toma días de descanso entre sesiones intensas de entrenamiento para permitir la recuperación muscular. Sin un descanso adecuado, tus músculos no tendrán la oportunidad de repararse y crecer, lo que podría llevar a lesiones y fatiga.', 'Musculacion'),
+
+    ('Cómo Evitar Estancarte en el Gimnasio', 'Mantén tus progresos en ascenso', '/img/ejervicioDos.pngg', 'Si sientes que te has estancado, prueba a variar tus ejercicios, aumenta la intensidad y asegúrate de comer adecuadamente. La sobrecarga progresiva es clave para seguir avanzando en tus objetivos. Mantén un registro de tus entrenamientos y haz ajustes regularmente para asegurarte de que estás desafiando a tus músculos de nuevas maneras.', 'Musculacion'),
+
+    ('Nutrición para el Crecimiento Muscular', 'Qué comer para maximizar tus ganancias', '/img/ejervicioCinco.png', 'Una dieta rica en proteínas, carbohidratos y grasas saludables es esencial para el crecimiento muscular. Consume alimentos como pollo, arroz integral, aguacates y batidos de proteínas para apoyar tus entrenamientos. Además, asegúrate de mantenerte bien hidratado y de comer una variedad de alimentos para obtener todos los nutrientes necesarios.', 'Musculacion'),
+
+    ('Suplementos para la Musculación', 'Lo que realmente necesitas', '/img/ejervicioTres.png', 'Los suplementos pueden ser útiles, pero no son necesarios para todos. La proteína en polvo, la creatina y los BCAA son populares entre los culturistas. Consulta con un nutricionista antes de comenzar a tomar cualquier suplemento para asegurarte de que sean adecuados para tus necesidades específicas.', 'Musculacion'),
+
+    ('Entrenamiento de Alta Intensidad (HIIT) para la Musculación', 'Aumenta la intensidad y maximiza los resultados', '/img/ejervicioTres.png', 'Incorporar sesiones de HIIT en tu rutina puede mejorar tu resistencia y acelerar la quema de grasa. Combina ejercicios de fuerza con ráfagas cortas de cardio intenso para obtener los beneficios. Este tipo de entrenamiento también puede ayudarte a ahorrar tiempo, ya que las sesiones de HIIT son generalmente más cortas pero más efectivas.', 'Musculacion'),
+
+    ('Consejos para Levantar Pesas de Forma Segura', 'Evita lesiones y mejora tu técnica', '/img/ejervicioUno.png', 'La técnica correcta es crucial para evitar lesiones. Mantén la espalda recta, usa un cinturón de levantamiento si es necesario y no dudes en pedir ayuda si estás levantando pesos pesados. Además, asegúrate de calentar adecuadamente antes de cada sesión de levantamiento y de enfriar después para reducir el riesgo de lesiones.', 'Musculacion'),
+
+    ('Rutina de Entrenamiento para Definición Muscular', 'Cómo lograr un cuerpo definido', '/img/ejervicioDos.png', 'Para definir los músculos, combina entrenamiento de fuerza con cardio y una dieta baja en calorías. Realiza series más largas con menos peso y reduce tu ingesta calórica para quemar grasa corporal. Mantén una dieta equilibrada y asegúrate de mantener un déficit calórico para ver resultados en la definición muscular.', 'Musculacion'),
+
+    ('La Importancia del Calentamiento y Enfriamiento', 'Cómo preparar tu cuerpo para el entrenamiento', '/img/ejervicioCuatro.png', 'El calentamiento prepara tus músculos para el esfuerzo y reduce el riesgo de lesiones. Dedica 10 minutos a actividades ligeras como estiramientos dinámicos antes de empezar tu rutina de entrenamiento. Después de entrenar, realiza estiramientos estáticos para ayudar a la recuperación muscular y reducir la rigidez.', 'Musculacion'),
+
+    ('Mejores Ejercicios para Pecho', 'Desarrolla un pecho fuerte y definido', '/img/ejervicioCuatro.png', 'El press de banca es uno de los mejores ejercicios para desarrollar el pecho. También puedes incluir variaciones como el press inclinado y el press declinado para trabajar diferentes áreas del pecho. No olvides complementar con ejercicios como aperturas con mancuernas y fondos en paralelas.', 'Musculacion'),
+
+    ('Cómo Mejorar tus Sentadillas', 'Técnicas y consejos para un mejor rendimiento', '/img/ejervicioTres.png', 'La sentadilla es un ejercicio fundamental para fortalecer las piernas y glúteos. Asegúrate de mantener una postura adecuada, con la espalda recta y las rodillas alineadas con los pies. Practica la sentadilla profunda para maximizar la activación muscular.', 'Musculacion'),
+
+    ('Entrenamiento con Pesas para Mujeres', 'Rompiendo mitos y obteniendo resultados', '/img/ejervicioCuatro.png', 'El entrenamiento con pesas no hará que las mujeres se vuelvan musculosas de forma exagerada, sino que les ayudará a tonificar y fortalecer su cuerpo. Las mujeres pueden beneficiarse de levantamientos compuestos como el peso muerto y el press de banca. La clave está en la consistencia y en seguir una rutina bien estructurada.', 'Musculacion');
+
