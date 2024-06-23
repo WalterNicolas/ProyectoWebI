@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ControladorExcel {
     ServicioExcel servicioExcel;
     @Autowired
     RepositorioRutinaSemanal respositorioRutinaSemanal;
-
+    @Transactional
     @RequestMapping("/generarRutina")
     public ModelAndView generarRutina(@RequestParam Long rutinaSemanalId, HttpServletResponse response, HttpServletRequest request) throws RutinaSemanalVacia {
         List<RutinaSemanal> rutinaSemanal = respositorioRutinaSemanal.buscarPorIdDeUsuario(rutinaSemanalId);

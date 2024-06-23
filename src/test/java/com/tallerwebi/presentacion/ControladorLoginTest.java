@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.RepositorioRutinaSemanal;
-import com.tallerwebi.dominio.RepositorioUsuario;
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +23,7 @@ public class ControladorLoginTest {
 	private HttpSession sessionMock;
 	private ServicioLogin servicioLoginMock;
 	private RepositorioUsuario repositorioUsuarioMock;
-	private RepositorioRutinaSemanal repositorioRutinaSemanalMock;
+	private ServicioRutina repositorioRutinaSemanalMock;
 	@BeforeEach
 	public void init(){
 		datosLoginMock = new DatosLogin("dami@unlam.com", "123");
@@ -35,7 +32,7 @@ public class ControladorLoginTest {
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
-		repositorioRutinaSemanalMock = mock(RepositorioRutinaSemanal.class);
+		repositorioRutinaSemanalMock = mock(ServicioRutina.class);
 		controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,repositorioRutinaSemanalMock);
 	}
 

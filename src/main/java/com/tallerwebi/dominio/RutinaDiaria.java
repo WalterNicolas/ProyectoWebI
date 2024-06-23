@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import org.springframework.core.annotation.Order;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +18,9 @@ public class RutinaDiaria {
     @ManyToOne
     @JoinColumn(name = "rutina_semanal_id")
     private RutinaSemanal rutinaSemanal;
+    public Long getId() {
+        return id;
+    }
 
     @ManyToMany
     @JoinTable(
@@ -23,10 +28,8 @@ public class RutinaDiaria {
             joinColumns = @JoinColumn(name = "rutina_diaria_id"),
             inverseJoinColumns = @JoinColumn(name = "ejercicio_id")
     )
-    private Set<Ejercicio> ejercicios = new HashSet<>();
-    public Long getId() {
-        return id;
-    }
+    @OrderColumn(name = "id")
+    private List<Ejercicio> ejercicios = new ArrayList<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -40,11 +43,11 @@ public class RutinaDiaria {
         this.rutinaSemanal = rutinaSemanal;
     }
 
-    public Set<Ejercicio> getEjercicios() {
+    public List<Ejercicio> getEjercicios() {
         return ejercicios;
     }
 
-    public void setEjercicios(Set<Ejercicio> ejercicios) {
+    public void setEjercicios(List<Ejercicio> ejercicios) {
         this.ejercicios = ejercicios;
     }
 

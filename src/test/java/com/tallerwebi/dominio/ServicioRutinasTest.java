@@ -223,7 +223,7 @@ public class ServicioRutinasTest {
         when(repositorioEjercicioMock.buscarTodosLosEjercicio()).thenReturn(new ArrayList<>(ejerciciosDisponibles)); // Convertir Set a List
 
         // Act
-        Set<Ejercicio> ejerciciosDia = servicioRutina.generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
+        List<Ejercicio> ejerciciosDia = servicioRutina.generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
 
         // Assert
         assertNotNull(ejerciciosDia);

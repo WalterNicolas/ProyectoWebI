@@ -182,7 +182,7 @@
       <!-- Iterar sobre cada Rutina Semanal -->
       <div th:each="rutinaSemanal : ${rutinasSemanales}">
         <div class="text-center">
-          <h2 class="text-light">Entrenamiento: <span th:text="${rutinaSemanal.getTipoRutina()}"></span></h2>
+          <h2 class="text-light">Entrenamiento: <span th:text="${rutinaSemanal.getTipoRutina()} +${rutinasSemanales.size()} "></span></h2>
 
           <!-- Botón para generar Excel para cada Rutina Semanal -->
           <form th:action="@{/generarRutina}" method="get" class="d-inline-block mt-2">
@@ -198,16 +198,20 @@
           <table class="table table-bordered mt-3 text-light" style="background-color: rgba(0, 0, 0, 0.75);">
             <thead>
             <tr>
+              <th>Id</th>
               <th>Duración</th>
               <th>Ejercicio</th>
               <th>Descripción</th>
+              <th>Tipo</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="ejercicio : ${rutinaDiaria.getEjercicios()}">
+              <td th:text="${ejercicio.getId()}"></td>
               <td th:text="${ejercicio.getDuracion() + ' minutos'}"></td>
               <td th:text="${ejercicio.getNombre()}"></td>
               <td th:text="${ejercicio.getDescripcion()}"></td>
+              <td th:text="${ejercicio.getPrimario()}"></td>
             </tr>
             </tbody>
           </table>

@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.RutinaDiaria;
-import com.tallerwebi.dominio.RutinaSemanal;
-import com.tallerwebi.dominio.RepositorioRutinaSemanal;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -25,21 +22,29 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
     }
-    public List<RutinaSemanal> buscarPorIdDeUsuario(Long idUsuario){
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<RutinaSemanal> criteriaQuery = builder.createQuery(RutinaSemanal.class);
-        Root<RutinaSemanal> rutinaSemanalRoot = criteriaQuery.from(RutinaSemanal.class);
-
-        // Crear un join con Usuario para establecer la condición
-        Join<RutinaSemanal, Usuario> usuarioJoin = rutinaSemanalRoot.join("usuario");
-
-        // Establecer la condición WHERE
-        criteriaQuery.where(builder.equal(usuarioJoin.get("id"), idUsuario));
-
-        // Ejecutar la consulta y obtener los resultados
-        Query<RutinaSemanal> query = session.createQuery(criteriaQuery);
+    public List<RutinaSemanal> buscarPorIdDeUsuario(Long idUsuario) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<RutinaSemanal> query = session.createQuery(
+                "SELECT DISTINCT rs " +
+                        "FROM RutinaSemanal rs " +
+                        "LEFT JOIN FETCH rs.rutinaDiaria rd " +
+                        "LEFT JOIN FETCH rd.ejercicios e " +
+                        "LEFT JOIN RutinasDiariasEjercicios rde " +
+                        "ON rd.id = rde.rutinaDiaria.id " + // Join con la tabla pivot
+                        "WHERE rs.usuario.id = :idUsuario " +
+                        "ORDER BY rde.id",  // Ordenar por el id de la tabla pivot rutina_diaria_ejercicio
+                RutinaSemanal.class
+        );
+        query.setParameter("idUsuario", idUsuario);
         return query.getResultList();
+    }
+
+    @Override
+    public RutinaSemanal rutinaSemanalPorId(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from RutinaSemanal where id = :id", RutinaSemanal.class)
+                .setParameter("id", id)
+                .uniqueResult();
     }
 
     @Override

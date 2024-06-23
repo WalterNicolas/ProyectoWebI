@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.RepositorioRutinaSemanal;
-import com.tallerwebi.dominio.RepositorioUsuario;
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -20,7 +17,7 @@ public class ControladorFormAptitudFisicaTest {
     private ServicioLogin servicioLoginMock;
 
     @Mock
-    private RepositorioRutinaSemanal repositorioRutinaSemanalMock;
+    private ServicioRutina servicioRutinaMock;
     private RepositorioUsuario repositorioUsuarioMock;
 
 
@@ -28,7 +25,7 @@ public class ControladorFormAptitudFisicaTest {
     public void init(){
         servicioLoginMock = mock(ServicioLogin.class);
         repositorioUsuarioMock = mock(RepositorioUsuario.class);
-        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,repositorioRutinaSemanalMock);
+        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,servicioRutinaMock);
     }
     @Test
     public void queLuegoDeRegistrarmeMeLLeveAlFormularioDeAptitudFisica(){

@@ -2,7 +2,6 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosIncompletosLogin;
-import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +21,13 @@ public class ControladorLogin {
 
     private ServicioLogin servicioLogin;
     private RepositorioUsuario repositorioUsuario;
-    private RepositorioRutinaSemanal repositorioRutinaSemanal;
+    private ServicioRutina servicioRutina;
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario,RepositorioRutinaSemanal repositorioRutinaSemanal){
+    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario, ServicioRutina servicioRutina){
         this.servicioLogin = servicioLogin;
         this.repositorioUsuario = repositorioUsuario;
-        this.repositorioRutinaSemanal = repositorioRutinaSemanal;
+        this.servicioRutina = servicioRutina;
     }
 
     @RequestMapping("/login")
@@ -80,7 +79,7 @@ public class ControladorLogin {
     }
     @Transactional
     @RequestMapping(path = "/home", method = RequestMethod.GET)
-    public ModelAndView irAHome(HttpServletRequest request) throws RutinaSemanalVacia {
+    public ModelAndView irAHome(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
         ModelMap model = new ModelMap();
@@ -88,7 +87,8 @@ public class ControladorLogin {
            model.put("Email",session.getAttribute("Email") );
            model.put("id",session.getAttribute("id") );
          Usuario usuario = repositorioUsuario.buscarPorId((Long)session.getAttribute("id"));
-         List<RutinaSemanal>  rutinasSemanales = repositorioRutinaSemanal.buscarPorIdDeUsuario(usuario.getId());
+         List<RutinaSemanal>  rutinasSemanales = servicioRutina.buscarPorIdDeUsuario(usuario.getId());
+
             model.put("rutinasSemanales",rutinasSemanales);
             model.put("usuario",usuario);
             return new ModelAndView("home",model);

@@ -95,7 +95,7 @@ public class ServicioRutinaImp implements ServicioRutina {
                 rutinaDiaria.setRutinaSemanal(rutinaSemanal);
                 rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
 
-                Set<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento.getNombre());
+                List<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento.getNombre());
                 rutinaDiaria.setEjercicios(ejerciciosDia);
 
                 rutinasDiarias.add(rutinaDiaria);
@@ -104,17 +104,19 @@ public class ServicioRutinaImp implements ServicioRutina {
             rutinaSemanal.setTipoRutina(tipoEntrenamiento.getNombre());
             rutinas.add(rutinaSemanal);
             repositorioRutinaSemanal.guardar(rutinaSemanal);
-
         }
         return rutinas;
     }
 
-    public Set<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
+    public List<Ejercicio> generarEjerciciosDia(int horasPorSesion, String tipoEntrenamiento) {
         List<Ejercicio> ejerciciosDisponibles = repositorioEjercicio.buscarTodosLosEjercicio();
-        Set<Ejercicio> ejerciciosDia = new HashSet<>();
+        List<Ejercicio> ejerciciosYDescansosOrdenados = new ArrayList<>(); // Lista para mantener el orden de inserción
         Random random = new Random();
         int minutosDisponibles = horasPorSesion * 60;
+        int minutosDescansoMax = (int) (minutosDisponibles * 0.3);
+        minutosDisponibles = (int) (minutosDisponibles * 0.7); // Usar solo el 70% del tiempo disponible
         int minutosAsignados = 0;
+
         // Filtrar ejercicios primarios y no primarios
         List<Ejercicio> ejerciciosPrimarios = new ArrayList<>();
         List<Ejercicio> ejerciciosNoPrimarios = new ArrayList<>();
@@ -130,15 +132,24 @@ public class ServicioRutinaImp implements ServicioRutina {
         }
 
         // Agregar hasta 2 ejercicios primarios
-            int maxPrimarios = 2;
+        int maxPrimarios = 2;
         while (maxPrimarios > 0 && minutosAsignados < minutosDisponibles && !ejerciciosPrimarios.isEmpty()) {
             int index = random.nextInt(ejerciciosPrimarios.size());
             Ejercicio ejercicio = ejerciciosPrimarios.get(index);
 
             if (minutosAsignados + ejercicio.getDuracion() <= minutosDisponibles) {
                 minutosAsignados += ejercicio.getDuracion();
-                ejerciciosDia.add(ejercicio);
+                ejerciciosYDescansosOrdenados.add(ejercicio);
                 maxPrimarios--;
+
+                // Solo añadir descanso si no es el último ejercicio que estamos agregando
+                if (minutosDescansoMax + crearDescanso("Primario").getDuracion() <= minutosDisponibles && maxPrimarios > 0) {
+                    Ejercicio descanso = crearDescanso("Primario");
+                    repositorioEjercicio.guardar(descanso);
+                    minutosDescansoMax += descanso.getDuracion();
+
+                    ejerciciosYDescansosOrdenados.add(descanso);
+                }
             }
 
             ejerciciosPrimarios.remove(index);
@@ -148,21 +159,58 @@ public class ServicioRutinaImp implements ServicioRutina {
         while (minutosAsignados < minutosDisponibles && !ejerciciosNoPrimarios.isEmpty()) {
             int index = random.nextInt(ejerciciosNoPrimarios.size());
             Ejercicio ejercicio = ejerciciosNoPrimarios.get(index);
+            // Solo añadir descanso si no es el último ejercicio
+            if (minutosDescansoMax + ejercicio.getDuracion() <= minutosDisponibles &&  !ejerciciosYDescansosOrdenados.get(ejerciciosYDescansosOrdenados.size() - 1).getNombre().equals("Descanso Primario")) {
+                Ejercicio descanso = crearDescanso("Secundario");
+                repositorioEjercicio.guardar(descanso);
+                minutosDescansoMax += descanso.getDuracion();
+                ejerciciosYDescansosOrdenados.add(descanso);
 
-            if (minutosAsignados + ejercicio.getDuracion() <= minutosDisponibles) {
+            }
+            if (minutosAsignados + crearDescanso("Secundario").getDuracion() <= minutosDisponibles &&  ejerciciosYDescansosOrdenados.get(ejerciciosYDescansosOrdenados.size() - 1).getNombre().equals("Descanso Secundario")) {
+
                 minutosAsignados += ejercicio.getDuracion();
-                ejerciciosDia.add(ejercicio);
+                ejerciciosYDescansosOrdenados.add(ejercicio);
             }
 
             ejerciciosNoPrimarios.remove(index);
         }
-        return ejerciciosDia;
+
+        // Convertir la lista a un Set para eliminar duplicados si es necesario, pero mantener el orden
+        return  ejerciciosYDescansosOrdenados;
     }
 
+    public Ejercicio crearDescanso(String tipo) {
+        Ejercicio descanso = new Ejercicio();
+        if (tipo.equals("Primario")){
+            descanso.setNombre("Descanso Primario");
+            descanso.setDescripcion("Descanso activo o pasivo entre ejercicios");
+            descanso.setDuracion(5);
+            descanso.setPrimario(false);
+            descanso.setRealizado(false);
+            descanso.setTipo("Descanso");
+        }else{
+            descanso.setNombre("Descanso Secundario");
+            descanso.setDescripcion("Descanso activo o pasivo entre ejercicios");
+            descanso.setDuracion(3);
+            descanso.setPrimario(false);
+            descanso.setRealizado(false);
+            descanso.setTipo("Descanso");
+        }
+
+        return descanso;
+    }
+    @Override
+    public List<RutinaSemanal> buscarPorIdDeUsuario(Long id) {
+        // Obtener la rutina sin descansos
+        return repositorioRutinaSemanal.buscarPorIdDeUsuario(id);
+    }
     @Override
     public List<RutinaSemanal> obtenerTodasLasRutinasById(Long idUsuario) throws RutinaSemanalVacia {
         return this.repositorioRutinaSemanal.obtenerTodasLasRutinasById(idUsuario);
     }
+
+
     @Override
     public DatosDiasYEjercicios obtenerDatosDiasYEjercicios(Long idUsuario) throws RutinaSemanalVacia {
         List<RutinaSemanal> rutinaSemanalList = this.obtenerTodasLasRutinasById(idUsuario);
@@ -176,7 +224,7 @@ public class ServicioRutinaImp implements ServicioRutina {
 
                 datos.agregarDia(dia);
 
-                Set<Ejercicio> ejercicios = rutinaDiaria.getEjercicios();
+                List<Ejercicio> ejercicios = rutinaDiaria.getEjercicios();
 
                 for (Ejercicio ejercicio : ejercicios) {
                     String nombreEjercicio = ejercicio.getNombre();

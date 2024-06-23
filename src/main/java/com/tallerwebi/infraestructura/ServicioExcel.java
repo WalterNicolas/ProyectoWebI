@@ -7,13 +7,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
 @Service
 public
 class ServicioExcel {
-
+    @Transactional
     public void getRutinaExcel(List<RutinaSemanal> rutinaSemanalList, ServletOutputStream nombreExcel) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Rutina Semanal");
