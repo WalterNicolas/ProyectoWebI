@@ -31,7 +31,7 @@ public class ServicioTipsYNutricionTest {
         when(repositorioArticulo.buscarPorTipoEntrenamiento(tipoEntrenamiento)).thenReturn(articulos);
 
         // Act
-        List<Articulo> resultado = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tipoEntrenamiento);
+        List<Articulo> resultado = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tipoEntrenamiento,0,10);
 
         // Assert
         assertNotNull(resultado);
@@ -47,7 +47,7 @@ public class ServicioTipsYNutricionTest {
 
         // when no existe ese entrenamiento
         assertThrows(NoHayArticulosDeEseTipo.class, () -> {
-            servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tipoEntrenamiento);
+            servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tipoEntrenamiento,0,10);
         });
         verify(repositorioArticulo, times(1)).buscarPorTipoEntrenamiento(tipoEntrenamiento);
     }

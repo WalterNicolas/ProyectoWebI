@@ -9,11 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +22,7 @@ import java.util.Set;
 @Controller
 @Transactional
 public class ControladorTipsYNutricion {
-    @Autowired
     ServicioLogin servicioLogin;
-    @Autowired
     ServicioTipsYNutricion servicioTipsYNutricion;
 
     @Autowired
@@ -38,17 +33,23 @@ public class ControladorTipsYNutricion {
 
     @RequestMapping("/tipsYNutricion")
 
-    public ModelAndView vistaTipsYNutricion(HttpServletRequest request) throws UsuarioInexistenteException ,NoHayArticulosDeEseTipo {
+    public ModelAndView vistaTipsYNutricion(@RequestParam(defaultValue = "todos") String tipo,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "12") int size,
+                                            HttpServletRequest request) throws UsuarioInexistenteException {
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
         String mailLogeado = (String) session.getAttribute("Email");
         if (session != null && mailLogeado != null) {
             try {
                 Usuario usuario = servicioLogin.buscarPorMail(mailLogeado);
-                List<TipoEntrenamiento> tiposEntrenamiento = usuario.getAptitudFisica().getTipoEntrenamiento();
-                List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tiposEntrenamiento.iterator().next().getDescripcion());
+                List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tipo,page,size);
+                long totalArticulos = servicioTipsYNutricion.contarTotalDeArticulos();
+                int totalPages = (int) Math.ceil((double) totalArticulos / size);
+                modelo.put("totalPages", totalPages);
+                modelo.put("currentPage",page);
                 modelo.put("articulos", listaArticulos);
-                modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTipoEntrenamiento() );
+                modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTipoEntrenamiento());
             } catch (NoHayArticulosDeEseTipo e) {
                 modelo.put("error", "No hay articulos");
                 return new ModelAndView("tipsYNutricion", modelo);

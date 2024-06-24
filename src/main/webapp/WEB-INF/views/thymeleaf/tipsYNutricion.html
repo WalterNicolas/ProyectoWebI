@@ -11,21 +11,59 @@
 <body>
 <div th:replace="templates/header :: header">
 </div>
-<h2 class="text-light text-center pt-4" th:text="'Tips de Nutricion y mas para : '+${tipoEntrenamiento} ">Titulo Seccion</h2>
-<div class="container">
+<h2 class="text-light text-center pt-5" >Tips de Nutrición y más</h2>
+<div class="container text-center">
+    <form th:action="@{/tipsYNutricion}" method="get">
+        <label for="tipo" class="text-light">Filtrar por tipo:</label>
+        <select id="tipo" name="tipo">
+            <option value="todos" th:selected="${tipoSeleccionado == 'todos'}">Todos</option>
+            <option value="cardio" th:selected="${tipoSeleccionado == 'Cardio'}">Cardio</option>
+            <option value="musculacion" th:selected="${tipoSeleccionado == 'Musculacion'}">Musculación</option>
+            <option value="calistenia" th:selected="${tipoSeleccionado == 'Calistenia'}">Calistenia</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Aplicar</button>
+    </form>
+</div>
+
+<div class="container pt-2">
     <div class="row">
-        <div th:each="articulo : ${articulos}" class="col-md-4">
-            <div class="card">
-                <img class="profile-img" th:src="@{/img/ZonaRyp.jpg}" alt="">
+        <div th:each="articulo : ${articulos}" class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img class="card-img-top" th:src="@{${articulo.getImagen()}}" alt="Imagen del artículo"
+                     style="max-height: 190px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${articulo.getTitulo()}">Título del Artículo</h5>
+                    <p th:text="${articulo.getTipoEntrenamiento()}"></p>
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${articulo.getSubtitulo()}">Subtítulo del Artículo</h6>
-                    <button type="button" class="btn btn-primary" th:attr="data-id=${articulo.getId()}" data-toggle="modal" data-target="#exampleModal">Ver más</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-more" th:attr="data-id=${articulo.getId()}"
+                            data-toggle="modal" data-target="#exampleModal">Ver más
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="d-flex justify-content-end">
+    <ul class="pagination">
+        <!-- Enlace "Anterior" -->
+        <li th:classappend="${currentPage <= 0} ? 'disabled' : ''" class="page-item">
+            <a th:href="@{/tipsYNutricion(page=${currentPage - 1}, size=${10})}" class="page-link">&laquo; Anterior</a>
+        </li>
+
+        <!-- Números de página -->
+        <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${pageNum == currentPage} ? 'active' : ''" class="page-item">
+            <a th:href="@{/tipsYNutricion(page=${pageNum}, size=${10})}" th:text="${pageNum + 1}" class="page-link">1</a>
+        </li>
+
+        <!-- Enlace "Siguiente" -->
+        <li th:classappend="${currentPage >= totalPages - 1} ? 'disabled' : ''" class="page-item">
+            <a th:href="@{/tipsYNutricion(page=${currentPage + 1}, size=${10})}" class="page-link">Siguiente &raquo;</a>
+        </li>
+    </ul>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -56,7 +94,7 @@
 
 <script>
     $(document).ready(function () {
-        $('.btn-primary').click(function () {
+        $('.btn-more').click(function () {
             var id = $(this).data('id');
             $.ajax({
                 type: "GET",
