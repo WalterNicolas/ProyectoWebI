@@ -170,107 +170,108 @@
 </script>
 <script th:inline="javascript">
 
-    let arrayEntrenamientos = /*[[${tipoDeEntrenamientos}]] */ || [];
+    /*<![CDATA[*/
+   let arrayEntrenamientos = /*[[${tipoDeEntrenamientos}]]*/ [];
+   let tiposEntrenamientoOptions = [];
 
-    let tiposEntrenamientoOptions = [];
+   arrayEntrenamientos.forEach(element => {
+       tiposEntrenamientoOptions.push({"id":element.id,"nombre":element.nombre});
+   });
 
-    arrayEntrenamientos.forEach(element => {
-        tiposEntrenamientoOptions.push({"id":element.id,"nombre":element.nombre})
-    });
+   let opcionesHtml = tiposEntrenamientoOptions.map(function(entrenamiento) {
+       return '<option value="' + entrenamiento.id + '">' + entrenamiento.nombre + '</option>';
+   }).join('');
+   /*]]>*/
 
-    tiposEntrenamientoOptions.map(function(entrenamiento) {
-        return '<option value="' + entrenamiento.id + '">' + entrenamiento.nombre + '</option>';
-    }).join('');
+   function removeEntrenamiento(button) {
+       var container = document.getElementById('tiposEntrenamientoContainer');
+       if (container.children.length > 1) {
+           button.closest('.form-outline').remove();
+           updateEntrenamientoIndices();
+       } else {
+           alert('Debe haber al menos un tipo de entrenamiento.');
+       }
+   }
 
-    function removeEntrenamiento(button) {
-        var container = document.getElementById('tiposEntrenamientoContainer');
-        if (container.children.length > 1) {
-            button.closest('.form-outline').remove();
-            updateEntrenamientoIndices();
-        } else {
-            alert('Debe haber al menos un tipo de entrenamiento.');
-        }
-    }
+   function updateEntrenamientoIndices() {
+       var selects = document.querySelectorAll('#tiposEntrenamientoContainer select');
+       selects.forEach((select, index) => {
+           select.name = 'tiposEntrenamiento[' + index + '].id';
+       });
+   }
 
-    function updateEntrenamientoIndices() {
-        var selects = document.querySelectorAll('#tiposEntrenamientoContainer select');
-        selects.forEach((select, index) => {
-            select.name = 'tiposEntrenamiento[' + index + '].id';
-        });
-    }
-
-    function addEntrenamiento() {
-        var container = document.getElementById('tiposEntrenamientoContainer');
-        var index = container.children.length;
-        var newEntrenamiento = `
-            <div data-mdb-input-init class="form-outline mb-3">
-                <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
-                <div class="d-flex align-items-center">
-                    <select id="tipoEntrenamiento" class="form-select" name="tiposEntrenamiento[` + index + `].id">
-                        <option value="">Seleccione...</option>
-                        ` + tiposEntrenamientoOptions + `
-                    </select>
-                    <button type="button" class="btn btn-danger ms-2" onclick="removeEntrenamiento(this)">Borrar</button>
-                </div>
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', newEntrenamiento);
-    }
-
-     $(document).ready(function() {
-        $("#form-aptitud-fisica").submit(function(event) {
-            event.preventDefault();
-
-            var fechaDate = $("#fechaNacimiento").val();
-            var date = new Date(fechaDate);
-
-            var today = new Date();
-            var age = today.getFullYear() - date.getFullYear();
-            var m = today.getMonth() - date.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < date.getDate())) {
-                age--;
-            }
-
-            if (age < 18) {
-                alert("Debe ser mayor de 18 años para registrar esta información.");
-                return;
-            }
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "/guardar-aptitud-fisica",
-                data: formData,
-                success: function(response) {
-                    alert("Datos actualizados correctamente");
-                },
-                error: function(error) {
-                    alert("Ocurrió un error al actualizar los datos");
-                }
-            });
-        });
-    });
+   function addEntrenamiento() {
+       var container = document.getElementById('tiposEntrenamientoContainer');
+       var index = container.children.length;
+       var newEntrenamiento = `
+           <div data-mdb-input-init class="form-outline mb-3">
+               <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
+               <div class="d-flex align-items-center">
+                   <select id="tipoEntrenamiento" class="form-select" name="tiposEntrenamiento[` + index + `].id">
+                       <option value="">Seleccione...</option>
+                       ` + opcionesHtml + `
+                   </select>
+                   <button type="button" class="btn btn-danger ms-2" onclick="removeEntrenamiento(this)">Borrar</button>
+               </div>
+           </div>
+       `;
+       container.insertAdjacentHTML('beforeend', newEntrenamiento);
+   }
 
     $(document).ready(function() {
-        $("#form-user").submit(function(event) {
-            event.preventDefault();
+       $("#form-aptitud-fisica").submit(function(event) {
+           event.preventDefault();
 
-            var formData = $(this).serialize();
+           var fechaDate = $("#fechaNacimiento").val();
+           var date = new Date(fechaDate);
 
-            $.ajax({
-                type: "POST",
-                url: "/guardar-user-data",
-                data: formData,
-                success: function(response) {
-                    alert("Datos actualizados correctamente");
-                },
-                error: function(error) {
-                    alert("Ocurrió un error al actualizar los datos");
-                }
-            });
-        });
-    });
+           var today = new Date();
+           var age = today.getFullYear() - date.getFullYear();
+           var m = today.getMonth() - date.getMonth();
+           if (m < 0 || (m === 0 && today.getDate() < date.getDate())) {
+               age--;
+           }
+
+           if (age < 18) {
+               alert("Debe ser mayor de 18 años para registrar esta información.");
+               return;
+           }
+
+           var formData = $(this).serialize();
+
+           $.ajax({
+               type: "POST",
+               url: "/guardar-aptitud-fisica",
+               data: formData,
+               success: function(response) {
+                   alert("Datos actualizados correctamente");
+               },
+               error: function(error) {
+                   alert("Ocurrió un error al actualizar los datos");
+               }
+           });
+       });
+   });
+
+   $(document).ready(function() {
+       $("#form-user").submit(function(event) {
+           event.preventDefault();
+
+           var formData = $(this).serialize();
+
+           $.ajax({
+               type: "POST",
+               url: "/guardar-user-data",
+               data: formData,
+               success: function(response) {
+                   alert("Datos actualizados correctamente");
+               },
+               error: function(error) {
+                   alert("Ocurrió un error al actualizar los datos");
+               }
+           });
+       });
+   });
 
 </script>
 </html>
