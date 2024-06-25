@@ -45,10 +45,10 @@ public class ControladorTipsYNutricion {
         if (session != null && mailLogeado != null) {
             try {
                 Usuario usuario = servicioLogin.buscarPorMail(mailLogeado);
-                List<TipoEntrenamiento> tiposEntrenamiento = usuario.getAptitudFisica().getTipoEntrenamiento();
+                List<TipoEntrenamiento> tiposEntrenamiento = usuario.getAptitudFisica().getTiposEntrenamiento();
                 List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tiposEntrenamiento.iterator().next().getDescripcion());
                 modelo.put("articulos", listaArticulos);
-                modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTipoEntrenamiento() );
+                modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTiposEntrenamiento() );
             } catch (NoHayArticulosDeEseTipo e) {
                 modelo.put("error", "No hay articulos");
                 return new ModelAndView("tipsYNutricion", modelo);

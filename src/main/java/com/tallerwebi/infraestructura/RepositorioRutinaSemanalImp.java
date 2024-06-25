@@ -22,6 +22,7 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
     }
+
     public List<RutinaSemanal> buscarPorIdDeUsuario(Long idUsuario) {
         Session session = sessionFactory.getCurrentSession();
         Query<RutinaSemanal> query = session.createQuery(
@@ -31,14 +32,12 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
                         "LEFT JOIN FETCH rd.ejercicios e " +
                         "LEFT JOIN RutinasDiariasEjercicios rde " +
                         "ON rd.id = rde.rutinaDiaria.id " + // Join con la tabla pivot
-                        "WHERE rs.usuario.id = :idUsuario " +
-                        "ORDER BY rde.id",  // Ordenar por el id de la tabla pivot rutina_diaria_ejercicio
+                        "WHERE rs.usuario.id = :idUsuario",
                 RutinaSemanal.class
         );
         query.setParameter("idUsuario", idUsuario);
         return query.getResultList();
     }
-
     @Override
     public RutinaSemanal rutinaSemanalPorId(Long id) {
         Session session = sessionFactory.getCurrentSession();

@@ -82,7 +82,7 @@ public class ServicioRutinaImp implements ServicioRutina {
         AptitudFisica aptitudFisica = usuario.getAptitudFisica();
         int diasEntrenamiento = aptitudFisica.getDiasEntrenamiento();
         int horasPorSesion = aptitudFisica.getHorasEntrenamiento();
-        List<TipoEntrenamiento> tiposEntrenamientos = aptitudFisica.getTipoEntrenamiento();
+        List<TipoEntrenamiento> tiposEntrenamientos = aptitudFisica.getTiposEntrenamiento();
        List<RutinaSemanal> rutinas = new ArrayList<>();
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
