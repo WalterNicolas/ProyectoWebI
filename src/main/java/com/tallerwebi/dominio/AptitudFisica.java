@@ -20,12 +20,11 @@ public class AptitudFisica {
     @OneToOne
     private Usuario usuario;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "AptitudFisicaTipoEntrenamiento",
             joinColumns = @JoinColumn(name = "aptitudFisica_id"),
             inverseJoinColumns = @JoinColumn(name = "tipoEntrenamiento_id")
-
     )
     private List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
 
@@ -75,12 +74,12 @@ public class AptitudFisica {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<TipoEntrenamiento> getTipoEntrenamiento() {
+    public List<TipoEntrenamiento> getTiposEntrenamiento() {
         return tiposEntrenamiento;
     }
 
-    public void setTipoEntrenamiento(List<TipoEntrenamiento> tipoEntrenamiento) {
-        this.tiposEntrenamiento = tipoEntrenamiento;
+    public void setTiposEntrenamiento(List<TipoEntrenamiento> tiposEntrenamiento) {
+        this.tiposEntrenamiento = tiposEntrenamiento;
     }
 
     public int getDiasEntrenamiento() {

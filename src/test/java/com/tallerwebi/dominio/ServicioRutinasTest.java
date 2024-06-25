@@ -168,7 +168,7 @@ public class ServicioRutinasTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         aptitudFisica.setDiasEntrenamiento(3);
         aptitudFisica.setHorasEntrenamiento(1);
-        aptitudFisica.setTipoEntrenamiento(entrenamientosLis);
+        aptitudFisica.setTiposEntrenamiento(entrenamientosLis);
         usuario.setAptitudFisica(aptitudFisica);
 
         List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios());
@@ -196,7 +196,7 @@ public class ServicioRutinasTest {
         AptitudFisica aptitudFisica = new AptitudFisica();
         aptitudFisica.setDiasEntrenamiento(3);
         aptitudFisica.setHorasEntrenamiento(1);
-        aptitudFisica.setTipoEntrenamiento(entrenamientosLista);
+        aptitudFisica.setTiposEntrenamiento(entrenamientosLista);
         usuario.setAptitudFisica(aptitudFisica);
 
         List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios());

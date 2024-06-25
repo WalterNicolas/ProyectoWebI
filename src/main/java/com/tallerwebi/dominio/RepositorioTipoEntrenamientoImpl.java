@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.util.List;
+
 @Repository
 public class RepositorioTipoEntrenamientoImpl implements RepositorioTipoEntrenamiento {
 
@@ -23,6 +26,17 @@ public class RepositorioTipoEntrenamientoImpl implements RepositorioTipoEntrenam
     public void guardarRelacion(Long aptitudFisicaId, Long tipoEntrenamientoId) {
         String sql = "INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, aptitudFisicaId, tipoEntrenamientoId);
+    }
+
+    @Override
+    public List<TipoEntrenamiento> findAll() {
+        String sql = "SELECT id, nombre FROM TipoEntrenamiento";
+        return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> {
+            TipoEntrenamiento tipoEntrenamiento = new TipoEntrenamiento();
+            tipoEntrenamiento.setId(rs.getLong("id"));
+            tipoEntrenamiento.setNombre(rs.getString("nombre"));
+            return tipoEntrenamiento;
+        });
     }
 
     @Override

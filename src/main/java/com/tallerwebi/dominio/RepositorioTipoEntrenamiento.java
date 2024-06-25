@@ -1,8 +1,10 @@
 package com.tallerwebi.dominio;
 
+import java.util.List;
+
 public interface RepositorioTipoEntrenamiento {
      void guardar(AptitudFisica aptitudFisica);
     void guardarRelacion(Long aptitudFisicaId, Long tipoEntrenamientoId);
-
-    public TipoEntrenamiento findByNombre(String nombre);
+    List<TipoEntrenamiento> findAll();
+    TipoEntrenamiento findByNombre(String nombre);
 }

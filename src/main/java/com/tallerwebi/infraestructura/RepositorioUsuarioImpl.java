@@ -1,11 +1,14 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.AptitudFisica;
 import com.tallerwebi.dominio.RepositorioUsuario;
+import com.tallerwebi.dominio.TipoEntrenamiento;
 import com.tallerwebi.dominio.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -15,6 +18,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     @Autowired
     public RepositorioUsuarioImpl(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
@@ -52,4 +57,17 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         sessionFactory.getCurrentSession().update(usuario);
     }
 
+    @Override
+    public void updateData(Usuario usuario) {
+        String updateSql = "UPDATE Usuario SET nombre = ?, apellido = ?, email = ?, latitud = ?, longitud = ? WHERE id = ?";
+        jdbcTemplate.update(
+                updateSql,
+                usuario.getNombre(),
+                usuario.getApellido(),
+                usuario.getEmail(),
+                usuario.getLatitud(),
+                usuario.getLongitud(),
+                usuario.getId()
+        );
+    }
 }

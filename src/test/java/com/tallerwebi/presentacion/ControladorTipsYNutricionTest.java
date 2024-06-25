@@ -52,7 +52,7 @@ class ControladorTipsYNutricionTest {
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
-        when(aptitudFisicaMock.getTipoEntrenamiento()).thenReturn(entrenamientosLis);
+        when(aptitudFisicaMock.getTiposEntrenamiento()).thenReturn(entrenamientosLis);
         when(servicioLoginMock.buscarPorMail(anyString())).thenReturn(usuarioEncontradoMock);
         when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento("Musculacion",0,10)).thenReturn(mockArticulos);
     }
@@ -62,7 +62,7 @@ class ControladorTipsYNutricionTest {
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientosLis.add(entrenamiento);
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
-        when(aptitudFisicaMock.getTipoEntrenamiento()).thenReturn(entrenamientosLis);
+        when(aptitudFisicaMock.getTiposEntrenamiento()).thenReturn(entrenamientosLis);
         when(servicioLoginMock.buscarPorMail(anyString())).thenReturn(usuarioEncontradoMock);
         when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento(any(), anyInt(), anyInt()))
                 .thenThrow(new NoHayArticulosDeEseTipo());

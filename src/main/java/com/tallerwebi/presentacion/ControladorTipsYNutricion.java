@@ -49,7 +49,7 @@ public class ControladorTipsYNutricion {
                 modelo.put("totalPages", totalPages);
                 modelo.put("currentPage",page);
                 modelo.put("articulos", listaArticulos);
-                modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTipoEntrenamiento());
+                modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTiposEntrenamiento());
             } catch (NoHayArticulosDeEseTipo e) {
                 modelo.put("error", "No hay articulos");
                 return new ModelAndView("tipsYNutricion", modelo);

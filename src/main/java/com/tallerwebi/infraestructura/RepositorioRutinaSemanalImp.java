@@ -22,6 +22,7 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
     }
+
     public List<RutinaSemanal> buscarPorIdDeUsuario(Long idUsuario) {
         Session session = sessionFactory.getCurrentSession();
         Query<RutinaSemanal> query = session.createQuery(
@@ -37,7 +38,6 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
         query.setParameter("idUsuario", idUsuario);
         return query.getResultList();
     }
-
     @Override
     public RutinaSemanal rutinaSemanalPorId(Long id) {
         Session session = sessionFactory.getCurrentSession();
