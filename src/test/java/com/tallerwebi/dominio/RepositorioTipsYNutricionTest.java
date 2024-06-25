@@ -101,7 +101,7 @@ public class RepositorioTipsYNutricionTest {
 //
 //    }
     private List<Articulo> whenObtengoTodosLosArticulos(){
-         return repositorioArticulo.todosLosArticulos();
+         return repositorioArticulo.todosLosArticulos(0,10);
     }
     private void thenTengoLaListaDeTodosLosArticulos(List<Articulo> resultado){
         assertNotNull(resultado);

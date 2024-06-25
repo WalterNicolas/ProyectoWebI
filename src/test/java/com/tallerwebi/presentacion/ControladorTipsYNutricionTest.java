@@ -54,7 +54,7 @@ class ControladorTipsYNutricionTest {
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
         when(aptitudFisicaMock.getTiposEntrenamiento()).thenReturn(entrenamientosLis);
         when(servicioLoginMock.buscarPorMail(anyString())).thenReturn(usuarioEncontradoMock);
-        when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento("Musculacion")).thenReturn(mockArticulos);
+        when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento("Musculacion",0,10)).thenReturn(mockArticulos);
     }
 
     private void givenUsuarioExistenteYNoExistenRegistros() throws UsuarioInexistenteException, NoHayArticulosDeEseTipo {
@@ -64,7 +64,8 @@ class ControladorTipsYNutricionTest {
         when(usuarioEncontradoMock.getAptitudFisica()).thenReturn(aptitudFisicaMock);
         when(aptitudFisicaMock.getTiposEntrenamiento()).thenReturn(entrenamientosLis);
         when(servicioLoginMock.buscarPorMail(anyString())).thenReturn(usuarioEncontradoMock);
-        when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento(any())).thenThrow(new NoHayArticulosDeEseTipo());
+        when(servicioTipsYNutricionMock.buscarTipsPorTipoDeEntrenamiento(any(), anyInt(), anyInt()))
+                .thenThrow(new NoHayArticulosDeEseTipo());
     }
 
     @Test
@@ -79,7 +80,7 @@ class ControladorTipsYNutricionTest {
     }
 
     private ModelAndView whenIngresaASeccionTipsYNutricion() throws UsuarioInexistenteException, NoHayArticulosDeEseTipo {
-        return controladorTipsYNutricion.vistaTipsYNutricion(requestMock);
+        return controladorTipsYNutricion.vistaTipsYNutricion("todos",0,10, requestMock);
     }
 
     @Test

@@ -21,14 +21,21 @@ public class ServicioTipsYNutricionImp implements ServicioTipsYNutricion {
         this.repositorioArticulo = repositorioArticulo;
     }
     @Override
-   public List<Articulo>  buscarTipsPorTipoDeEntrenamiento(String tipoEntrenamiento) throws NoHayArticulosDeEseTipo {
-        if (repositorioArticulo.buscarPorTipoEntrenamiento(tipoEntrenamiento) == null) {
+    public List<Articulo> buscarTipsPorTipoDeEntrenamiento(String tipoEntrenamiento, int page, int size) throws NoHayArticulosDeEseTipo {
+        if (repositorioArticulo.buscarPorTipoEntrenamiento(tipoEntrenamiento) == null && !"todos".equalsIgnoreCase(tipoEntrenamiento)) {
             throw new NoHayArticulosDeEseTipo();
-        }else{
-            List<Articulo> articulos = repositorioArticulo.buscarPorTipoEntrenamiento(tipoEntrenamiento);
+        } else {
+            List<Articulo> articulos;
+            if ("todos".equalsIgnoreCase(tipoEntrenamiento)) {
+                articulos = repositorioArticulo.todosLosArticulos(page, size);
+            } else {
+                // Obtener artículos por tipo de entrenamiento
+                articulos = repositorioArticulo.buscarPorTipoEntrenamiento(tipoEntrenamiento);
+            }
             return articulos;
         }
     }
+
 
     @Override
     public Articulo getArticuloPorId(Long id) throws NoHayInformacionDelArticulo {
@@ -37,6 +44,11 @@ public class ServicioTipsYNutricionImp implements ServicioTipsYNutricion {
         }else{
             return repositorioArticulo.getPorId(id);
         }
+    }
+
+    @Override
+    public Long contarTotalDeArticulos() {
+        return repositorioArticulo.contarTotalArticulos();
     }
 
 }

@@ -32,8 +32,8 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
                         "LEFT JOIN FETCH rd.ejercicios e " +
                         "LEFT JOIN RutinasDiariasEjercicios rde " +
                         "ON rd.id = rde.rutinaDiaria.id " + // Join con la tabla pivot
-                        "WHERE rs.usuario.id = :idUsuario",
-                RutinaSemanal.class
+                        "WHERE rs.usuario.id = :idUsuario ",
+                        RutinaSemanal.class
         );
         query.setParameter("idUsuario", idUsuario);
         return query.getResultList();
