@@ -8,4 +8,5 @@ public interface ServicioAptitudFisica {
    AptitudFisica registrarDatos(AptitudFisica aptitudFisica, String[] tipoDeEntrenamiento);
    Integer calcularEdad(String fechaNacimiento);
    Boolean sonParametrosValidos(AptitudFisica aptitudFisica);
+   boolean update(AptitudFisica aptitudFisica);
 }

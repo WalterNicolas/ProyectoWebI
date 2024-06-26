@@ -34,5 +34,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
     }
 
+    @Override
+    public void updateData(Usuario usuario) {
+        this.repositorioUsuario.updateData(usuario);
+    }
 
 }

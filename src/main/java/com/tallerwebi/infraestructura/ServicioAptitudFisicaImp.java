@@ -41,7 +41,7 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
                     tiposEntrenamiento.add(tipo);
                 }
             }
-            aptitudFisica.setTipoEntrenamiento(tiposEntrenamiento);
+            aptitudFisica.setTiposEntrenamiento(tiposEntrenamiento);
         }
 
         if (!sonParametrosValidos(aptitudFisica)) {
@@ -65,8 +65,8 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
     public Boolean sonParametrosValidos(AptitudFisica aptitudFisica) {
         return aptitudFisica.getAltura() > 0
                 && aptitudFisica.getPeso() > 0
-                && aptitudFisica.getTipoEntrenamiento() != null
-                && !aptitudFisica.getTipoEntrenamiento().isEmpty()
+                && aptitudFisica.getTiposEntrenamiento() != null
+                && !aptitudFisica.getTiposEntrenamiento().isEmpty()
                 && aptitudFisica.getFechaNacimiento() != null
                 && !aptitudFisica.getFechaNacimiento().isEmpty()
                 && aptitudFisica.getDiasEntrenamiento() > 0
@@ -74,6 +74,12 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
                 && aptitudFisica.getEstadoFisico() != null
                 && !aptitudFisica.getEstadoFisico().isEmpty();
     }
+
+    @Override
+    public boolean update(AptitudFisica aptitudFisica) {
+        return repositorioAptitudFisica.update(aptitudFisica);
+    }
+
     public Boolean esMayorDeEdad(String edad){
         if (calcularEdad(edad) >=18) {
             return true;

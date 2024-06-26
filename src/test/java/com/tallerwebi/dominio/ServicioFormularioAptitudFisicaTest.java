@@ -65,7 +65,7 @@ public class ServicioFormularioAptitudFisicaTest {
         // Convertir la fecha de nacimiento a String
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
         apto.setFechaNacimiento(fechaDeNacimientoString);
-        apto.setTipoEntrenamiento(entrenamientosLis);
+        apto.setTiposEntrenamiento(entrenamientosLis);
         apto.setDiasEntrenamiento(3);
         apto.setHorasEntrenamiento(1);
         apto.setEstadoFisico("sedentario");
@@ -95,7 +95,7 @@ public class ServicioFormularioAptitudFisicaTest {
         // Convertir la fecha de nacimiento a String
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
         apto.setFechaNacimiento(fechaDeNacimientoString);
-        apto.setTipoEntrenamiento(entrenamientosLis);
+        apto.setTiposEntrenamiento(entrenamientosLis);
         apto.setDiasEntrenamiento(3);
         apto.setEstadoFisico("sedentario");
         assertThrows(DatosMalIngresadosException.class,

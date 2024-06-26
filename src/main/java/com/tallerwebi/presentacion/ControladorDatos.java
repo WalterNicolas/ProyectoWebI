@@ -48,7 +48,7 @@ public class ControladorDatos {
             ArrayList pesosRegistro = servicioPeso.obtenerPesosPorMes(usuario.getId());
             Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
 
-            if ("Nivel 1".equals(membresia.getTipo())) {
+            if ( membresia == null || "Nivel 1".equals(membresia.getTipo()) ) {
                 modelo.put("error", "No tienes acceso a esta sección.");
                 return new ModelAndView("datos", modelo);
             }

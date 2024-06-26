@@ -44,22 +44,4 @@ public class MapaController {
         }
     }
 
-   /* @RequestMapping("/mapaBuscador")
-    public ModelAndView irASearch() {
->>>>>>> e9957f37a788e5c0b2f28b5d55086884155c7558
-        List<Lugar> lugares;
-        ModelMap modelo = new ModelMap();
-        try {
-            if (session != null && session.getAttribute("Email") != null) {
-                lugares = servicioSearch.buscarSitios();
-                modelo.addAttribute("lugares", lugares);
-                return new ModelAndView("mapaBuscador", modelo);
-            }else{
-                return new ModelAndView("redirect:/login");
-            }
-        } catch (SearchException e) {
-            modelo.put("error","No hay lugares disponibles");
-            return new ModelAndView("mapaBuscador", modelo);
-        }
-    }*/
 }
