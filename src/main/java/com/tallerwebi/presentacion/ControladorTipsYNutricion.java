@@ -24,11 +24,12 @@ import java.util.Set;
 public class ControladorTipsYNutricion {
     ServicioLogin servicioLogin;
     ServicioTipsYNutricion servicioTipsYNutricion;
-
+    ServicioMembresia servicioMembresia;
     @Autowired
-    public ControladorTipsYNutricion(ServicioLogin servicioLogin, ServicioTipsYNutricion servicioTipsYNutricion) {
+    public ControladorTipsYNutricion(ServicioLogin servicioLogin, ServicioTipsYNutricion servicioTipsYNutricion,ServicioMembresia servicioMembresia) {
         this.servicioLogin = servicioLogin;
         this.servicioTipsYNutricion = servicioTipsYNutricion;
+        this.servicioMembresia = servicioMembresia;
     }
 
     @RequestMapping("/tipsYNutricion")
@@ -43,13 +44,21 @@ public class ControladorTipsYNutricion {
         if (session != null && mailLogeado != null) {
             try {
                 Usuario usuario = servicioLogin.buscarPorMail(mailLogeado);
+
                 List<Articulo> listaArticulos = servicioTipsYNutricion.buscarTipsPorTipoDeEntrenamiento(tipo,page,size);
                 long totalArticulos = servicioTipsYNutricion.contarTotalDeArticulos();
                 int totalPages = (int) Math.ceil((double) totalArticulos / size);
                 modelo.put("totalPages", totalPages);
                 modelo.put("currentPage",page);
+                Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
+                if (membresia == null || "GRATUITO".equals(membresia.getTipo()) || "INTERMEDIO".equals(membresia.getTipo())) {
+                    modelo.put("error", "No tienes acceso a esta sección.");
+                    return new ModelAndView("tipsYNutricion", modelo);
+                }
                 modelo.put("articulos", listaArticulos);
                 modelo.put("tipoEntrenamiento",usuario.getAptitudFisica().getTiposEntrenamiento());
+
+
             } catch (NoHayArticulosDeEseTipo e) {
                 modelo.put("error", "No hay articulos");
                 return new ModelAndView("tipsYNutricion", modelo);
