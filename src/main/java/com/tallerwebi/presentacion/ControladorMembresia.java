@@ -1,6 +1,9 @@
 package com.tallerwebi.presentacion;
 
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.excepcion.MembresiaNoEncontrada;
 import com.tallerwebi.dominio.excepcion.UsuarioInexistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,11 +28,15 @@ public class ControladorMembresia {
     private ServicioMembresia servicioMembresia;
 
     private ServicioRutina servicioRutina;
+    private ServicioMercadoPago servicioMercadoPago;
+    private HttpSession session;
     @Autowired
-    public ControladorMembresia(ServicioLogin servicioLogin, ServicioMembresia servicioMembresia,ServicioRutina servicioRutina){
+    public ControladorMembresia(ServicioLogin servicioLogin, ServicioMembresia servicioMembresia,ServicioRutina servicioRutina, ServicioMercadoPago servicioMercadoPago,HttpSession session){
         this.servicioLogin = servicioLogin;
         this.servicioMembresia = servicioMembresia;
         this.servicioRutina = servicioRutina;
+        this.servicioMercadoPago = servicioMercadoPago;
+        this.session = session;
     }
     @Transactional
     @RequestMapping(path = "/asignarMembresia", method = RequestMethod.POST)
@@ -41,26 +48,62 @@ public class ControladorMembresia {
             Membresia membresia = new Membresia();
             LocalDate fechaActual = LocalDate.now();
             LocalDate fechaFutura = fechaActual.plusMonths(duracion);
-
             membresia.setFechaFin(fechaFutura);
             membresia.setFechaInicio(fechaActual);
             membresia.setDuracion(duracion);
             membresia.setTipo(tipo);
              membresia.setUsuario(usuario);
+            membresia.setValor(50);
+             Integer valorMembresia =  50;
+             Integer total = valorMembresia * duracion; // La duracion es por mes. 1 = 1 mes
+            //CREO LA MEMBRESIA. -> Luego es borrada si el pago no es Satifactorio. /validar-pago
             servicioMembresia.crearMembresia(membresia);
-
-            // Se genera la rutina a partir de la Aptitud Fisica del Usuario
-            List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
-            session.setAttribute("Email", email);
-            session.setAttribute("membresia", membresia);
-            session.setAttribute("usuario", usuario);
-            session.setAttribute("rutinaSemanal", rutinaSemanal);
-
-            return new ModelAndView("redirect:/home");
+            if (tipo.equalsIgnoreCase("GRATUITO")){
+                List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(membresia.getUsuario());
+                session.setAttribute("membresia", membresia);
+                session.setAttribute("usuario", membresia.getUsuario());
+                session.setAttribute("rutinaSemanal", rutinaSemanal);
+                return new ModelAndView("redirect:/home");
+            }
+            // Mando en session el id de la membresia creada.
+            session.setAttribute("idMembresia",membresia.getId());
+            DatosPreferencia preference = servicioMercadoPago.crearPreferenciaPago(total);
+            modelo.put("idPreferencia", preference);
+            return new ModelAndView("redirect:" + preference.urlCheckout, modelo);
         } catch (UsuarioInexistenteException ex) {
             modelo.put("error", "Usuario no encontrado");
             return new ModelAndView("home", modelo);
+        } catch (MPException e) {
+            e.printStackTrace();
+            modelo.put("error",  e.getMessage());
+            return new ModelAndView("home", modelo);
+        } catch (MPApiException e) {
+            e.printStackTrace();
+            modelo.put("error", e.getMessage());
+            return new ModelAndView("home", modelo);
         }
+    }
+    //Aca te redirecciona MercadoPago
+    @Transactional
+    @RequestMapping(path = "/validar-pago", method = RequestMethod.GET)
+    public ModelAndView validarPago(@RequestParam("status") String status) throws MembresiaNoEncontrada {
+        ModelMap modelo = new ModelMap();
+        Long membresiaId = (Long) session.getAttribute("idMembresia");
+        // Si es Exitoso, genero la rutina y mantengo la Membresia.
+        if (status.equals("approved")) {
+            Membresia membresia = servicioMembresia.buscarPorId(membresiaId);
+            List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(membresia.getUsuario());
+            session.setAttribute("membresia", membresia);
+            session.removeAttribute("idMembresia");
+            session.setAttribute("usuario", membresia.getUsuario());
+            session.setAttribute("rutinaSemanal", rutinaSemanal);
+        } else {
+            //Si se genera algun error al procesar el pago, se Elimina la membresia y se envia al front un msj de error.
+            servicioMembresia.eliminarPorId(membresiaId);
+            modelo.put("error", "Error al procesar el pago.");
+            return new ModelAndView("redirect:/home", modelo);
+        }
+        return new ModelAndView("redirect:/home");
     }
 
 }

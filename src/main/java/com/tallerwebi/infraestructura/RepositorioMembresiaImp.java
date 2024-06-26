@@ -1,21 +1,13 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Articulo;
 import com.tallerwebi.dominio.Membresia;
 import com.tallerwebi.dominio.RepositorioMembresia;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.MembresiaNoEncontrada;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
-import java.util.List;
 
 @Repository
 public class RepositorioMembresiaImp implements RepositorioMembresia {
@@ -45,6 +37,26 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
     @Override
     public void crearMembresia(Membresia membresia) {
         sessionFactory.getCurrentSession().save(membresia);
+    }
+
+    @Override
+    public Membresia buscarPorId(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Membresia where id = :id", Membresia.class)
+                .setParameter("id", id)
+                .uniqueResult();
+    }
+
+    @Override
+    public Boolean eliminarPorId(Long membresiaId) throws MembresiaNoEncontrada {
+        Session session = sessionFactory.getCurrentSession();
+        Membresia membresia = buscarPorId(membresiaId);
+        if(membresia !=null){
+            session.delete(membresia);
+        }else{
+          throw new MembresiaNoEncontrada();
+        }
+        return true;
     }
 
 }

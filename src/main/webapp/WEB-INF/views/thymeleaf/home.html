@@ -256,26 +256,26 @@
 
           </div>
         </a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIntermedio">
+          Obtener Pack Intermedio
+        </button>
       </div>
-
       <div class="ag-courses_item">
         <a href="#" class="ag-courses-item_link">
           <div class="ag-courses-item_bg"></div>
-
           <div class="ag-courses-item_title">
             Pack Premium
           </div>
-
           <div class="ag-courses-item_date-box">
-
             <span class="ag-courses-item_date">
              Rutina gratuita<br> Gym's <br>Consejos Alimentacion
           </span>
           </div>
         </a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPremium">
+          Obtener Pack Premium
+        </button>
       </div>
-
-
     </div>
   </div>
   </div>
@@ -296,8 +296,74 @@
           <div th:if="${usuario.getAptitudFisica() != null}">
             <form th:action="@{/asignarMembresia}" method="post">
               <div class="form-group mb-3"> <!-- Agrega la clase "mb-3" para agregar espacio en la parte inferior -->
+                <input type="hidden"   name="email" th:value="${usuario.getEmail()}">
+                <input type="hidden"   name="tipo" th:value="GRATUITO">
+                <label for="duracion" class="mb-2">Cuántos meses de rutina?</label> <!-- Agrega la clase "mb-2" para agregar espacio en la parte inferior -->
+                <select class="form-control"   name="duracion">
+                  <option value="">Seleccionar</option>
+                  <option value="1">Uno</option>
+                  <option value="2">Dos</option>
+                  <option value="3">Tres</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Suscripcion Gratuita</button> <!-- Agrega la clase "mt-3" para agregar espacio en la parte superior -->
+            </form>
+
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!--Modal Contratar rutina Intermedia -->
+  <div class="modal fade" id="modalIntermedio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">Cuando Durara tu rutina?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div th:if="${usuario.getAptitudFisica() == null}">
+            <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
+          </div>
+          <div th:if="${usuario.getAptitudFisica() != null}">
+            <form th:action="@{/asignarMembresia}" method="post">
+              <div class="form-group mb-3"> <!-- Agrega la clase "mb-3" para agregar espacio en la parte inferior -->
+                <input type="hidden"   name="email" th:value="${usuario.getEmail()}">
+                <input type="hidden"  name="tipo" th:value="INTERMEDIO">
+                <label for="duracion" class="mb-2">Cuántos meses de rutina?</label> <!-- Agrega la clase "mb-2" para agregar espacio en la parte inferior -->
+                <select class="form-control"   name="duracion">
+                  <option value="">Seleccionar</option>
+                  <option value="1">Uno</option>
+                  <option value="2">Dos</option>
+                  <option value="3">Tres</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-warning mt-3">Suscripcion Intermedia</button> <!-- Agrega la clase "mt-3" para agregar espacio en la parte superior -->
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal contratar rutina Premium -->
+  <div class="modal fade" id="modalPremium" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Cuando Durara tu rutina?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div th:if="${usuario.getAptitudFisica() == null}">
+            <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
+          </div>
+          <div th:if="${usuario.getAptitudFisica() != null}">
+            <form th:action="@{/asignarMembresia}" method="post">
+              <div class="form-group mb-3"> <!-- Agrega la clase "mb-3" para agregar espacio en la parte inferior -->
                 <input type="hidden" id="email" name="email" th:value="${usuario.getEmail()}">
-                <input type="hidden" id="tipo" name="tipo" th:value="GRATUITO">
+                <input type="hidden" id="tipo" name="tipo" th:value="PREMIUM">
                 <label for="duracion" class="mb-2">Cuántos meses de rutina?</label> <!-- Agrega la clase "mb-2" para agregar espacio en la parte inferior -->
                 <select class="form-control" id="duracion" name="duracion">
                   <option value="">Seleccionar</option>
@@ -306,13 +372,13 @@
                   <option value="3">Tres</option>
                 </select>
               </div>
-              <button type="submit" class="btn btn-primary mt-3">Suscribirse</button> <!-- Agrega la clase "mt-3" para agregar espacio en la parte superior -->
+              <button type="submit" class="btn btn-danger mt-3">Suscripcion Premium</button> <!-- Agrega la clase "mt-3" para agregar espacio en la parte superior -->
             </form>
 
           </div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
  </main>
 <footer></footer>
@@ -322,8 +388,6 @@
 <script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 <script th:inline="javascript">
-  /
-
 </script>
 </body>
 </html>
