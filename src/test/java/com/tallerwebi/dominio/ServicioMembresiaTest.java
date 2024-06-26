@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.MembresiaNoEncontrada;
 import com.tallerwebi.infraestructura.ServicioMembresiaImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ServicioMembresiaTest {
@@ -24,7 +26,7 @@ public class ServicioMembresiaTest {
 
     @Test
     public void queSePuedanObtenerMembresias() {
-        // Arrange
+        // Preparacion
         Long usuarioId = 1L;
         Membresia membresia1 = new Membresia();
         Membresia membresia2 = new Membresia();
@@ -40,5 +42,24 @@ public class ServicioMembresiaTest {
         Membresia membresia = new Membresia();
         servicioMembresia.crearMembresia(membresia);
         verify(repositorioMembresiaMock, times(1)).crearMembresia(membresia);
+    }
+    @Test
+    public void testEliminarPorIdExitoso() throws MembresiaNoEncontrada {
+        // Preparacion
+        Long membresiaId = 1L;
+        when(repositorioMembresiaMock.eliminarPorId(anyLong())).thenReturn(true);
+        // accion
+        boolean resultado = servicioMembresia.eliminarPorId(membresiaId);
+        // validacion
+        assertTrue(resultado); // Verificar que el método devolvió true
+    }
+
+    @Test
+    public void testEliminarPorIdMembresiaNoEncontrada() throws MembresiaNoEncontrada {
+        // Preparacion
+        Long membresiaId = 1L;
+        // Mockear el repositorio para lanzar una excepción
+        when(repositorioMembresiaMock.eliminarPorId(membresiaId))
+                .thenThrow(new MembresiaNoEncontrada());
     }
 }
