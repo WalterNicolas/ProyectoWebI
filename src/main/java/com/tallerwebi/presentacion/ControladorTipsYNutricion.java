@@ -50,6 +50,7 @@ public class ControladorTipsYNutricion {
                 int totalPages = (int) Math.ceil((double) totalArticulos / size);
                 modelo.put("totalPages", totalPages);
                 modelo.put("currentPage",page);
+                modelo.put("Email",mailLogeado);
                 Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
                 if (membresia == null || "GRATUITO".equals(membresia.getTipo()) || "INTERMEDIO".equals(membresia.getTipo())) {
                     modelo.put("error", "No tienes acceso a esta sección.");

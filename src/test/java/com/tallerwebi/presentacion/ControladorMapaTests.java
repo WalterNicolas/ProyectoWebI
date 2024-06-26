@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Lugar;
-import com.tallerwebi.dominio.ServicioMapa;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.SearchException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,28 +18,43 @@ import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+
 public class ControladorMapaTests {
     private HttpServletRequest requestMock;
     private MapaController controller;
     private HttpSession sessionMock;
     @Mock
     private ServicioMapa servicioSearchMock;
+    private ServicioMembresia servicioMembresiaMock;
+    private ServicioUsuario servicioUsuarioMock;
+    private Membresia membresiaMock;
+    private Usuario usuarioMock;
 
     @BeforeEach
     public void setUp() {
         servicioSearchMock = mock(ServicioMapa.class);
-        controller = new MapaController(servicioSearchMock);
+        servicioMembresiaMock = mock(ServicioMembresia.class);
+        servicioUsuarioMock = mock(ServicioUsuario.class);
+        controller = new MapaController(servicioSearchMock, servicioMembresiaMock, servicioUsuarioMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
+        membresiaMock = mock(Membresia.class);
+        usuarioMock = mock(Usuario.class);
+        when(requestMock.getSession(false)).thenReturn(sessionMock);
+        when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com"); // Email válido en la sesión
+        when(sessionMock.getAttribute("id")).thenReturn(1L); // ID válido en la sesión
+        when(servicioUsuarioMock.buscarPorId(1L)).thenReturn(usuarioMock); // Usuario válido
+        when(usuarioMock.getId()).thenReturn(1L); // ID del usuario
+        when(servicioMembresiaMock.membresiasPorId(1L)).thenReturn(membresiaMock); // Membresía válida
+        when(membresiaMock.getTipo()).thenReturn("PREMIUM"); // Tipo de membresía que permite acceso
     }
 
     @Test
     public void whenNoSeEncuentranLugaresLanzarError() throws Exception {
         // Configurar el comportamiento del mock
         when(servicioSearchMock.buscarSitios()).thenThrow(new SearchException());
-
         // Ejecutar el método bajo prueba
-        ModelAndView modelAndView = controller.irASearch(null);
+        ModelAndView modelAndView = controller.irASearch(null, requestMock);
 
         // Verificar el resultado
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
@@ -52,17 +66,17 @@ public class ControladorMapaTests {
 
     @Test
     public void whenSeEncuentranLugaresLanzar() throws Exception {
-        when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com");
-        when(requestMock.getSession(false)).thenReturn(sessionMock);
+        // Preparar datos de prueba
         List<Lugar> lugares = new ArrayList<>();
         lugares.add(new Lugar());
-
-        // Configurar el comportamiento del mock
         when(servicioSearchMock.buscarSitios()).thenReturn(lugares);
-        ModelAndView modelAndView = controller.irASearch(null);
+        ModelAndView modelAndView = controller.irASearch(null, requestMock);
+
         // Verificar el resultado
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("mapaBuscador"));
         assertEquals(lugares, modelAndView.getModel().get("lugares"));
+        assertEquals("usuario@example.com", modelAndView.getModel().get("Email"));
+        assertEquals(1L, modelAndView.getModel().get("id"));
 
         // Verificar que se llamó al método correspondiente del servicio
         verify(servicioSearchMock).buscarSitios();
