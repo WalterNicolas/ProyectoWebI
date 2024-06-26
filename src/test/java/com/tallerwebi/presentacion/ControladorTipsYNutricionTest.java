@@ -31,12 +31,14 @@ class ControladorTipsYNutricionTest {
     private Usuario usuarioEncontradoMock;
     private AptitudFisica aptitudFisicaMock;
     private List<Articulo> mockArticulos;
+    private ServicioMembresia servicioMembresiaMock;
 
     @BeforeEach
     void init() {
         servicioLoginMock = mock(ServicioLogin.class);
         servicioTipsYNutricionMock = mock(ServicioTipsYNutricion.class);
-        controladorTipsYNutricion = new ControladorTipsYNutricion(servicioLoginMock, servicioTipsYNutricionMock);
+        servicioMembresiaMock = mock(ServicioMembresia.class);
+        controladorTipsYNutricion = new ControladorTipsYNutricion(servicioLoginMock, servicioTipsYNutricionMock,servicioMembresiaMock);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         usuarioEncontradoMock = mock(Usuario.class);

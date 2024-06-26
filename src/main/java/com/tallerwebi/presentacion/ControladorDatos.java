@@ -49,7 +49,7 @@ public class ControladorDatos {
             Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
 
             if ( membresia == null || "Nivel 1".equals(membresia.getTipo()) ) {
-                modelo.put("error", "No tienes acceso a esta sección.");
+                modelo.put("error", "No tienes acceso a esta sección. Actualice su Membresia");
                 return new ModelAndView("datos", modelo);
             }
 

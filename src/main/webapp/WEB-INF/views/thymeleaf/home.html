@@ -128,7 +128,6 @@
   }
   @media only screen and (max-width: 639px) {
     .ag-courses_item {
-      -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
     }
     .ag-courses-item_title {
@@ -171,9 +170,6 @@
         <p class="card-text">Peso: <span th:text="${usuario.getAptitudFisica().getPeso()}"></span> Kg</p>
       </div>
     </div>
-  </div>
-
-
   </div>
   <div th:if="${rutinasSemanales.size() != 0}">
     <div class="container">
