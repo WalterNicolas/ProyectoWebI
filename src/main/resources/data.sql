@@ -5,9 +5,9 @@ VALUES (1.75, 5, 'entrenado', 2.0, 70.0),
        (1.65, 4, 'intermedio', 1.0, 60.0);
 -- Insertar datos de prueba en Usuario
 INSERT INTO usuario (accessLevel, activo, apellido, nombre, email, latitud, longitud, password, rol, aptitudFisica_id)
-VALUES (1, TRUE, 'Garcia', 'Juan', 'ni@ni.com', 40.7128, -74.0060, '123', 'user', 1),
-       (2, TRUE, 'Lopez', 'Maria', 'da@da.com', 34.0522, -118.2437, '123', 'user', 2),
-       (1, TRUE, 'Perez', 'Carlos', 'le@le.com', 41.8781, -87.6298, '123', 'user', 3);
+VALUES (1, TRUE, 'Garcia', 'Juan', 'ni@ni.com', -34.648927, -58.576088, '123', 'user', 1),
+       (2, TRUE, 'Lopez', 'Maria', 'da@da.com', -34.644619, -58.571625, '123', 'user', 2),
+       (1, TRUE, 'Perez', 'Carlos', 'le@le.com', -34.640989, -58.579419, '123', 'user', 3);
 
 UPDATE aptitudFisica
 SET usuario_id = 1

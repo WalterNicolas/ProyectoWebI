@@ -41,12 +41,13 @@ public class PerfilController {
     public  ModelAndView irAPerfil(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
+        String mailLogeado = (String) session.getAttribute("Email");
         if (session != null && session.getAttribute("Email") != null) {
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
             AptitudFisica aptitudFisica = usuario.getAptitudFisica();
             List<TipoEntrenamiento> userEntrenamiento = aptitudFisica.getTiposEntrenamiento();
             List<TipoEntrenamiento> tiposEntrenamiento = servicioTipoEntrenamiento.findAll();
-
+            modelo.put("Email",mailLogeado);
             modelo.put("usuario", usuario);
             modelo.put("aptitudFisica", aptitudFisica);
             modelo.put("userTiposEntrenamiento", userEntrenamiento);
