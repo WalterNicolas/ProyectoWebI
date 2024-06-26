@@ -70,10 +70,11 @@ public class RepositorioMembresiaTest {
     @Rollback
     public void queSePuedaEliminarMembresia() throws MembresiaNoEncontrada {
         //prepa
-        Long membresiaId = 1L;
+        Long membresiaId = 3L;
         Membresia membresia = new Membresia();
         membresia.setId(membresiaId);
         repositorioMembresia.crearMembresia(membresia);
+        System.out.println(membresia.getId());
         //ejecucion
         Boolean resultado = repositorioMembresia.eliminarPorId(membresiaId);
         //validacion
