@@ -80,7 +80,6 @@ public class ServicioRutinaImp implements ServicioRutina {
 
     public List<RutinaSemanal> generarRutinaSemanal(Usuario usuario) {
         AptitudFisica aptitudFisica = usuario.getAptitudFisica();
-        int diasEntrenamiento = aptitudFisica.getDiasEntrenamiento();
         int horasPorSesion = aptitudFisica.getHorasEntrenamiento();
         List<TipoEntrenamiento> tiposEntrenamientos = aptitudFisica.getTiposEntrenamiento();
        List<RutinaSemanal> rutinas = new ArrayList<>();
@@ -90,7 +89,7 @@ public class ServicioRutinaImp implements ServicioRutina {
             RutinaSemanal rutinaSemanal = new RutinaSemanal();
             rutinaSemanal.setUsuario(usuario);
             Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
-            for (int i = 0; i < diasEntrenamiento; i++) {
+            for (int i = 0; i < tipoEntrenamiento.getDias(); i++) {
                 RutinaDiaria rutinaDiaria = new RutinaDiaria();
                 rutinaDiaria.setRutinaSemanal(rutinaSemanal);
                 rutinaDiaria.setDiaSemana(diasSemana[i % 7]);

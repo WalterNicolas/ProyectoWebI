@@ -88,7 +88,7 @@ public class ControladorLogin {
            model.put("id",session.getAttribute("id") );
          Usuario usuario = repositorioUsuario.buscarPorId((Long)session.getAttribute("id"));
          List<RutinaSemanal>  rutinasSemanales = servicioRutina.buscarPorIdDeUsuario(usuario.getId());
-
+            System.out.println(usuario.getRutinaSemanal().size());
             model.put("rutinasSemanales",rutinasSemanales);
             model.put("usuario",usuario);
             return new ModelAndView("home",model);

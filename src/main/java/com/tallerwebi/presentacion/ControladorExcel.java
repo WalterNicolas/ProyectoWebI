@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import com.tallerwebi.infraestructura.ServicioExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,15 +26,12 @@ public class ControladorExcel {
     RepositorioRutinaSemanal respositorioRutinaSemanal;
     @Transactional
     @RequestMapping("/generarRutina")
-    public ModelAndView generarRutina(@RequestParam Long rutinaSemanalId, HttpServletResponse response, HttpServletRequest request) throws RutinaSemanalVacia {
-        List<RutinaSemanal> rutinaSemanal = respositorioRutinaSemanal.buscarPorIdDeUsuario(rutinaSemanalId);
-        System.out.println("existe rutina?");
-        System.out.println(rutinaSemanal);
+    public ModelAndView generarRutina(@RequestParam Long idUsuario, HttpServletResponse response, HttpServletRequest request) throws RutinaSemanalVacia {
         try (ServletOutputStream outputStream = response.getOutputStream()) {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setHeader("Content-Disposition", "attachment; filename=rutinaExportar.xlsx");
-
-            servicioExcel.getRutinaExcel(rutinaSemanal, outputStream);
+          List<RutinaSemanal> rutinasSemanal=  respositorioRutinaSemanal.buscarPorIdDeUsuario(idUsuario);
+            servicioExcel.getRutinaExcel(rutinasSemanal, outputStream);
             outputStream.flush();
         } catch (IOException e) {
             // Manejar adecuadamente la excepción, podrías devolver un mensaje de error al cliente

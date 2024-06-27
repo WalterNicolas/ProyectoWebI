@@ -166,27 +166,23 @@
       <div class="card-body">
         <h5 class="card-title">Datos de Aptitud Física</h5>
         <p class="card-text">Altura: <span th:text="${usuario.getAptitudFisica().getAltura()}"></span> cm</p>
-        <p class="card-text">Dias Entrenamiento: <span th:text="${usuario.getAptitudFisica().getDiasEntrenamiento()}"></span> </p>
         <p class="card-text">Peso: <span th:text="${usuario.getAptitudFisica().getPeso()}"></span> Kg</p>
       </div>
     </div>
   </div>
   <div th:if="${rutinasSemanales.size() != 0}">
     <div class="container">
-      <h1 class="mt-2 text-light text-center">Rutinas Semanales</h1>
-
+      <h1 class="mt-2 text-light text-center">Tu Rutina Semanal</h1>
+      <div class="text-center">
+        <!-- Botón para generar Excel para cada Rutina Semanal -->
+        <form th:action="@{/generarRutina}" method="get" class="d-inline-block mt-2">
+          <input type="hidden" name="idUsuario" th:value="${usuario.getId()}">
+          <button type="submit" class="btn btn-primary">Generar Excel</button>
+        </form>
+      </div>
       <!-- Iterar sobre cada Rutina Semanal -->
       <div th:each="rutinaSemanal : ${rutinasSemanales}">
-        <div class="text-center">
-          <h2 class="text-light">Entrenamiento: <span th:text="${rutinaSemanal.getTipoRutina()} +${rutinasSemanales.size()} "></span></h2>
-
-          <!-- Botón para generar Excel para cada Rutina Semanal -->
-          <form th:action="@{/generarRutina}" method="get" class="d-inline-block mt-2">
-            <input type="hidden" name="rutinaSemanalId" th:value="${rutinaSemanal.getId()}">
-            <button type="submit" class="btn btn-primary">Generar Excel</button>
-          </form>
-        </div>
-
+          <h3 th:text="${rutinaSemanal.getTipoRutina()}" class="text-center text-light"></h3>
         <!-- Iterar sobre cada Rutina Diaria de la semana actual -->
         <div class="text-light text-center mt-4" th:each="rutinaDiaria, stat : ${rutinaSemanal.getRutinaDiaria()}">
           <h3 th:text="'Día: ' + (${stat.index} + 1)"></h3>
@@ -194,20 +190,16 @@
           <table class="table table-bordered mt-3 text-light" style="background-color: rgba(0, 0, 0, 0.75);">
             <thead>
             <tr>
-              <th>Id</th>
               <th>Duración</th>
               <th>Ejercicio</th>
               <th>Descripción</th>
-              <th>Tipo</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="ejercicio : ${rutinaDiaria.getEjercicios()}">
-              <td th:text="${ejercicio.getId()}"></td>
               <td th:text="${ejercicio.getDuracion() + ' minutos'}"></td>
               <td th:text="${ejercicio.getNombre()}"></td>
               <td th:text="${ejercicio.getDescripcion()}"></td>
-              <td th:text="${ejercicio.getPrimario()}"></td>
             </tr>
             </tbody>
           </table>

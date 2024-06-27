@@ -51,8 +51,8 @@ class ServicioExcel {
             int diaIndex = 1;
             for (RutinaDiaria rutinaDiaria : rutinaSemanal.getRutinaDiaria()) {
                 Row diaRow = sheet.createRow(rowNum++);
-                diaRow.createCell(0).setCellValue("Semana " + semanaIndex);
-                diaRow.createCell(1).setCellValue("Día " + diaIndex++);
+                diaRow.createCell(0).setCellValue("Día " + diaIndex++);
+                diaRow.createCell(1).setCellValue(rutinaSemanal.getTipoRutina());
                 diaRow.createCell(2).setCellValue("");
                 diaRow.createCell(3).setCellValue("");
 

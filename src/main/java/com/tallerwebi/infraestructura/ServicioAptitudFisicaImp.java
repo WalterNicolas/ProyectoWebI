@@ -69,7 +69,6 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
                 && !aptitudFisica.getTiposEntrenamiento().isEmpty()
                 && aptitudFisica.getFechaNacimiento() != null
                 && !aptitudFisica.getFechaNacimiento().isEmpty()
-                && aptitudFisica.getDiasEntrenamiento() > 0
                 && aptitudFisica.getHorasEntrenamiento() > 0
                 && aptitudFisica.getEstadoFisico() != null
                 && !aptitudFisica.getEstadoFisico().isEmpty();

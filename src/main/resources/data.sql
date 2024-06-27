@@ -1,13 +1,13 @@
 -- Insertar datos en la tabla aptitudes_fisicas con las opciones permitidas
-INSERT INTO aptitudFisica (altura, diasEntrenamiento, estadoFisico, horasEntrenamiento, peso)
-VALUES (1.75, 5, 'entrenado', 2.0, 70.0),
-       (1.80, 3, 'entrenado', 1.5, 75.0),
-       (1.65, 4, 'intermedio', 1.0, 60.0);
+INSERT INTO aptitudFisica (altura, estadoFisico, horasEntrenamiento, peso)
+VALUES (1.75,  'entrenado', 2.0, 70.0),
+       (1.80,  'entrenado', 1.5, 75.0),
+       (1.65, 'intermedio', 1.0, 60.0);
 -- Insertar datos de prueba en Usuario
-INSERT INTO usuario (accessLevel, activo, apellido, nombre, email, latitud, longitud, password, rol, aptitudFisica_id)
-VALUES (1, TRUE, 'Garcia', 'Juan', 'ni@ni.com', -34.648927, -58.576088, '123', 'user', 1),
-       (2, TRUE, 'Lopez', 'Maria', 'da@da.com', -34.644619, -58.571625, '123', 'user', 2),
-       (1, TRUE, 'Perez', 'Carlos', 'le@le.com', -34.640989, -58.579419, '123', 'user', 3);
+INSERT INTO usuario ( activo, apellido, nombre, email, latitud, longitud, password, rol, aptitudFisica_id)
+VALUES ( TRUE, 'Garcia', 'Juan', 'ni@ni.com', -34.648927, -58.576088, '123', 'user', 1),
+       ( TRUE, 'Lopez', 'Maria', 'da@da.com', -34.644619, -58.571625, '123', 'user', 2),
+       (TRUE, 'Perez', 'Carlos', 'le@le.com', -34.640989, -58.579419, '123', 'user', 3);
 
 UPDATE aptitudFisica
 SET usuario_id = 1
@@ -30,20 +30,30 @@ SET aptitudFisica_id = 3
 WHERE id = 3;
 
 
-INSERT INTO TipoEntrenamiento (id, nombre, descripcion)
-VALUES (1, 'Musculacion', 'Entrenamiento de fuerza');
-INSERT INTO TipoEntrenamiento (id, nombre, descripcion)
-VALUES (2, 'Cardio', 'Entrenamiento cardiovascular');
-INSERT INTO TipoEntrenamiento (id, nombre, descripcion)
-VALUES (3, 'Calistenia', 'Entrenamiento con el peso del cuerpo');
-
+INSERT INTO TipoEntrenamiento (id, nombre, descripcion, dias)
+VALUES
+    (1, 'Musculacion', 'Entrenamiento de fuerza, dura 1 día', 1),
+    (2, 'Musculacion', 'Entrenamiento de fuerza, dura 2 días', 2),
+    (3, 'Musculacion', 'Entrenamiento de fuerza, dura 3 días', 3),
+    (4, 'Musculacion', 'Entrenamiento de fuerza, dura 4 días', 4),
+    (5, 'Musculacion', 'Entrenamiento de fuerza, dura 5 días', 5),
+    (6, 'Calistenia', 'Entrenamiento con peso corporal, dura 1 día', 1),
+    (7, 'Calistenia', 'Entrenamiento con peso corporal, dura 2 días', 2),
+    (8, 'Calistenia', 'Entrenamiento con peso corporal, dura 3 días', 3),
+    (9, 'Calistenia', 'Entrenamiento con peso corporal, dura 4 días', 4),
+    (10, 'Calistenia', 'Entrenamiento con peso corporal, dura 5 días', 5),
+    (11, 'Cardio', 'Entrenamiento cardiovascular, dura 1 día', 1),
+    (12, 'Cardio', 'Entrenamiento cardiovascular, dura 2 días', 2),
+    (13, 'Cardio', 'Entrenamiento cardiovascular, dura 3 días', 3),
+    (14, 'Cardio', 'Entrenamiento cardiovascular, dura 4 días', 4),
+    (15, 'Cardio', 'Entrenamiento cardiovascular, dura 5 días', 5);
 
 INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id)
 VALUES (1, 1),
-       (1, 2),
+       (1, 13),
        (3, 3),
        (2, 2),
-       (2, 1);
+       (2, 7);
 
 -- Insertar datos de prueba en RutinaSemanal
 -- INSERT INTO RutinaSemanal (usuario_id) VALUES

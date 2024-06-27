@@ -25,10 +25,8 @@ public class Usuario {
     private Double latitud;
     @OneToOne
     private AptitudFisica aptitudFisica;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY)
     private List<RutinaSemanal> rutinaSemanal;
-    @Column(name = "accessLevel")
-    private Integer accessLevel;
     @ManyToOne
     private Membresia membresias;
     public AptitudFisica getAptitudFisica() {
@@ -117,15 +115,6 @@ public class Usuario {
     public String getApellido() {
         return apellido;
     }
-
-    public Integer getAccessLevel() {
-        return accessLevel;
-    }
-
-    public void setAccessLevel(Integer accessLevel) {
-        this.accessLevel = accessLevel;
-    }
-
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }

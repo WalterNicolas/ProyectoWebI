@@ -6,5 +6,5 @@ import com.tallerwebi.presentacion.DatosPreferencia;
 
 public interface ServicioMercadoPago {
 
-    DatosPreferencia crearPreferenciaPago(Integer total) throws MPException, MPApiException;
+    DatosPreferencia crearPreferenciaPago(double total) throws MPException, MPApiException;
 }

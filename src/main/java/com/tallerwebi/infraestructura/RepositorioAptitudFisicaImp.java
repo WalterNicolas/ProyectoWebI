@@ -30,13 +30,12 @@ public class RepositorioAptitudFisicaImp implements RepositorioAptitudFisica {
 
     @Override
     public boolean update(AptitudFisica aptitudFisica) {
-        String updateSql = "UPDATE AptitudFisica SET altura = ?, peso = ?, fechaNacimiento = ?, diasEntrenamiento = ?, horasEntrenamiento = ?, estadoFisico = ? WHERE id = ?";
+        String updateSql = "UPDATE AptitudFisica SET altura = ?, peso = ?, fechaNacimiento = ? , horasEntrenamiento = ?, estadoFisico = ? WHERE id = ?";
         int rows = jdbcTemplate.update(
                 updateSql,
                 aptitudFisica.getAltura(),
                 aptitudFisica.getPeso(),
                 aptitudFisica.getFechaNacimiento(),
-                aptitudFisica.getDiasEntrenamiento(),
                 aptitudFisica.getHorasEntrenamiento(),
                 aptitudFisica.getEstadoFisico(),
                 aptitudFisica.getId()

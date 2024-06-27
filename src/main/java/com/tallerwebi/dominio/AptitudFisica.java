@@ -11,10 +11,9 @@ public class AptitudFisica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int altura;
+    private double altura;
     private double peso;
     private String fechaNacimiento;
-    private int diasEntrenamiento;
     private int horasEntrenamiento;
     private String estadoFisico;
     @OneToOne
@@ -34,11 +33,12 @@ public class AptitudFisica {
     }
 
     // Getters y setters para cada campo
-    public int getAltura() {
+
+    public double getAltura() {
         return altura;
     }
 
-    public void setAltura(int altura) {
+    public void setAltura(double altura) {
         this.altura = altura;
     }
 
@@ -80,14 +80,6 @@ public class AptitudFisica {
 
     public void setTiposEntrenamiento(List<TipoEntrenamiento> tiposEntrenamiento) {
         this.tiposEntrenamiento = tiposEntrenamiento;
-    }
-
-    public int getDiasEntrenamiento() {
-        return diasEntrenamiento;
-    }
-
-    public void setDiasEntrenamiento(int diasEntrenamiento) {
-        this.diasEntrenamiento = diasEntrenamiento;
     }
 
     public int getHorasEntrenamiento() {

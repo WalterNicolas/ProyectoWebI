@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -53,9 +52,19 @@ public class ControladorMembresia {
             membresia.setDuracion(duracion);
             membresia.setTipo(tipo);
              membresia.setUsuario(usuario);
-            membresia.setValor(50);
-             Integer valorMembresia =  50;
-             Integer total = valorMembresia * duracion; // La duracion es por mes. 1 = 1 mes
+             switch (tipo){
+                 case "INTERMEDIO":
+             membresia.setValor(1000.0);
+                     break;
+                 case "PREMIUM":
+                     membresia.setValor(2000.0);
+                     break;
+                  default:
+                      membresia.setValor(0.0);
+                     break;
+             }
+             double valorMembresia =   membresia.getValor();
+             double total = valorMembresia * duracion; // La duracion es por mes. 1 = 1 mes
             //CREO LA MEMBRESIA. -> Luego es borrada si el pago no es Satifactorio. /validar-pago
             servicioMembresia.crearMembresia(membresia);
             if (tipo.equalsIgnoreCase("GRATUITO")){

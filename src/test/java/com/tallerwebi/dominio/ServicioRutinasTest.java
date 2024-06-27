@@ -163,10 +163,10 @@ public class ServicioRutinasTest {
 
         List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        entrenamiento.setDias(2L);
         entrenamientosLis.add(entrenamiento);
 
         AptitudFisica aptitudFisica = new AptitudFisica();
-        aptitudFisica.setDiasEntrenamiento(3);
         aptitudFisica.setHorasEntrenamiento(1);
         aptitudFisica.setTiposEntrenamiento(entrenamientosLis);
         usuario.setAptitudFisica(aptitudFisica);
@@ -191,10 +191,11 @@ public class ServicioRutinasTest {
         List<TipoEntrenamiento> entrenamientosLista = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamientoUno = new TipoEntrenamiento("prueba", "Musculacion");
         TipoEntrenamiento entrenamientoDos = new TipoEntrenamiento("prueba", "Cardio");
+        entrenamientoUno.setDias(2L);
+        entrenamientoDos.setDias(2L);
         entrenamientosLista.add(entrenamientoUno);
         entrenamientosLista.add(entrenamientoDos);
         AptitudFisica aptitudFisica = new AptitudFisica();
-        aptitudFisica.setDiasEntrenamiento(3);
         aptitudFisica.setHorasEntrenamiento(1);
         aptitudFisica.setTiposEntrenamiento(entrenamientosLista);
         usuario.setAptitudFisica(aptitudFisica);

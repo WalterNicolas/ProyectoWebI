@@ -18,8 +18,8 @@ public class RepositorioTipoEntrenamientoImpl implements RepositorioTipoEntrenam
 
     @Override
     public void guardar(AptitudFisica aptitudFisica) {
-        String sql = "INSERT INTO AptitudFisica (altura, peso, fechaNacimiento, diasEntrenamiento, horasEntrenamiento, estadoFisico, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, aptitudFisica.getAltura(), aptitudFisica.getPeso(), aptitudFisica.getFechaNacimiento(), aptitudFisica.getDiasEntrenamiento(), aptitudFisica.getHorasEntrenamiento(), aptitudFisica.getEstadoFisico(), aptitudFisica.getUsuario().getId());
+        String sql = "INSERT INTO AptitudFisica (altura, peso, fechaNacimiento, horasEntrenamiento, estadoFisico, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, aptitudFisica.getAltura(), aptitudFisica.getPeso(), aptitudFisica.getFechaNacimiento(),  aptitudFisica.getHorasEntrenamiento(), aptitudFisica.getEstadoFisico(), aptitudFisica.getUsuario().getId());
     }
 
     @Override

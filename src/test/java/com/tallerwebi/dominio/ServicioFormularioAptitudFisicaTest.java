@@ -66,7 +66,6 @@ public class ServicioFormularioAptitudFisicaTest {
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
         apto.setFechaNacimiento(fechaDeNacimientoString);
         apto.setTiposEntrenamiento(entrenamientosLis);
-        apto.setDiasEntrenamiento(3);
         apto.setHorasEntrenamiento(1);
         apto.setEstadoFisico("sedentario");
         assertThrows(esMenorDeEdadException.class,
@@ -96,7 +95,6 @@ public class ServicioFormularioAptitudFisicaTest {
         String fechaDeNacimientoString = fechaDeNacimiento.format(formato);
         apto.setFechaNacimiento(fechaDeNacimientoString);
         apto.setTiposEntrenamiento(entrenamientosLis);
-        apto.setDiasEntrenamiento(3);
         apto.setEstadoFisico("sedentario");
         assertThrows(DatosMalIngresadosException.class,
                 ()-> servicioAptitudFisica.registrarDatos(apto,arrayEntrenamiento));

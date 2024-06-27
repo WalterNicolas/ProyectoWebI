@@ -62,15 +62,16 @@ public class ControladorMembresiaTest {
         doNothing().when(servicioMembresiaMock).crearMembresia(membresiaMock);
         //mockeo mercadopago
         DatosPreferencia preferenceMock = mock(DatosPreferencia.class);
+
         preferenceMock.urlCheckout = "http://localhost:8080/validar-pago";
-        when(servicioMercadoPagoMock.crearPreferenciaPago(anyInt())).thenReturn(preferenceMock);
+        when(servicioMercadoPagoMock.crearPreferenciaPago(anyDouble())).thenReturn(preferenceMock);
         return controladorMembresia.asignarMembresia(tipo, email, duracion, requestMock);
     }
     public void thenRedirijoAlHome(ModelAndView mav, Usuario usuario, List<RutinaSemanal> rutinaSemanal) throws MPException, MPApiException {
 
         ModelMap modelo = mav.getModelMap();
         assertNotNull(mav);
-        verify(servicioMercadoPagoMock, times(1)).crearPreferenciaPago(anyInt());
+        verify(servicioMercadoPagoMock, times(1)).crearPreferenciaPago(anyDouble());
         assertEquals("redirect:http://localhost:8080/validar-pago", mav.getViewName());
     }
     private Usuario givenUsuarioCreado(String email) {

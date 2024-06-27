@@ -10,16 +10,10 @@ public class TipoEntrenamiento {
     private Long id;
 
 
-    public Set<AptitudFisica> getAptitudesFisicas() {
-        return aptitudesFisicas;
-    }
-
-    public void setAptitudesFisicas(Set<AptitudFisica> aptitudesFisicas) {
-        this.aptitudesFisicas = aptitudesFisicas;
-    }
 
     private String nombre;
     private String descripcion;
+    private Long dias;
 
     @ManyToMany(mappedBy = "tiposEntrenamiento")
     private Set<AptitudFisica> aptitudesFisicas;
@@ -54,7 +48,21 @@ public class TipoEntrenamiento {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    public Set<AptitudFisica> getAptitudesFisicas() {
+        return aptitudesFisicas;
+    }
 
+    public void setAptitudesFisicas(Set<AptitudFisica> aptitudesFisicas) {
+        this.aptitudesFisicas = aptitudesFisicas;
+    }
+
+    public Long getDias() {
+        return dias;
+    }
+
+    public void setDias(Long dias) {
+        this.dias = dias;
+    }
 
     public Long getId() {
         return id;

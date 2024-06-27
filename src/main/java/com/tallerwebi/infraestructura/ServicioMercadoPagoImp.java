@@ -18,7 +18,7 @@ public class ServicioMercadoPagoImp implements ServicioMercadoPago {
     }
 
     @Override
-    public DatosPreferencia crearPreferenciaPago(Integer total) throws MPException, MPApiException {
+    public DatosPreferencia crearPreferenciaPago(double total) throws MPException, MPApiException {
         DatosPago datosPago = new DatosPago(total);
         DatosPreferencia responsePago = null;
 
