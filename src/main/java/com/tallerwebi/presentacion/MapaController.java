@@ -27,14 +27,16 @@ public class MapaController {
         this.servicioSearch = servicioSearch;
         this.servicioUsuario = servicioUsuario;
         this.servicioMembresia = servicioMembresia;
+
     }
     @Transactional
     @GetMapping("/mapaBuscador")
-    public ModelAndView irASearch(@RequestParam(value = "query", required = false) String query, HttpServletRequest request) {
+    public ModelAndView irASearch(@RequestParam(value = "tipoActividad", required = false) String tipoActividad,
+                                  HttpServletRequest request) throws SearchException {
         List<Lugar> lugares;
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
-        if (session != null && session.getAttribute("Email") != null) {
+        /*if (session != null && session.getAttribute("Email") != null) {
             modelo.put("Email", session.getAttribute("Email"));
             modelo.put("id", session.getAttribute("id"));
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
@@ -42,22 +44,20 @@ public class MapaController {
             if (membresia == null || "GRATUITO".equals(membresia.getTipo())) {
                 modelo.put("error", "No tienes acceso a esta sección. Actualice su Membresia");
                 return new ModelAndView("datos", modelo);
-            }
-            try {
-                if (query == null || query.isEmpty()) {
-                    lugares = servicioSearch.buscarSitios();
-                } else {
-                    lugares = servicioSearch.buscarLugaresPorNombre(query);
-                }
-
-                modelo.addAttribute("lugares", lugares);
-                return new ModelAndView("mapaBuscador", modelo);
-            } catch (SearchException e) {
-                modelo.put("error", "No hay lugares disponibles");
-                return new ModelAndView("mapaBuscador", modelo);
-            }
+            }*/
+        if (tipoActividad == null || tipoActividad.isEmpty()) {
+            lugares = servicioSearch.buscarSitios();
+        } else {
+            // Convertir tipoActividad a Long para pasarlo al servicio
+            Long idActividad = Long.parseLong(tipoActividad);
+            lugares = servicioSearch.buscarLugaresPorTipoActividad(idActividad);
         }
-        return new ModelAndView("redirect:/home", modelo);
-    }
 
+        modelo.addAttribute("lugares", lugares);
+        return new ModelAndView("mapaBuscador", modelo);
+    }
 }
+        //return new ModelAndView("redirect:/home", modelo);
+
+
+

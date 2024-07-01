@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LugarRepositorio extends JpaRepository<Lugar, Long> {
-    List<Lugar> findByNombreContaining(String nombre);
+public interface LugarRepositorio {
+    List<Lugar> obtenerTodosLosLugares();
+    List<Lugar> buscarLugaresPorTipoActividad(Long tipoActividad);
 }
