@@ -5,7 +5,26 @@
 <body>
 <div th:replace="templates/header :: header">
 </div>
-
+<!-- <div th:if="${error != null}">
+    <div class="modal fade" id="accessDeniedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Acceso Denegado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="${error}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/home'">Volver al Inicio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 <div class="row p-4">
     <div class="col-md-12">
         <h2 class="text-center text-white">Encuentra tu lugar ideal</h2>
@@ -35,7 +54,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn rose-button align-self-end">
-                    <i class="fa-solid fa-dumbbell"></i> Buscar
+                    <i class="fa-solid fa-dumbbell"></i> Filtrar
                 </button>
             </form>
         </div>
@@ -57,18 +76,29 @@
     <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
         <div id="mapid" style="height: 500px; width:100%;"></div>
         <div class="ml-4" id="coordenadas"></div>
+
+        <!-- Botón para actualizar el marcador a las nuevas coordenadas obtenidas del mapa -->
+        <div class="mt-2">
+            <button id="btn-actualizar-marcador" class="btn btn-primary">Actualizar Ubicacion</button>
+        </div>
     </div>
 </div>
 
 <script th:inline="javascript">
     $(document).ready(function() {
-        var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13); // Coordenadas de Ramos Mejía
+        // Obtener las coordenadas del usuario desde el modelo de Spring
+        var latitudUsuario = /*[[${latitudUsuario}]]*/ -34.74973643128108;
+        var longitudUsuario = /*[[${longitudUsuario}]]*/ -58.571734784656066;
+
+        // Inicializar el mapa centrado en las coordenadas del usuario
+        var mymap = L.map('mapid').setView([latitudUsuario, longitudUsuario], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
 
-        var marker = L.marker([-34.74973643128108, -58.571734784656066], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+        // Agregar un marcador draggable en las coordenadas del usuario
+        var marker = L.marker([latitudUsuario, longitudUsuario], {draggable: true}).addTo(mymap);
         marker.on('dragend', function (event) {
             var marker = event.target;
             var position = marker.getLatLng();
@@ -78,6 +108,28 @@
             $('#latitud').val(position.lat.toFixed(6));
             $('#longitud').val(position.lng.toFixed(6));
             $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+        });
+
+        // Manejar la actualización de la ubicación
+        $('#btn-actualizar-marcador').on('click', function() {
+            var nuevaLatitud = marker.getLatLng().lat;
+            var nuevaLongitud = marker.getLatLng().lng;
+
+            // Realizar una solicitud POST para enviar las nuevas coordenadas al backend
+            $.ajax({
+                url: '/actualizarUbicacion',
+                type: 'POST',
+                data: {
+                    latitud: nuevaLatitud,
+                    longitud: nuevaLongitud
+                },
+                success: function(response) {
+                    alert('Ubicación actualizada exitosamente.');
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al actualizar la ubicación: ' + error);
+                }
+            });
         });
     });
 </script>
