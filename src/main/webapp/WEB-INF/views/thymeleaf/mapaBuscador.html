@@ -1,87 +1,87 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="templates/head :: head">
 </head>
 <body>
 <div th:replace="templates/header :: header">
 </div>
 
-
-<div th:if="${error != null}">
-    <div class="modal fade" id="accessDeniedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Acceso Denegado</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p th:text="${error}"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='/home'">Volver al Inicio</button>
-                </div>
-            </div>
-        </div>
+<div class="row p-4">
+    <div class="col-md-12">
+        <h2 class="text-center text-white">Encuentra tu lugar ideal</h2>
     </div>
 </div>
 
-
-   <div class="row p-4">
-       <div class="col-md-12"> <h2 class="text-center text-white">Encuentra tu lugar ideal</h2></div>
-   </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
-
-            <div class="buscadorContainer">
-                <input type="text" class="form-control" placeholder="Busca por ubicación o tipo de actividad" aria-label="Username" aria-describedby="basic-addon1">
-                <button class="btn rose-button text-center justify-content-center font-weight-bold"><i
-                        class="fa-solid fa-dumbbell"></i></button>
-            </div>
-
-            <section class="searchCardContainer scroll">
-                <span th:if="${error}"  th:text="${error}" class="text-white"></span>
-                <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
-                    <img th:src="@{/img/ZonaRyp.jpg}" alt="">
-                    <div class="infoContainer">
-                        <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
-                        <p> <i class="fa-solid fa-location-dot"></i> Distancia <span th:text="${lugar.distancia}"></span></p>
-                    </div>
+<div class="row justify-content-center">
+    <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+        <div class="buscadorContainer">
+            <form id="searchForm" action="/mapaBuscador" method="get" class="d-flex">
+                <div class="form-group mr-2 mb-0">
+                    <select name="tipoActividad" class="form-control">
+                        <option value="" disabled selected>Selecciona</option>
+                        <option value="1">Musculación</option>
+                        <option value="2">Cardio</option>
+                        <option value="3">Calistenia</option>
+                        <option value="4">Natación</option>
+                    </select>
                 </div>
-            </section>
-        </div>
-        <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
-                <div id="mapid" style="height: 500px; width:100%;">
-                    /div>
-                <div class=ml-4 id="coordenadas"></div>
+                <div class="form-group mr-2 mb-0">
+                    <select id="distancia" class="form-control">
+                        <option value="" disabled selected>Selecciona</option>
+                        <option value="1">5km</option>
+                        <option value="2">10km</option>
+                        <option value="3">15km</option>
+                        <option value="4">30km</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn rose-button align-self-end">
+                    <i class="fa-solid fa-dumbbell"></i> Buscar
+                </button>
+            </form>
         </div>
 
-</body>
-<script th:inline="javascript" >
+        <section class="searchCardContainer scroll">
+            <span th:if="${error}" th:text="${error}" class="text-white"></span>
+            <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
+                <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+                <div class="infoContainer">
+                    <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
+                    <p>
+                        <i class="fa-solid fa-location-dot"></i> Distancia
+                        <span th:text="${lugar.distancia}"></span>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+        <div id="mapid" style="height: 500px; width:100%;"></div>
+        <div class="ml-4" id="coordenadas"></div>
+    </div>
+</div>
+
+<script th:inline="javascript">
     $(document).ready(function() {
-      var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13); // Coordenadas de Ramos Mejía
+        var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13); // Coordenadas de Ramos Mejía
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(mymap);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
 
-      var marker = L.marker([-34.74973643128108, -58.571734784656066], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
-      marker.on('dragend', function (event) {
-        var marker = event.target;
-        var position = marker.getLatLng();
-        marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
+        var marker = L.marker([-34.74973643128108, -58.571734784656066], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+        marker.on('dragend', function (event) {
+            var marker = event.target;
+            var position = marker.getLatLng();
+            marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
 
-        // Actualizar el div de coordenadas con las nuevas coordenadas
-        $('#latitud').val(position.lat.toFixed(6));
-        $('#longitud').val(position.lng.toFixed(6));
-        $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
-
-      });
+            // Actualizar el div de coordenadas con las nuevas coordenadas
+            $('#latitud').val(position.lat.toFixed(6));
+            $('#longitud').val(position.lng.toFixed(6));
+            $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+        });
     });
 </script>
+
 <script th:inline="javascript">
     if ([[${error}]] != null) {
         $(document).ready(function() {
@@ -89,4 +89,5 @@
         });
     }
 </script>
+</body>
 </html>

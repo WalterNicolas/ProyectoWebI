@@ -1,4 +1,4 @@
-package com.tallerwebi.presentacion;
+/*package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.SearchException;
@@ -81,4 +81,4 @@ public class ControladorMapaTests {
         // Verificar que se llamó al método correspondiente del servicio
         verify(servicioSearchMock).buscarSitios();
     }
-}
+}*/

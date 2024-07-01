@@ -1,22 +1,27 @@
 package com.tallerwebi.dominio;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 public class TipoEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
-
     private String nombre;
     private String descripcion;
     private Long dias;
 
     @ManyToMany(mappedBy = "tiposEntrenamiento")
-    private Set<AptitudFisica> aptitudesFisicas;
+    private Set<Lugar> lugares = new HashSet<>();
+
+    @ManyToMany(mappedBy = "tiposEntrenamiento")
+    private Set<AptitudFisica> aptitudesFisicas = new HashSet<>();
 
     public TipoEntrenamiento(String nombre, String descripcion) {
         this.nombre = nombre;
@@ -28,6 +33,7 @@ public class TipoEntrenamiento {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+
 
     public TipoEntrenamiento (){
 

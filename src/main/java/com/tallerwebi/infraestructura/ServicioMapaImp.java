@@ -21,42 +21,13 @@ public class ServicioMapaImp implements ServicioMapa {
         this.lugarRepositorio = lugarRepositorio;
     }
 
-
     @Override
-    public Double buscarDistancia(Lugar l){
-
-        return 0.0;
+    public List<Lugar> buscarSitios() {
+        return lugarRepositorio.obtenerTodosLosLugares();
     }
 
     @Override
-    public List<Lugar> buscarSitios() throws SearchException{
-        List<Lugar> lugares = mockDatos();
-        if (lugares.isEmpty()){
-            throw new SearchException();
-        }
-        return lugares;
-    }
-
-    @Override
-    public List<Lugar> mockDatos(){
-        List<Lugar> lugares = new ArrayList<>();
-
-        lugares.add(new Lugar("Zona Ryp", "Ubicacion A",-34.747132079753904,-58.585186748664825));
-
-        lugares.add(new Lugar("Taruk", "Ubicacion A",-34.74976373083753,-58.58363723032326));
-
-        lugares.add(new Lugar("Nitro",  "Ubicacion A",-34.747968651909794, -58.58560155905591));
-        lugares.add(new Lugar("Vida Fit",  "Ubicacion A",-34.75045468465815, -58.587086498772415));
-
-        return lugares;
-    }
-
-    @Override
-    public Lugar filtroSitios(String input) throws Exception {
-        return null;
-    }
-    @Override
-    public List<Lugar> buscarLugaresPorNombre(String nombre) {
-        return lugarRepositorio.findByNombreContaining(nombre);
+    public List<Lugar> buscarLugaresPorTipoActividad(Long tipoActividad) {
+        return lugarRepositorio.buscarLugaresPorTipoActividad(tipoActividad);
     }
 }
