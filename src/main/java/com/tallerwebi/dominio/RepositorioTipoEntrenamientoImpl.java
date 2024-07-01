@@ -50,4 +50,16 @@ public class RepositorioTipoEntrenamientoImpl implements RepositorioTipoEntrenam
                 )
         );
     }
+
+    @Override
+    public TipoEntrenamiento findById(Long id) {
+        String sql = "SELECT * FROM TipoEntrenamiento WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) ->
+                new TipoEntrenamiento(
+                        rs.getLong("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion")
+                )
+        );
+    }
 }

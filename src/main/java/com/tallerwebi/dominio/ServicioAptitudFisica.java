@@ -1,11 +1,15 @@
 package com.tallerwebi.dominio;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
+import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
+
+import java.util.List;
 
 public interface ServicioAptitudFisica {
 
-   AptitudFisica registrarDatos(AptitudFisica aptitudFisica, String[] tipoDeEntrenamiento);
+
+   boolean registrarDatos(AptitudFisica aptitudFisica, List<TipoEntrenamiento> tiposEntrenamiento, List<Long> dias) throws DatosMalIngresadosException, esMenorDeEdadException;
+
    Integer calcularEdad(String fechaNacimiento);
    Boolean sonParametrosValidos(AptitudFisica aptitudFisica);
    boolean update(AptitudFisica aptitudFisica);

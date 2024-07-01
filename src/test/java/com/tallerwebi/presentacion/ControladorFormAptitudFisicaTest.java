@@ -20,12 +20,14 @@ public class ControladorFormAptitudFisicaTest {
     private ServicioRutina servicioRutinaMock;
     private RepositorioUsuario repositorioUsuarioMock;
 
+    private ServicioTipoEntrenamiento servicioTipoEntrenamiento;
 
     @BeforeEach
     public void init(){
         servicioLoginMock = mock(ServicioLogin.class);
         repositorioUsuarioMock = mock(RepositorioUsuario.class);
-        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,servicioRutinaMock);
+        servicioTipoEntrenamiento = mock(ServicioTipoEntrenamiento.class);
+        controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,servicioRutinaMock,servicioTipoEntrenamiento);
     }
     @Test
     public void queLuegoDeRegistrarmeMeLLeveAlFormularioDeAptitudFisica(){

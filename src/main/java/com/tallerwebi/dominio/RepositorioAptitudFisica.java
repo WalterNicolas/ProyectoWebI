@@ -2,7 +2,9 @@ package com.tallerwebi.dominio;
 
 public interface RepositorioAptitudFisica
 {
-    void guardar(AptitudFisica aptitudFisica);
+    boolean guardar(AptitudFisica aptitudFisica);
 
     boolean update(AptitudFisica aptitudFisica);
+
+    boolean guardarAptitudFisicaTipoEntrenamiento(AptitudFisicaTipoEntrenamiento aptitudFisicaTipoEntrenamiento);
 }

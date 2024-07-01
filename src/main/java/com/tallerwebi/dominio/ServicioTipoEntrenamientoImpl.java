@@ -20,4 +20,8 @@ public class ServicioTipoEntrenamientoImpl implements ServicioTipoEntrenamiento{
         return repositorioTipoEntrenamiento.findAll();
     }
 
+    @Override
+    public TipoEntrenamiento findById(Long id) {
+        return this.repositorioTipoEntrenamiento.findById(id);
+    }
 }

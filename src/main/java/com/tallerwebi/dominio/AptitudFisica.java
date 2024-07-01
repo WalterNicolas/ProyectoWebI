@@ -19,13 +19,8 @@ public class AptitudFisica {
     @OneToOne
     private Usuario usuario;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "AptitudFisicaTipoEntrenamiento",
-            joinColumns = @JoinColumn(name = "aptitudFisica_id"),
-            inverseJoinColumns = @JoinColumn(name = "tipoEntrenamiento_id")
-    )
-    private List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
+    @OneToMany(mappedBy = "aptitudFisica", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = new ArrayList<>();
 
 
     // Constructor vacío
@@ -75,12 +70,11 @@ public class AptitudFisica {
     }
 
     public List<TipoEntrenamiento> getTiposEntrenamiento() {
-        return tiposEntrenamiento;
+        List<TipoEntrenamiento> newList = new ArrayList<TipoEntrenamiento>();
+        aptitudFisicaTipoEntrenamientos.forEach(ap ->newList.add(ap.getTipoEntrenamiento()));
+        return newList;
     }
 
-    public void setTiposEntrenamiento(List<TipoEntrenamiento> tiposEntrenamiento) {
-        this.tiposEntrenamiento = tiposEntrenamiento;
-    }
 
     public int getHorasEntrenamiento() {
         return horasEntrenamiento;
@@ -97,4 +91,19 @@ public class AptitudFisica {
     public void setEstadoFisico(String estadoFisico) {
         this.estadoFisico = estadoFisico;
     }
+
+
+    public List<AptitudFisicaTipoEntrenamiento> getAptitudFisicaTipoEntrenamientos() {
+        return  this.aptitudFisicaTipoEntrenamientos;
+    }
+
+    public void setAptitudFisicaTipoEntrenamientos(List<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos) {
+        this.aptitudFisicaTipoEntrenamientos.clear();
+
+        for (AptitudFisicaTipoEntrenamiento asociacion : aptitudFisicaTipoEntrenamientos) {
+            asociacion.setAptitudFisica(this);
+            this.aptitudFisicaTipoEntrenamientos.add(asociacion);
+        }
+    }
+
 }

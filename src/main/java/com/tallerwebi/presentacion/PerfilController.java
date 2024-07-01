@@ -38,22 +38,22 @@ public class PerfilController {
 
     @RequestMapping("/perfil")
     @Transactional
-    public  ModelAndView irAPerfil(HttpServletRequest request) {
+    public ModelAndView irAPerfil(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
         String mailLogeado = (String) session.getAttribute("Email");
         if (session != null && session.getAttribute("Email") != null) {
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
             AptitudFisica aptitudFisica = usuario.getAptitudFisica();
-            List<TipoEntrenamiento> userEntrenamiento = aptitudFisica.getTiposEntrenamiento();
+            List<AptitudFisicaTipoEntrenamiento> userEntrenamiento = aptitudFisica.getAptitudFisicaTipoEntrenamientos();
             List<TipoEntrenamiento> tiposEntrenamiento = servicioTipoEntrenamiento.findAll();
-            modelo.put("Email",mailLogeado);
+            modelo.put("Email", mailLogeado);
             modelo.put("usuario", usuario);
             modelo.put("aptitudFisica", aptitudFisica);
             modelo.put("userTiposEntrenamiento", userEntrenamiento);
-            modelo.put("tipoDeEntrenamientos",tiposEntrenamiento);
+            modelo.put("tipoDeEntrenamientos", tiposEntrenamiento);
             return new ModelAndView("perfil", modelo);
-        }else{
+        } else {
             return new ModelAndView("redirect:/login");
         }
     }

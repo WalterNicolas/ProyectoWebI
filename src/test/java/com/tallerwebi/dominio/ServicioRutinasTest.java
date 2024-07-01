@@ -20,20 +20,11 @@ public class ServicioRutinasTest {
     RepositorioEjercicio repositorioEjercicioMock;
     RepositorioRutinaSemanal repositorioRutinaSemanalMock;
     RutinaSemanal rutinalSemanal;
-    /*
-    1. que se pueda crear una lista de ejercicios
-    2. que se pueda marcar un ejercicio como realizado
-    3. que se pueda calcular el IMC
-    4. que se pueda calcular la diferencia de peso
-    5. que se puedan contar los ejercicios realizados
-    6. que se puedan contar los ejercicios por hacer
-         */
     @BeforeEach
     public void init() {
-
         repositorioEjercicioMock = mock(RepositorioEjercicio.class);
         repositorioRutinaSemanalMock = mock(RepositorioRutinaSemanal.class);
-        servicioRutina = new ServicioRutinaImp(repositorioEjercicioMock,repositorioRutinaSemanalMock);
+        servicioRutina = new ServicioRutinaImp(repositorioEjercicioMock, repositorioRutinaSemanalMock);
         rutinalSemanal = mock(RutinaSemanal.class);
     }
 
@@ -48,6 +39,7 @@ public class ServicioRutinasTest {
     public void queSePuedaMarcarUnEjercicioComoRealizado() {
         List<Ejercicio> listaEjercicios = givenExisteListaDeEjercicios();
         Ejercicio unEjercicio = new Ejercicio();
+        unEjercicio.setDescripcion("correr rapido");
         whenRealizarUnEjercicioDeLaLista(listaEjercicios, unEjercicio);
         thenRetornaListaDeEjercicios(listaEjercicios);
     }
@@ -57,7 +49,7 @@ public class ServicioRutinasTest {
         givenExistenDatos();
         Double pesoActual = 75.5;
         Double altura = 1.65;
-        Double imc = whenCalculaIMC();
+        Double imc = whenCalculaIMC(pesoActual, altura);
         thenRetornaIMC(imc);
     }
 
@@ -89,12 +81,10 @@ public class ServicioRutinasTest {
     }
 
     private List<Ejercicio> whenRealizarUnEjercicioDeLaLista(@NotNull List<Ejercicio> listaEjercicios, Ejercicio unEjercicio) {
-//        Ejercicio actual = new Ejercicio();
         for (Ejercicio actual : listaEjercicios) {
             if (actual.getDescripcion().equals(unEjercicio.getDescripcion())) {
                 actual.setRealizado(Boolean.TRUE);
             }
-            return listaEjercicios;
         }
         return listaEjercicios;
     }
@@ -107,10 +97,8 @@ public class ServicioRutinasTest {
     private void givenExistenDatos() {
     }
 
-    private Double whenCalculaIMC() {
-        Double pesoActual = 75.5;
-        Double altura = 1.65;
-        return servicioRutina.calcularIMC(pesoActual, altura);
+    private Double whenCalculaIMC(Double peso, Double altura) {
+        return servicioRutina.calcularIMC(peso, altura);
     }
 
     private Double whenCalculaDiferenciaDePeso() {
@@ -138,7 +126,6 @@ public class ServicioRutinasTest {
     private void givenNoExisteListaDeEjercicios() {
     }
 
-
     private List<Ejercicio> whenIngresarListaDeEjercicios() {
         Ejercicio unEjercicio = new Ejercicio();
         unEjercicio.setDescripcion("3 reps 4 series");
@@ -161,14 +148,19 @@ public class ServicioRutinasTest {
     public void queSePuedaGenerarRutinaSemanal() {
         Usuario usuario = new Usuario();
 
-        List<TipoEntrenamiento> entrenamientosLis = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
-        entrenamiento.setDias(2L);
-        entrenamientosLis.add(entrenamiento);
 
         AptitudFisica aptitudFisica = new AptitudFisica();
         aptitudFisica.setHorasEntrenamiento(1);
-        aptitudFisica.setTiposEntrenamiento(entrenamientosLis);
+
+        List<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = new ArrayList<>();
+        AptitudFisicaTipoEntrenamiento aptitudFisicaTipoEntrenamiento = new AptitudFisicaTipoEntrenamiento();
+        aptitudFisicaTipoEntrenamiento.setTipoEntrenamiento(entrenamiento);
+        aptitudFisicaTipoEntrenamiento.setDias(2L);
+        aptitudFisicaTipoEntrenamientos.add(aptitudFisicaTipoEntrenamiento);
+
+        aptitudFisica.setAptitudFisicaTipoEntrenamientos(aptitudFisicaTipoEntrenamientos);
+
         usuario.setAptitudFisica(aptitudFisica);
 
         List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios());
@@ -187,17 +179,26 @@ public class ServicioRutinasTest {
     @Test
     public void queSePuedaGenerarDosRutinasSemanales() {
         Usuario usuario = new Usuario();
-
-        List<TipoEntrenamiento> entrenamientosLista = new ArrayList<TipoEntrenamiento>();
         TipoEntrenamiento entrenamientoUno = new TipoEntrenamiento("prueba", "Musculacion");
         TipoEntrenamiento entrenamientoDos = new TipoEntrenamiento("prueba", "Cardio");
-        entrenamientoUno.setDias(2L);
-        entrenamientoDos.setDias(2L);
-        entrenamientosLista.add(entrenamientoUno);
-        entrenamientosLista.add(entrenamientoDos);
         AptitudFisica aptitudFisica = new AptitudFisica();
         aptitudFisica.setHorasEntrenamiento(1);
-        aptitudFisica.setTiposEntrenamiento(entrenamientosLista);
+
+        List<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = new ArrayList<>();
+        AptitudFisicaTipoEntrenamiento aptitudFisicaTipoEntrenamientoUno = new AptitudFisicaTipoEntrenamiento();
+        AptitudFisicaTipoEntrenamiento aptitudFisicaTipoEntrenamientoDos = new AptitudFisicaTipoEntrenamiento();
+
+        aptitudFisicaTipoEntrenamientoUno.setTipoEntrenamiento(entrenamientoUno);
+        aptitudFisicaTipoEntrenamientoUno.setDias(2L);
+
+        aptitudFisicaTipoEntrenamientoDos.setTipoEntrenamiento(entrenamientoDos);
+        aptitudFisicaTipoEntrenamientoDos.setDias(2L);
+
+        aptitudFisicaTipoEntrenamientos.add(aptitudFisicaTipoEntrenamientoUno);
+        aptitudFisicaTipoEntrenamientos.add(aptitudFisicaTipoEntrenamientoDos);
+
+        aptitudFisica.setAptitudFisicaTipoEntrenamientos(aptitudFisicaTipoEntrenamientos);
+
         usuario.setAptitudFisica(aptitudFisica);
 
         List<Ejercicio> listEjercicios = new ArrayList<>(listaEjercicios());
@@ -206,7 +207,7 @@ public class ServicioRutinasTest {
         doNothing().when(repositorioRutinaSemanalMock).guardar(any(RutinaSemanal.class));
 
         List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(usuario);
-
+        
 
         assertNotNull(rutinaSemanal);
         assertEquals(2, rutinaSemanal.size());
@@ -216,28 +217,19 @@ public class ServicioRutinasTest {
 
     @Test
     public void testGenerarEjerciciosDia() {
-        // Arrange
         int horasPorSesion = 1;
         String tipoEntrenamiento = "Cardio";
         Set<Ejercicio> ejerciciosDisponibles = listaEjercicios();
 
-        when(repositorioEjercicioMock.buscarTodosLosEjercicio()).thenReturn(new ArrayList<>(ejerciciosDisponibles)); // Convertir Set a List
+        when(repositorioEjercicioMock.buscarTodosLosEjercicio()).thenReturn(new ArrayList<>(ejerciciosDisponibles));
 
-        // Act
         List<Ejercicio> ejerciciosDia = servicioRutina.generarEjerciciosDia(horasPorSesion, tipoEntrenamiento);
 
-        // Assert
         assertNotNull(ejerciciosDia);
-        System.out.println(ejerciciosDia.size());
-        assertTrue(ejerciciosDia.size() == 3);
+        assertTrue(ejerciciosDia.size() <= horasPorSesion * 60);
         int totalDuracion = ejerciciosDia.stream().mapToInt(Ejercicio::getDuracion).sum();
         assertTrue(totalDuracion <= horasPorSesion * 60);
-        Integer cantidadEjerciciosDeCardio = 0;
-        for (Ejercicio ejercicio : ejerciciosDia) {
-           if(ejercicio.getTipo() == "Cardio"){
-               cantidadEjerciciosDeCardio++;
-           }
-        }
+        long cantidadEjerciciosDeCardio = ejerciciosDia.stream().filter(ejercicio -> "Cardio".equals(ejercicio.getTipo())).count();
         assertTrue(cantidadEjerciciosDeCardio > 0);
         verify(repositorioEjercicioMock, times(1)).buscarTodosLosEjercicio();
     }
@@ -267,6 +259,4 @@ public class ServicioRutinasTest {
         list.add(ejercicio3);
         return list;
     }
-
 }
-

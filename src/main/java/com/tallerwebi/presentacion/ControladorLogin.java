@@ -23,11 +23,15 @@ public class ControladorLogin {
     private RepositorioUsuario repositorioUsuario;
     private ServicioRutina servicioRutina;
 
+
+    private ServicioTipoEntrenamiento servicioTipoEntrenamiento;
+
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario, ServicioRutina servicioRutina){
+    public ControladorLogin(ServicioLogin servicioLogin, RepositorioUsuario repositorioUsuario, ServicioRutina servicioRutina,ServicioTipoEntrenamiento servicioTipoEntrenamiento){
         this.servicioLogin = servicioLogin;
         this.repositorioUsuario = repositorioUsuario;
         this.servicioRutina = servicioRutina;
+        this.servicioTipoEntrenamiento = servicioTipoEntrenamiento;
     }
 
     @RequestMapping("/login")
@@ -66,6 +70,8 @@ public class ControladorLogin {
             model.put("error", "Faltan datos para Registrar / Asegurate de elegir tu lugar de residencia");
             return new ModelAndView("nuevo-usuario", model);
         }
+        List<TipoEntrenamiento> tiposEntrenamiento = servicioTipoEntrenamiento.findAll();
+        model.put("tipoDeEntrenamientos", tiposEntrenamiento);
         model.put("aptitudFisica", new AptitudFisica());
         model.put("usuario",usuario);
         return new ModelAndView("formularioAptitudFisica",model);

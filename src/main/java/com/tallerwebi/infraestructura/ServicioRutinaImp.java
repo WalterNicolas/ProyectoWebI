@@ -80,29 +80,32 @@ public class ServicioRutinaImp implements ServicioRutina {
 
     public List<RutinaSemanal> generarRutinaSemanal(Usuario usuario) {
         AptitudFisica aptitudFisica = usuario.getAptitudFisica();
-        int horasPorSesion = aptitudFisica.getHorasEntrenamiento();
-        List<TipoEntrenamiento> tiposEntrenamientos = aptitudFisica.getTiposEntrenamiento();
-       List<RutinaSemanal> rutinas = new ArrayList<>();
+        List<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = aptitudFisica.getAptitudFisicaTipoEntrenamientos();
+        List<RutinaSemanal> rutinas = new ArrayList<>();
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-        for (TipoEntrenamiento tipoEntrenamiento : tiposEntrenamientos) {
+
+        for (AptitudFisicaTipoEntrenamiento aft : aptitudFisicaTipoEntrenamientos) {
+            TipoEntrenamiento tipoEntrenamiento = aft.getTipoEntrenamiento();
+
             RutinaSemanal rutinaSemanal = new RutinaSemanal();
             rutinaSemanal.setUsuario(usuario);
+            rutinaSemanal.setTipoRutina(tipoEntrenamiento.getNombre());
+
             Set<RutinaDiaria> rutinasDiarias = new HashSet<>();
-            for (int i = 0; i < tipoEntrenamiento.getDias(); i++) {
+            for (int i = 0; i < aft.getDias(); i++) {
                 RutinaDiaria rutinaDiaria = new RutinaDiaria();
                 rutinaDiaria.setRutinaSemanal(rutinaSemanal);
                 rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
 
-                List<Ejercicio> ejerciciosDia = generarEjerciciosDia(horasPorSesion, tipoEntrenamiento.getNombre());
+                List<Ejercicio> ejerciciosDia = generarEjerciciosDia(aptitudFisica.getHorasEntrenamiento(), tipoEntrenamiento.getNombre());
                 rutinaDiaria.setEjercicios(ejerciciosDia);
 
                 rutinasDiarias.add(rutinaDiaria);
             }
             rutinaSemanal.setRutinaDiaria(rutinasDiarias);
-            rutinaSemanal.setTipoRutina(tipoEntrenamiento.getNombre());
-            rutinas.add(rutinaSemanal);
             repositorioRutinaSemanal.guardar(rutinaSemanal);
+            rutinas.add(rutinaSemanal);
         }
         return rutinas;
     }
