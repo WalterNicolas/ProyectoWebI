@@ -31,73 +31,85 @@ public class MapaController {
     @Transactional
     @GetMapping("/mapaBuscador")
     public ModelAndView irASearch(@RequestParam(value = "tipoActividad", required = false) String tipoActividad,
-                                  HttpServletRequest request) throws SearchException {
+                                  @RequestParam(value = "distancia", required = false) Integer distancia,
+                                  HttpServletRequest request) {
         List<Lugar> lugares;
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
+        double latitudUsuario;
+        double longitudUsuario;
 
-        if (session != null && session.getAttribute("Email") != null) {
-            modelo.put("Email", session.getAttribute("Email"));
-            modelo.put("id", session.getAttribute("id"));
-            Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
+        try {
+            if (session != null && session.getAttribute("Email") != null) {
+                modelo.put("Email", session.getAttribute("Email"));
+                modelo.put("id", session.getAttribute("id"));
+                Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
 
-            modelo.put("usuario", usuario);
-            // Obtener coordenadas del usuario
-            double latitud = usuario.getLatitud(); // Asumiendo que el usuario tiene estas propiedades
-            double longitud = usuario.getLongitud();
+                modelo.put("usuario", usuario);
+                latitudUsuario = usuario.getLatitud();
+                longitudUsuario = usuario.getLongitud();
+                modelo.put("latitudUsuario", latitudUsuario);
+                modelo.put("longitudUsuario", longitudUsuario);
 
-            modelo.put("latitudUsuario", latitud);
-            modelo.put("longitudUsuario", longitud);
+                // Manejo de membresías comentado
+                /*
+                Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
+                if (membresia == null || "GRATUITO".equals(membresia.getTipo())) {
+                    modelo.put("error", "No tienes acceso a esta sección. Actualice su Membresia");
+                    return new ModelAndView("datos", modelo);
+                }
+                */
+            } else {
+                latitudUsuario = -34.74973643128108;
+                longitudUsuario = -58.571734784656066;
+                modelo.put("latitudUsuario", latitudUsuario);
+                modelo.put("longitudUsuario", longitudUsuario);
+            }
 
-            // Lógica de membresía comentada previamente
-        /*Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
-        if (membresia == null || "GRATUITO".equals(membresia.getTipo())) {
-            modelo.put("error", "No tienes acceso a esta sección. Actualice su Membresia");
-            return new ModelAndView("datos", modelo);
-        }*/
-        } else {
-            // Definir una ubicación por defecto en caso de que no haya usuario logueado
-            modelo.put("latitudUsuario", -34.74973643128108);
-            modelo.put("longitudUsuario", -58.571734784656066);
+            if (tipoActividad == null || tipoActividad.isEmpty()) {
+                lugares = servicioSearch.buscarSitios();
+            } else {
+                Long idActividad = Long.parseLong(tipoActividad);
+                lugares = servicioSearch.buscarLugaresPorTipoActividad(idActividad);
+            }
+
+            if (distancia != null) {
+                lugares = servicioSearch.filtrarLugaresPorDistancia(lugares, latitudUsuario, longitudUsuario, distancia);
+            }
+
+            if (lugares.isEmpty()) {
+                modelo.put("error", "No se encontraron lugares para los filtros seleccionados.");
+            }
+            modelo.put("lugares", lugares);
+
+        } catch (SearchException e) {
+            modelo.put("error", "Error al buscar lugares: " + e.getMessage());
         }
 
-        if (tipoActividad == null || tipoActividad.isEmpty()) {
-            lugares = servicioSearch.buscarSitios();
-        } else {
-            Long idActividad = Long.parseLong(tipoActividad);
-            lugares = servicioSearch.buscarLugaresPorTipoActividad(idActividad);
-        }
-
-        modelo.addAttribute("lugares", lugares);
         return new ModelAndView("mapaBuscador", modelo);
     }
 
+    @Transactional
     @PostMapping("/actualizarUbicacion")
     @ResponseBody
-    public ModelAndView actualizarUbicacion(@RequestParam("latitud") double latitud,
-                                            @RequestParam("longitud") double longitud,
-                                            HttpServletRequest request) {
+    public String actualizarUbicacion(@RequestParam("latitud") double latitud,
+                                      @RequestParam("longitud") double longitud,
+                                      HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        ModelMap modelo = new ModelMap();
 
         if (session != null && session.getAttribute("id") != null) {
-            Long usuarioId = (Long) session.getAttribute("id");
-            Usuario usuario = servicioUsuario.buscarPorId(usuarioId);
+            Long userId = (Long) session.getAttribute("id");
+            Usuario usuario = servicioUsuario.buscarPorId(userId);
 
             if (usuario != null) {
                 usuario.setLatitud(latitud);
                 usuario.setLongitud(longitud);
-                servicioUsuario.updateData(usuario); // Asume que tienes un método para actualizar el usuario
-                modelo.put("usuario", usuario);
-                modelo.put("mensaje", "Ubicación actualizada exitosamente.");
-            } else {
-                modelo.put("error", "Usuario no encontrado.");
+                servicioUsuario.updateData(usuario);
+                return "Ubicación actualizada correctamente.";
             }
-        } else {
-            modelo.put("error", "No hay sesión activa.");
         }
 
-        return new ModelAndView("mapaBuscador", modelo);
+        return "No se pudo actualizar la ubicación.";
     }
 
     //return new ModelAndView("redirect:/home", modelo);
