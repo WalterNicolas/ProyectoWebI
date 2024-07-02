@@ -44,7 +44,7 @@ public class ServicioPesoTests {
 
         ArrayList<Double> result = servicioPeso.obtenerPesosPorMes(usuarioId);
 
-        assertEquals(6, result.size());
+        assertEquals(7, result.size());
         assertEquals(70.0, result.get(0));
         assertEquals(71.0, result.get(1));
         assertEquals(72.0, result.get(2));

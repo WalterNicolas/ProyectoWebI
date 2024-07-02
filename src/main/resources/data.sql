@@ -30,23 +30,20 @@ SET aptitudFisica_id = 3
 WHERE id = 3;
 
 
-INSERT INTO TipoEntrenamiento (id, nombre, descripcion, dias)
+INSERT INTO TipoEntrenamiento (id, nombre)
 VALUES
-    (1, 'Musculacion', 'Entrenamiento de fuerza, dura 1 día', 1),
-    (2, 'Musculacion', 'Entrenamiento de fuerza, dura 2 días', 2),
-    (3, 'Musculacion', 'Entrenamiento de fuerza, dura 3 días', 3),
-    (4, 'Musculacion', 'Entrenamiento de fuerza, dura 4 días', 4),
-    (5, 'Musculacion', 'Entrenamiento de fuerza, dura 5 días', 5),
-    (6, 'Calistenia', 'Entrenamiento con peso corporal, dura 1 día', 1),
-    (7, 'Calistenia', 'Entrenamiento con peso corporal, dura 2 días', 2),
-    (8, 'Calistenia', 'Entrenamiento con peso corporal, dura 3 días', 3),
-    (9, 'Calistenia', 'Entrenamiento con peso corporal, dura 4 días', 4),
-    (10, 'Calistenia', 'Entrenamiento con peso corporal, dura 5 días', 5),
-    (11, 'Cardio', 'Entrenamiento cardiovascular, dura 1 día', 1),
-    (12, 'Cardio', 'Entrenamiento cardiovascular, dura 2 días', 2),
-    (13, 'Cardio', 'Entrenamiento cardiovascular, dura 3 días', 3),
-    (14, 'Cardio', 'Entrenamiento cardiovascular, dura 4 días', 4),
-    (15, 'Cardio', 'Entrenamiento cardiovascular, dura 5 días', 5);
+    (1, 'Musculacion'),
+    (2, 'Calistenia'),
+    (3, 'Cardio');
+
+
+INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id,dias)
+VALUES (1, 1,2),
+       (1, 2,2),
+       (3, 3,2),
+       (2, 2,2),
+       (2, 1,2);
+
 
 INSERT INTO Lugar (nombre, ubicacion, longitud, latitud)
 VALUES
@@ -80,65 +77,50 @@ VALUES
     ('Gimnasio Espartaco', 'Av. Don Bosco 9500, La Matanza, Buenos Aires', -58.575000, -34.685000),
     ('Espacio Recreativo San Justo', 'Av. San Justo 11500, La Matanza, Buenos Aires', -58.560000, -34.720000),
     ('Club Atlético Temperley', 'Av. Alvear 12300, La Matanza, Buenos Aires', -58.552000, -34.730000);
+
+
 INSERT INTO Lugar_TipoEntrenamiento (lugar_id, tipoEntrenamiento_id)
 VALUES
     (1, 1), -- Gimnasio Fénix -> Musculacion
     (2, 1), -- Club Deportivo Morón -> Musculacion
-    (2, 4), -- Club Deportivo Morón -> Natacion
-    (3, 2), -- Parque de la Estación -> Cardio
-    (3, 3), -- Parque de la Estación -> Calistenia
-    (4, 4), -- Centro Natatorio González -> Natacion
-    (5, 2), -- Plaza San Martín -> Cardio
-    (5, 3), -- Plaza San Martín -> Calistenia
+    (3, 3), -- Parque de la Estación -> Cardio
+    (3, 2), -- Parque de la Estación -> Calistenia
+    (5, 3), -- Plaza San Martín -> Cardio
+    (5, 2), -- Plaza San Martín -> Calistenia
     (6, 1), -- Gimnasio Olimpia -> Musculacion
-    (6, 3), -- Gimnasio Olimpia -> Calistenia
+    (6, 2), -- Gimnasio Olimpia -> Calistenia
     (7, 1), -- Club Atlético La Matanza -> Musculacion
-    (7, 4), -- Club Atlético La Matanza -> Natacion
-    (8, 2), -- Complejo Deportivo Sur -> Cardio
-    (8, 3), -- Complejo Deportivo Sur -> Calistenia
-    (9, 2), -- Parque de la Familia -> Cardio
+    (8, 3), -- Complejo Deportivo Sur -> Cardio
+    (8, 2), -- Complejo Deportivo Sur -> Calistenia
+    (9, 3), -- Parque de la Familia -> Cardio
     (10, 1), -- Centro Deportivo Oeste -> Musculacion
-    (10, 4), -- Centro Deportivo Oeste -> Natacion
-    (11, 2), -- Polideportivo Municipal -> Cardio
+    (11, 3), -- Polideportivo Municipal -> Cardio
     (12, 1), -- Gimnasio Power -> Musculacion
-    (12, 3), -- Gimnasio Power -> Calistenia
-    (13, 2), -- Espacio Verde -> Cardio
+    (12, 2), -- Gimnasio Power -> Calistenia
+    (13, 3), -- Espacio Verde -> Cardio
     (14, 1), -- Club Los Cedros -> Musculacion
-    (14, 4), -- Club Los Cedros -> Natacion
-    (15, 2), -- Parque Lineal -> Cardio
+    (15, 3), -- Parque Lineal -> Cardio
     (16, 1), -- Gimnasio Fénix II -> Musculacion
-    (16, 3), -- Gimnasio Fénix II -> Calistenia
-    (17, 4), -- Centro Deportivo Alvear -> Natacion
-    (17, 2), -- Centro Deportivo Alvear -> Cardio
+    (16, 2), -- Gimnasio Fénix II -> Calistenia
+    (17, 3), -- Centro Deportivo Alvear -> Cardio
     (18, 1), -- Complejo Deportivo 3 de Febrero -> Musculacion
-    (19, 4), -- Club Unión -> Natacion
-    (19, 3), -- Club Unión -> Calistenia
-    (20, 2), -- Plaza El Líbano -> Cardio
+    (19, 2), -- Club Unión -> Calistenia
+    (20, 3), -- Plaza El Líbano -> Cardio
     (21, 1), -- Gimnasio Titanes -> Musculacion
-    (21, 2), -- Gimnasio Titanes -> Cardio
-    (22, 3), -- Club Social y Deportivo Mitre -> Calistenia
-    (22, 4), -- Club Social y Deportivo Mitre -> Natacion
-    (23, 2), -- Centro Deportivo La Matanza Norte -> Cardio
+    (21, 3), -- Gimnasio Titanes -> Cardio
+    (22, 2), -- Club Social y Deportivo Mitre -> Calistenia
+    (23, 3), -- Centro Deportivo La Matanza Norte -> Cardio
     (23, 1), -- Centro Deportivo La Matanza Norte -> Musculacion
-    (24, 3), -- Polideportivo Municipal II -> Calistenia
-    (24, 2), -- Polideportivo Municipal II -> Cardio
-    (25, 1), -- Complejo Deportivo El Fortín -> Musculacion
-    (25, 4), -- Complejo Deportivo El Fortín -> Natacion
-    (26, 2), -- Club Atlético Huracán -> Cardio
-    (26, 3), -- Club Atlético Huracán -> Calistenia
+    (24, 2), -- Polideportivo Municipal II -> Calistenia
+    (24, 3), -- Polideportivo Municipal II -> Cardio
+    (25, 1), -- Complejo Deportivo El Fortín -> Musculacionn
+    (26, 3), -- Club Atlético Huracán -> Cardio
+    (26, 2), -- Club Atlético Huracán -> Calistenia
     (27, 1), -- Parque Deportivo La Matanza -> Musculacion
-    (27, 4), -- Parque Deportivo La Matanza -> Natacion
-    (28, 3), -- Gimnasio Espartaco -> Calistenia
-    (29, 2), -- Espacio Recreativo San Justo -> Cardio
-    (30, 1), -- Club Atlético Temperley -> Musculacion
-    (30, 4); -- Club Atlético Temperley -> Natacion
+    (28, 2), -- Gimnasio Espartaco -> Calistenia
+    (29, 3), -- Espacio Recreativo San Justo -> Cardio
+    (30, 1); -- Club Atlético Temperley -> Musculacion
 
-INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id)
-VALUES (1, 1),
-       (1, 13),
-       (3, 3),
-       (2, 2),
-       (2, 7);
 
 -- Insertar datos de prueba en RutinaSemanal
 -- INSERT INTO RutinaSemanal (usuario_id) VALUES

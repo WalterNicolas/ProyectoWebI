@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class ControladorLoginTest {
@@ -24,6 +25,8 @@ public class ControladorLoginTest {
 	private ServicioLogin servicioLoginMock;
 	private RepositorioUsuario repositorioUsuarioMock;
 	private ServicioRutina repositorioRutinaSemanalMock;
+
+	private ServicioTipoEntrenamiento servicioTipoEntrenamiento;
 	@BeforeEach
 	public void init(){
 		datosLoginMock = new DatosLogin("dami@unlam.com", "123");
@@ -32,8 +35,9 @@ public class ControladorLoginTest {
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
+		servicioTipoEntrenamiento = mock(ServicioTipoEntrenamiento.class);
 		repositorioRutinaSemanalMock = mock(ServicioRutina.class);
-		controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,repositorioRutinaSemanalMock);
+		controladorLogin = new ControladorLogin(servicioLoginMock, repositorioUsuarioMock,repositorioRutinaSemanalMock,servicioTipoEntrenamiento);
 	}
 
 	@Test
@@ -69,8 +73,8 @@ public class ControladorLoginTest {
 
 	@Test
 	public void registrameSiUsuarioNoExisteDeberiaCrearUsuarioYLlevarmeAFormularioAptitudFisica() throws UsuarioExistente {
+		doNothing().when(servicioLoginMock).registrar(usuarioMock);
 
-		// ejecucion
 		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock);
 
 		// validacion

@@ -14,24 +14,18 @@ public class TipoEntrenamiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String descripcion;
-    private Long dias;
 
-    @ManyToMany(mappedBy = "tiposEntrenamiento")
-    private Set<Lugar> lugares = new HashSet<>();
 
-    @ManyToMany(mappedBy = "tiposEntrenamiento")
-    private Set<AptitudFisica> aptitudesFisicas = new HashSet<>();
+    @OneToMany(mappedBy = "tipoEntrenamiento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = new HashSet<>();
 
     public TipoEntrenamiento(String nombre, String descripcion) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
     }
 
     public TipoEntrenamiento(Long id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
     }
 
 
@@ -45,29 +39,6 @@ public class TipoEntrenamiento {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-    public Set<AptitudFisica> getAptitudesFisicas() {
-        return aptitudesFisicas;
-    }
-
-    public void setAptitudesFisicas(Set<AptitudFisica> aptitudesFisicas) {
-        this.aptitudesFisicas = aptitudesFisicas;
-    }
-
-    public Long getDias() {
-        return dias;
-    }
-
-    public void setDias(Long dias) {
-        this.dias = dias;
     }
 
     public Long getId() {

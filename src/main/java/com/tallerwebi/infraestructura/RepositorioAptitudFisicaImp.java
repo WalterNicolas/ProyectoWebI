@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.AptitudFisica;
-import com.tallerwebi.dominio.RepositorioAptitudFisica;
-import com.tallerwebi.dominio.TipoEntrenamiento;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.*;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,8 +21,9 @@ public class RepositorioAptitudFisicaImp implements RepositorioAptitudFisica {
 
 
     @Override
-    public void guardar(AptitudFisica aptitudFisica) {
-    sessionFactory.getCurrentSession().save(aptitudFisica);
+    public boolean guardar(AptitudFisica aptitudFisica) {
+        sessionFactory.getCurrentSession().save(aptitudFisica);
+        return true;
     }
 
     @Override
@@ -45,11 +43,19 @@ public class RepositorioAptitudFisicaImp implements RepositorioAptitudFisica {
             String deleteRelationSql = "DELETE FROM AptitudFisicaTipoEntrenamiento WHERE aptitudFisica_id = ?";
             jdbcTemplate.update(deleteRelationSql, aptitudFisica.getId());
 
-            String insertRelationSql = "INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id) VALUES (?, ?)";
-            for (TipoEntrenamiento tipoEntrenamiento : aptitudFisica.getTiposEntrenamiento()) {
-                jdbcTemplate.update(insertRelationSql, aptitudFisica.getId(), tipoEntrenamiento.getId());
+            String insertRelationSql = "INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id, dias) VALUES (?, ?, ?)";
+            for (AptitudFisicaTipoEntrenamiento relacion : aptitudFisica.getAptitudFisicaTipoEntrenamientos()) {
+                jdbcTemplate.update(insertRelationSql, aptitudFisica.getId(), relacion.getTipoEntrenamiento().getId(), relacion.getDias());
             }
         }
+
+        return rows > 0;
+    }
+
+    @Override
+    public boolean guardarAptitudFisicaTipoEntrenamiento(AptitudFisicaTipoEntrenamiento aptitudFisicaTipoEntrenamiento) {
+        int rows =jdbcTemplate.update("INSERT INTO aptitudfisicatipoentrenamiento (aptitudFisica_id, tipoEntrenamiento_id, dias) VALUES (?, ?, ?)",
+                aptitudFisicaTipoEntrenamiento.getAptitudFisica().getId(), aptitudFisicaTipoEntrenamiento.getTipoEntrenamiento().getId(), aptitudFisicaTipoEntrenamiento.getDias());
 
         return rows > 0;
     }
