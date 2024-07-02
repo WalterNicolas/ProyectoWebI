@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.hibernate.query.Query;
 import javax.persistence.criteria.*;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
@@ -21,6 +22,15 @@ public class RepositorioRutinaSemanalImp implements RepositorioRutinaSemanal {
     @Override
     public void guardar(RutinaSemanal rutinaSemanal) {
         sessionFactory.getCurrentSession().save(rutinaSemanal);
+    }
+
+    @Override
+    public void eliminarRutinasSemanalPorUsuario(Long idUsuario) {
+        List<RutinaSemanal> rutinas = buscarPorIdDeUsuario(idUsuario);
+
+        for (RutinaSemanal rutina : rutinas) {
+                sessionFactory.getCurrentSession().delete(rutina);
+        }
     }
 
     public List<RutinaSemanal> buscarPorIdDeUsuario(Long idUsuario) {

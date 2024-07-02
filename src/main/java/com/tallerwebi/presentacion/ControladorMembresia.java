@@ -65,8 +65,7 @@ public class ControladorMembresia {
                      break;
              }
              double valorMembresia =   membresia.getValor();
-             double total = valorMembresia * duracion; // La duracion es por mes. 1 = 1 mes
-            //CREO LA MEMBRESIA. -> Luego es borrada si el pago no es Satifactorio. /validar-pago
+             double total = valorMembresia * duracion;
             servicioMembresia.crearMembresia(membresia);
             if (tipo.equalsIgnoreCase("GRATUITO")){
                 List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(membresia.getUsuario());

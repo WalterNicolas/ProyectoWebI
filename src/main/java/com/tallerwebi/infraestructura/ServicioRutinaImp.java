@@ -84,7 +84,7 @@ public class ServicioRutinaImp implements ServicioRutina {
         List<RutinaSemanal> rutinas = new ArrayList<>();
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-
+        repositorioRutinaSemanal.eliminarRutinasSemanalPorUsuario(usuario.getId());
         for (AptitudFisicaTipoEntrenamiento aft : aptitudFisicaTipoEntrenamientos) {
             TipoEntrenamiento tipoEntrenamiento = aft.getTipoEntrenamiento();
 
