@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -91,7 +92,7 @@ public class ServicioFormularioAptitudFisicaTest {
         apto.setFechaNacimiento(fechaDeNacimientoString);
         apto.setEstadoFisico("sedentario");
 
-        List<Long> dias = List.of(3L); 
+        List<Long> dias = Arrays.asList(3L);
 
         assertThrows(DatosMalIngresadosException.class,
                 () -> servicioAptitudFisica.registrarDatos(apto, entrenamientosLis, dias));
