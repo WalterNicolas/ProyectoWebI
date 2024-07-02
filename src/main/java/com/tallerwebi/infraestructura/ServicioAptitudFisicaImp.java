@@ -7,19 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
 public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
     @Autowired
-   private  RepositorioAptitudFisica repositorioAptitudFisica;
+    private  RepositorioAptitudFisica repositorioAptitudFisica;
     @Autowired
     private  RepositorioUsuario repoUsuario;
 
@@ -31,27 +28,27 @@ public class ServicioAptitudFisicaImp implements ServicioAptitudFisica {
     }
 
     @Override
-    public AptitudFisica registrarDatos(AptitudFisica aptitudFisica,String[] tiposDeEntrenamiento)  {
-
-        List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();
-        if (tiposDeEntrenamiento != null) {
-            for (String tipoNombre : tiposDeEntrenamiento) {
-                TipoEntrenamiento tipo = repoEntrenamiento.findByNombre(tipoNombre);
-                if (tipo != null) {
-                    tiposEntrenamiento.add(tipo);
-                }
-            }
-            aptitudFisica.setTiposEntrenamiento(tiposEntrenamiento);
-        }
-
+    @Transactional
+    public boolean registrarDatos(AptitudFisica aptitudFisica, List<TipoEntrenamiento> tiposEntrenamiento, List<Long> dias) throws DatosMalIngresadosException, esMenorDeEdadException {
         if (!sonParametrosValidos(aptitudFisica)) {
             throw new DatosMalIngresadosException();
         }
         if (!esMayorDeEdad(aptitudFisica.getFechaNacimiento())) {
             throw new esMenorDeEdadException();
         }
-        repositorioAptitudFisica.guardar(aptitudFisica);
-        return aptitudFisica;
+
+        List<AptitudFisicaTipoEntrenamiento> aptitudes = new ArrayList<>();
+        for (int i = 0; i < tiposEntrenamiento.size(); i++) {
+            AptitudFisicaTipoEntrenamiento aptitud = new AptitudFisicaTipoEntrenamiento();
+            aptitud.setAptitudFisica(aptitudFisica);
+            aptitud.setTipoEntrenamiento(tiposEntrenamiento.get(i));
+            aptitud.setDias(dias.get(i));
+            aptitudes.add(aptitud);
+        };
+
+        aptitudFisica.setAptitudFisicaTipoEntrenamientos(aptitudes);
+
+        return repositorioAptitudFisica.guardar(aptitudFisica);
     }
 
     @Override

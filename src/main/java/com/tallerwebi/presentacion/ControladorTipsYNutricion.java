@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -54,6 +55,10 @@ public class ControladorTipsYNutricion {
                 Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
                 if (membresia == null || "GRATUITO".equals(membresia.getTipo()) || "INTERMEDIO".equals(membresia.getTipo())) {
                     modelo.put("error", "No tienes acceso a esta sección.");
+                    return new ModelAndView("tipsYNutricion", modelo);
+                }
+                if (membresia != null && membresia.getFechaFin().isBefore(LocalDate.now())) {
+                    modelo.put("error", "Su membresía ha finalizado. Actualice su Membresía");
                     return new ModelAndView("tipsYNutricion", modelo);
                 }
                 modelo.put("articulos", listaArticulos);

@@ -49,7 +49,7 @@ public class ControladorMembresia {
             if (membresiaExistente != null) {
              servicioMembresia.eliminarPorUsuario(usuario);
             }
-            // Crear la nueva membresía como 'PENDIENTE'
+
             Membresia membresia = new Membresia();
             LocalDate fechaActual = LocalDate.now();
             LocalDate fechaFutura = fechaActual.plusMonths(duracion);
@@ -98,6 +98,8 @@ public class ControladorMembresia {
             e.printStackTrace();
             modelo.put("error", e.getMessage());
             return new ModelAndView("home", modelo);
+        } catch (MembresiaNoEncontrada e) {
+            throw new RuntimeException(e);
         }
     }
     //Aca te redirecciona MercadoPago
