@@ -97,6 +97,7 @@ public class ServicioRutinaImp implements ServicioRutina {
                 RutinaDiaria rutinaDiaria = new RutinaDiaria();
                 rutinaDiaria.setRutinaSemanal(rutinaSemanal);
                 rutinaDiaria.setDiaSemana(diasSemana[i % 7]);
+                rutinaDiaria.setDescripcion(tipoEntrenamiento.getNombre());
 
                 List<Ejercicio> ejerciciosDia = generarEjerciciosDia(aptitudFisica.getHorasEntrenamiento(), tipoEntrenamiento.getNombre());
                 rutinaDiaria.setEjercicios(ejerciciosDia);

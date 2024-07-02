@@ -36,6 +36,28 @@ public class ServicioMembresiaTest {
         assertEquals(expectedMembresias, actualMembresias);
         verify(repositorioMembresiaMock, times(1)).buscarPorUsuario(usuarioId);
     }
+    @Test
+    public void queSePuedaEliminarMembresiaPorUsuario(){
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Membresia membresia1 = new Membresia();
+        membresia1.setUsuario(usuario);
+        servicioMembresia.eliminarPorUsuario(usuario);
+        verify(repositorioMembresiaMock, times(1)).eliminarPorUsuario(usuario);
+
+    }
+    @Test
+    public void queSePuedaEncontrarMembresiasPendientes(){
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Membresia membresia1 = new Membresia();
+        membresia1.setUsuario(usuario);
+        when(repositorioMembresiaMock.buscarMembresiasActivasPorUsuario(usuario)).thenReturn(membresia1);
+        Membresia membresiaPendiente = servicioMembresia.buscarMembresiaPendientePorUsuario(usuario);
+
+        assertEquals(membresia1, membresiaPendiente);
+        verify(repositorioMembresiaMock, times(1)).buscarMembresiasActivasPorUsuario(usuario);
+    }
 
     @Test
     public void queSePuedaCrearUnaMembresia() {
@@ -62,4 +84,5 @@ public class ServicioMembresiaTest {
         when(repositorioMembresiaMock.eliminarPorId(membresiaId))
                 .thenThrow(new MembresiaNoEncontrada());
     }
+
 }

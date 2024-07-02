@@ -12,7 +12,7 @@ public class Membresia {
     private String tipo;
     private Integer duracion;
     private double valor;
-
+    private String estado = "PENDIENTE"; //por defecto
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -75,6 +75,14 @@ public class Membresia {
 
     public double getValor() {
         return valor;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public void setValor(double valor) {

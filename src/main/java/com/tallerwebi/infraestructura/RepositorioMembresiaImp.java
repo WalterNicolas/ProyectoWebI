@@ -2,12 +2,15 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Membresia;
 import com.tallerwebi.dominio.RepositorioMembresia;
+import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.MembresiaNoEncontrada;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class RepositorioMembresiaImp implements RepositorioMembresia {
@@ -46,6 +49,13 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
                 .setParameter("id", id)
                 .uniqueResult();
     }
+    @Override
+    public Membresia buscarMembresiasActivasPorUsuario(Usuario usuario) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Membresia where usuario = :usuario and estado = 'PENDIENTE'", Membresia.class)
+                .setParameter("usuario", usuario)
+                .uniqueResult();
+    }
 
     @Override
     public Boolean eliminarPorId(Long membresiaId) throws MembresiaNoEncontrada {
@@ -58,5 +68,21 @@ public class RepositorioMembresiaImp implements RepositorioMembresia {
         }
         return true;
     }
+
+    @Override
+    public void eliminarPorUsuario(Usuario usuario){
+        Session session = sessionFactory.getCurrentSession();
+
+        // Buscar todas las membresías asociadas con el usuario
+        List<Membresia> membresias = session.createQuery("from Membresia where usuario = :usuario", Membresia.class)
+                .setParameter("usuario", usuario)
+                .list();
+
+        // Eliminar todas las membresías encontradas
+        for (Membresia membresia : membresias) {
+            session.delete(membresia);
+        }
+    }
+
 
 }
