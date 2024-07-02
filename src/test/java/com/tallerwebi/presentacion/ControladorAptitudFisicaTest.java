@@ -63,7 +63,7 @@ public class ControladorAptitudFisicaTest {
         ModelAndView modelAndView = controladorAptitudFisica.procesarFormulario(1L, aptitudFisica, request);
 
         assertEquals("formularioAptitudFisica", modelAndView.getViewName());
-        assertEquals("Faltan Datos", modelAndView.getModel().get("error"));
+        assertEquals("Todos los campos deben estar completos", modelAndView.getModel().get("error"));
     }
 
     @Test
@@ -74,6 +74,17 @@ public class ControladorAptitudFisicaTest {
         List<TipoEntrenamiento> entrenamientos = new ArrayList<>();
         TipoEntrenamiento entrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
         entrenamientos.add(entrenamiento);
+        List<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = new ArrayList<>();
+        AptitudFisicaTipoEntrenamiento aptitudFisicaTipoEntrenamiento = new AptitudFisicaTipoEntrenamiento();
+        TipoEntrenamiento tipoEntrenamiento = new TipoEntrenamiento("prueba", "Musculacion");
+        aptitudFisicaTipoEntrenamiento.setTipoEntrenamiento(tipoEntrenamiento);
+        aptitudFisicaTipoEntrenamiento.setDias(2L);
+        aptitudFisicaTipoEntrenamientos.add(aptitudFisicaTipoEntrenamiento);
+        aptitudFisica.setAptitudFisicaTipoEntrenamientos(aptitudFisicaTipoEntrenamientos);
+        aptitudFisica.setAltura(20);
+        aptitudFisica.setPeso(20);
+        aptitudFisica.setHorasEntrenamiento(10);
+        aptitudFisica.setFechaNacimiento("2010-01-02");
 
         when(repositorioUsuarioMock.buscarPorId(1L)).thenReturn(usuario);
         when(request.getParameterValues("tiposDeEntrenamiento")).thenReturn(new String[]{"prueba"});
@@ -99,6 +110,9 @@ public class ControladorAptitudFisicaTest {
         aptitudFisicaTipoEntrenamiento.setDias(2L);
         aptitudFisicaTipoEntrenamientos.add(aptitudFisicaTipoEntrenamiento);
         aptitudFisica.setAptitudFisicaTipoEntrenamientos(aptitudFisicaTipoEntrenamientos);
+        aptitudFisica.setAltura(20);
+        aptitudFisica.setPeso(20);
+        aptitudFisica.setHorasEntrenamiento(10);
 
         HttpServletRequest request = mock(HttpServletRequest.class);
 
