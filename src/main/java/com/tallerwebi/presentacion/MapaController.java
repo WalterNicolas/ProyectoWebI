@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -37,30 +36,8 @@ public class MapaController {
         List<Lugar> lugares;
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
-<<<<<<< HEAD
-        if (session != null && session.getAttribute("Email") != null) {
-            modelo.put("Email", session.getAttribute("Email"));
-            modelo.put("id", session.getAttribute("id"));
-            Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
-            Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
-            if (membresia == null || "GRATUITO".equals(membresia.getTipo())) {
-                modelo.put("error", "No tienes acceso a esta sección. Actualice su Membresia");
-                return new ModelAndView("datos", modelo);
-            }
-            if (membresia != null && membresia.getFechaFin().isBefore(LocalDate.now())) {
-                modelo.put("error", "Su membresía ha finalizado. Actualice su Membresía");
-                return new ModelAndView("datos", modelo);
-            }
-            try {
-                if (query == null || query.isEmpty()) {
-                    lugares = servicioSearch.buscarSitios();
-                } else {
-                    lugares = servicioSearch.buscarLugaresPorNombre(query);
-                }
-=======
         double latitudUsuario;
         double longitudUsuario;
->>>>>>> 562f158ef23f64da2cfb79c380ee10827c3bfc40
 
         try {
             if (session != null && session.getAttribute("Email") != null) {

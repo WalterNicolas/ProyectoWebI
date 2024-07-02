@@ -18,10 +18,6 @@ public class TipoEntrenamiento {
 
     @OneToMany(mappedBy = "tipoEntrenamiento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<AptitudFisicaTipoEntrenamiento> aptitudFisicaTipoEntrenamientos = new HashSet<>();
-    
-    @ManyToMany(mappedBy = "tiposEntrenamiento")
-    private Set<Lugar> lugares = new HashSet<>();
-
 
     public TipoEntrenamiento(String nombre, String descripcion) {
         this.nombre = nombre;
