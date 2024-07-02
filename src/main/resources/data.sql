@@ -36,12 +36,108 @@ VALUES
     (2, 'Calistenia'),
     (3, 'Cardio');
 
+
 INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id,dias)
 VALUES (1, 1,2),
        (1, 2,2),
        (3, 3,2),
        (2, 2,2),
        (2, 1,2);
+
+
+INSERT INTO Lugar (nombre, ubicacion, longitud, latitud)
+VALUES
+    ('Gimnasio Fénix', 'Av. Rivadavia 13500, La Matanza, Buenos Aires', -58.552472, -34.710867),
+    ('Club Deportivo Morón', 'Constitución 60, La Matanza, Buenos Aires', -58.624289, -34.677841),
+    ('Parque de la Estación', 'Av. Mosconi 1200, La Matanza, Buenos Aires', -58.576573, -34.714259),
+    ('Centro Natatorio González', 'Av. Perón 14000, La Matanza, Buenos Aires', -58.549643, -34.721801),
+    ('Plaza San Martín', 'Almafuerte 1900, La Matanza, Buenos Aires', -58.573501, -34.683274),
+    ('Gimnasio Olimpia', 'Av. Crovara 7600, La Matanza, Buenos Aires', -58.527000, -34.674600),
+    ('Club Atlético La Matanza', 'Av. Juan Manuel de Rosas 9000, La Matanza, Buenos Aires', -58.560780, -34.690830),
+    ('Complejo Deportivo Sur', 'Carlos Casares 4000, La Matanza, Buenos Aires', -58.582000, -34.720000),
+    ('Parque de la Familia', 'Av. Illia 3000, La Matanza, Buenos Aires', -58.592550, -34.695050),
+    ('Centro Deportivo Oeste', 'Av. Brig. Gral. Juan Manuel de Rosas 12000, La Matanza, Buenos Aires', -58.537250, -34.703450),
+    ('Polideportivo Municipal', 'Av. Pres. Perón 9900, La Matanza, Buenos Aires', -58.550000, -34.705000),
+    ('Gimnasio Power', 'Av. Don Bosco 8500, La Matanza, Buenos Aires', -58.570000, -34.680000),
+    ('Espacio Verde', 'Av. San Justo 11000, La Matanza, Buenos Aires', -58.560000, -34.710000),
+    ('Club Los Cedros', 'Av. Gral. Paz 7500, La Matanza, Buenos Aires', -58.575000, -34.690000),
+    ('Parque Lineal', 'Av. Larrazábal 9000, La Matanza, Buenos Aires', -58.560000, -34.700000),
+    ('Gimnasio Fénix II', 'Av. Rivadavia 14000, La Matanza, Buenos Aires', -58.560000, -34.710000),
+    ('Centro Deportivo Alvear', 'Av. J. M. Alvear 9300, La Matanza, Buenos Aires', -58.535000, -34.675000),
+    ('Complejo Deportivo 3 de Febrero', 'Av. 3 de Febrero 8000, La Matanza, Buenos Aires', -58.565000, -34.695000),
+    ('Club Unión', 'Av. Libertador 8800, La Matanza, Buenos Aires', -58.550000, -34.685000),
+    ('Plaza El Líbano', 'Av. Carlos Casares 2000, La Matanza, Buenos Aires', -58.582000, -34.707000),
+    ('Gimnasio Titanes', 'Av. Independencia 9500, La Matanza, Buenos Aires', -58.540000, -34.680000),
+    ('Club Social y Deportivo Mitre', 'Av. Mitre 12000, La Matanza, Buenos Aires', -58.552000, -34.700000),
+    ('Centro Deportivo La Matanza Norte', 'Av. San Justo 9500, La Matanza, Buenos Aires', -58.540000, -34.680000),
+    ('Polideportivo Municipal II', 'Av. Pres. Perón 8000, La Matanza, Buenos Aires', -58.550000, -34.690000),
+    ('Complejo Deportivo El Fortín', 'Av. Juan B. Justo 13000, La Matanza, Buenos Aires', -58.545000, -34.710000),
+    ('Club Atlético Huracán', 'Av. Mosconi 15000, La Matanza, Buenos Aires', -58.550000, -34.720000),
+    ('Parque Deportivo La Matanza', 'Av. Brig. Gral. Juan Manuel de Rosas 15000, La Matanza, Buenos Aires', -58.555000, -34.730000),
+    ('Gimnasio Espartaco', 'Av. Don Bosco 9500, La Matanza, Buenos Aires', -58.575000, -34.685000),
+    ('Espacio Recreativo San Justo', 'Av. San Justo 11500, La Matanza, Buenos Aires', -58.560000, -34.720000),
+    ('Club Atlético Temperley', 'Av. Alvear 12300, La Matanza, Buenos Aires', -58.552000, -34.730000);
+
+INSERT INTO Lugar_TipoEntrenamiento (lugar_id, tipoEntrenamiento_id)
+VALUES
+    (1, 1), -- Gimnasio Fénix -> Musculacion
+    (2, 1), -- Club Deportivo Morón -> Musculacion
+    (2, 4), -- Club Deportivo Morón -> Natacion
+    (3, 2), -- Parque de la Estación -> Cardio
+    (3, 3), -- Parque de la Estación -> Calistenia
+    (4, 4), -- Centro Natatorio González -> Natacion
+    (5, 2), -- Plaza San Martín -> Cardio
+    (5, 3), -- Plaza San Martín -> Calistenia
+    (6, 1), -- Gimnasio Olimpia -> Musculacion
+    (6, 3), -- Gimnasio Olimpia -> Calistenia
+    (7, 1), -- Club Atlético La Matanza -> Musculacion
+    (7, 4), -- Club Atlético La Matanza -> Natacion
+    (8, 2), -- Complejo Deportivo Sur -> Cardio
+    (8, 3), -- Complejo Deportivo Sur -> Calistenia
+    (9, 2), -- Parque de la Familia -> Cardio
+    (10, 1), -- Centro Deportivo Oeste -> Musculacion
+    (10, 4), -- Centro Deportivo Oeste -> Natacion
+    (11, 2), -- Polideportivo Municipal -> Cardio
+    (12, 1), -- Gimnasio Power -> Musculacion
+    (12, 3), -- Gimnasio Power -> Calistenia
+    (13, 2), -- Espacio Verde -> Cardio
+    (14, 1), -- Club Los Cedros -> Musculacion
+    (14, 4), -- Club Los Cedros -> Natacion
+    (15, 2), -- Parque Lineal -> Cardio
+    (16, 1), -- Gimnasio Fénix II -> Musculacion
+    (16, 3), -- Gimnasio Fénix II -> Calistenia
+    (17, 4), -- Centro Deportivo Alvear -> Natacion
+    (17, 2), -- Centro Deportivo Alvear -> Cardio
+    (18, 1), -- Complejo Deportivo 3 de Febrero -> Musculacion
+    (19, 4), -- Club Unión -> Natacion
+    (19, 3), -- Club Unión -> Calistenia
+    (20, 2), -- Plaza El Líbano -> Cardio
+    (21, 1), -- Gimnasio Titanes -> Musculacion
+    (21, 2), -- Gimnasio Titanes -> Cardio
+    (22, 3), -- Club Social y Deportivo Mitre -> Calistenia
+    (22, 4), -- Club Social y Deportivo Mitre -> Natacion
+    (23, 2), -- Centro Deportivo La Matanza Norte -> Cardio
+    (23, 1), -- Centro Deportivo La Matanza Norte -> Musculacion
+    (24, 3), -- Polideportivo Municipal II -> Calistenia
+    (24, 2), -- Polideportivo Municipal II -> Cardio
+    (25, 1), -- Complejo Deportivo El Fortín -> Musculacion
+    (25, 4), -- Complejo Deportivo El Fortín -> Natacion
+    (26, 2), -- Club Atlético Huracán -> Cardio
+    (26, 3), -- Club Atlético Huracán -> Calistenia
+    (27, 1), -- Parque Deportivo La Matanza -> Musculacion
+    (27, 4), -- Parque Deportivo La Matanza -> Natacion
+    (28, 3), -- Gimnasio Espartaco -> Calistenia
+    (29, 2), -- Espacio Recreativo San Justo -> Cardio
+    (30, 1), -- Club Atlético Temperley -> Musculacion
+    (30, 4); -- Club Atlético Temperley -> Natacion
+
+INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id)
+VALUES (1, 1),
+       (1, 13),
+       (3, 3),
+       (2, 2),
+       (2, 7);
+
 
 -- Insertar datos de prueba en RutinaSemanal
 -- INSERT INTO RutinaSemanal (usuario_id) VALUES

@@ -2,7 +2,6 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Lugar;
 import com.tallerwebi.dominio.ServicioMapa;
-import com.tallerwebi.dominio.enums.ExerciseType;
 import com.tallerwebi.dominio.excepcion.SearchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,42 +20,47 @@ public class ServicioMapaImp implements ServicioMapa {
         this.lugarRepositorio = lugarRepositorio;
     }
 
-
     @Override
-    public Double buscarDistancia(Lugar l){
-
-        return 0.0;
-    }
-
-    @Override
-    public List<Lugar> buscarSitios() throws SearchException{
-        List<Lugar> lugares = mockDatos();
-        if (lugares.isEmpty()){
-            throw new SearchException();
+    public List<Lugar> buscarSitios() throws SearchException {
+        try {
+            return lugarRepositorio.obtenerTodosLosLugares();
+        } catch (Exception e) {
+            throw new SearchException("Error al buscar todos los lugares");
         }
-        return lugares;
     }
 
     @Override
-    public List<Lugar> mockDatos(){
-        List<Lugar> lugares = new ArrayList<>();
-
-        lugares.add(new Lugar("Zona Ryp", "Ubicacion A",-34.747132079753904,-58.585186748664825));
-
-        lugares.add(new Lugar("Taruk", "Ubicacion A",-34.74976373083753,-58.58363723032326));
-
-        lugares.add(new Lugar("Nitro",  "Ubicacion A",-34.747968651909794, -58.58560155905591));
-        lugares.add(new Lugar("Vida Fit",  "Ubicacion A",-34.75045468465815, -58.587086498772415));
-
-        return lugares;
+    public List<Lugar> buscarLugaresPorTipoActividad(Long tipoActividad) throws SearchException {
+        try {
+            return lugarRepositorio.buscarLugaresPorTipoActividad(tipoActividad);
+        } catch (Exception e) {
+            throw new SearchException("Error al buscar lugares por tipo de actividad");
+        }
     }
 
     @Override
-    public Lugar filtroSitios(String input) throws Exception {
-        return null;
+    public List<Lugar> filtrarLugaresPorDistancia(List<Lugar> lugares, double latitudUsuario, double longitudUsuario, int distancia) {
+        List<Lugar> lugaresFiltrados = new ArrayList<>();
+        for (Lugar lugar : lugares) {
+            double distanciaCalculada = calcularDistancia(latitudUsuario, longitudUsuario, lugar.getLatitud(), lugar.getLongitud());
+            if (distanciaCalculada <= distancia) {
+                lugar.setDistancia(distanciaCalculada + " km");
+                lugaresFiltrados.add(lugar);
+            }
+        }
+        return lugaresFiltrados;
     }
-    @Override
-    public List<Lugar> buscarLugaresPorNombre(String nombre) {
-        return lugarRepositorio.findByNombreContaining(nombre);
+
+    private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; // Radio de la Tierra en Km
+
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
     }
 }

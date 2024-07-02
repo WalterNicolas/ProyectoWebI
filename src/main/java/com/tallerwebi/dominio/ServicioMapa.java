@@ -6,11 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ServicioMapa {
-
-    Double buscarDistancia(Lugar l);
     List<Lugar> buscarSitios() throws SearchException;
-    Lugar  filtroSitios(String input) throws  Exception;
-    List<Lugar> mockDatos();
-    List<Lugar> buscarLugaresPorNombre(String nombre);
-
+    List<Lugar> buscarLugaresPorTipoActividad(Long tipoActividad) throws SearchException;
+    List<Lugar> filtrarLugaresPorDistancia(List<Lugar> lugares, double latitudUsuario, double longitudUsuario, int distancia);
 }

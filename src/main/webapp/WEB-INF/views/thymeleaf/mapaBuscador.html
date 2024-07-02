@@ -1,68 +1,127 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="templates/head :: head">
 </head>
 <body>
 <div th:replace="templates/header :: header">
 </div>
 
+
 <div th:if="${error != null}">
-    <div th:replace="templates/errorModal :: accessDeniedModal(errorMessage=${error}, redirect=true)"></div>
+    <div th:replace="templates/errorModal :: accessDeniedModal(errorMessage=${error}, redirect=true)">
 </div>
 
 
-   <div class="row p-4">
-       <div class="col-md-12"> <h2 class="text-center text-white">Encuentra tu lugar ideal</h2></div>
-   </div>
+<div class="row p-4">
+    <div class="col-md-12">
+        <h2 class="text-center text-white">Encuentra tu lugar ideal</h2>
+    </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+</div>
 
-            <div class="buscadorContainer">
-                <input type="text" class="form-control" placeholder="Busca por ubicación o tipo de actividad" aria-label="Username" aria-describedby="basic-addon1">
-                <button class="btn rose-button text-center justify-content-center font-weight-bold"><i
-                        class="fa-solid fa-dumbbell"></i></button>
-            </div>
-
-            <section class="searchCardContainer scroll">
-                <span th:if="${error}"  th:text="${error}" class="text-white"></span>
-                <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
-                    <img th:src="@{/img/ZonaRyp.jpg}" alt="">
-                    <div class="infoContainer">
-                        <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
-                        <p> <i class="fa-solid fa-location-dot"></i> Distancia <span th:text="${lugar.distancia}"></span></p>
-                    </div>
+<div class="row justify-content-center">
+    <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+        <div class="buscadorContainer">
+            <form id="searchForm" action="/mapaBuscador" method="get" class="d-flex">
+                <div class="form-group mr-2 mb-0">
+                    <select name="tipoActividad" class="form-control">
+                        <option value="" disabled selected>Tipo de Actividad</option>
+                        <option value="1">Musculación</option>
+                        <option value="2">Cardio</option>
+                        <option value="3">Calistenia</option>
+                        <option value="4">Natación</option>
+                    </select>
                 </div>
-            </section>
-        </div>
-        <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
-                <div id="mapid" style="height: 500px; width:100%;">
-                    /div>
-                <div class=ml-4 id="coordenadas"></div>
+                <div class="form-group mr-2 mb-0">
+                    <select id="distancia" class="form-control">
+                        <option value="" disabled selected> Distancia KM </option>
+                        <option value="5">5km</option>
+                        <option value="10">10km</option>
+                        <option value="15">15km</option>
+                        <option value="30">30km</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn rose-button align-self-end">
+                    <i class="fa-solid fa-dumbbell"></i> Filtrar
+                </button>
+            </form>
         </div>
 
-</body>
-<script th:inline="javascript" >
+        <section class="searchCardContainer scroll">
+            <span th:if="${error}" th:text="${error}" class="text-white"></span>
+            <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
+                <img th:src="@{/img/ZonaRyp.jpg}" alt="">
+                <div class="infoContainer">
+                    <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
+                    <p>
+                        <i class="fa-solid fa-location-dot"></i> Distancia
+                        <span th:text="${lugar.distancia}"></span>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
+        <div id="mapid" style="height: 500px; width:100%;"></div>
+        <div class="ml-4" id="coordenadas"></div>
+
+        <!-- Botón para actualizar el marcador a las nuevas coordenadas obtenidas del mapa -->
+        <div class="mt-2">
+            <button id="btn-actualizar-marcador" class="btn btn-primary">Actualizar Ubicacion</button>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
     $(document).ready(function() {
-      var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13);
+        // Obtener las coordenadas del usuario desde el modelo de Spring
+        var latitudUsuario = /*[[${latitudUsuario}]]*/ -34.74973643128108;
+        var longitudUsuario = /*[[${longitudUsuario}]]*/ -58.571734784656066;
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(mymap);
+        // Inicializar el mapa centrado en las coordenadas del usuario
+        var mymap = L.map('mapid').setView([latitudUsuario, longitudUsuario], 13);
 
-      var marker = L.marker([-34.74973643128108, -58.571734784656066], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
-      marker.on('dragend', function (event) {
-        var marker = event.target;
-        var position = marker.getLatLng();
-        marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
 
-        $('#latitud').val(position.lat.toFixed(6));
-        $('#longitud').val(position.lng.toFixed(6));
-        $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+        // Agregar un marcador draggable en las coordenadas del usuario
+        var marker = L.marker([latitudUsuario, longitudUsuario], {draggable: true}).addTo(mymap);
+        marker.on('dragend', function (event) {
+            var marker = event.target;
+            var position = marker.getLatLng();
+            marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
 
-      });
+            // Actualizar el div de coordenadas con las nuevas coordenadas
+            $('#latitud').val(position.lat.toFixed(6));
+            $('#longitud').val(position.lng.toFixed(6));
+            $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+        });
+
+        // Manejar la actualización de la ubicación
+        $('#btn-actualizar-marcador').on('click', function() {
+            var nuevaLatitud = marker.getLatLng().lat;
+            var nuevaLongitud = marker.getLatLng().lng;
+
+            // Realizar una solicitud POST para enviar las nuevas coordenadas al backend
+            $.ajax({
+                url: '/actualizarUbicacion',
+                type: 'POST',
+                data: {
+                    latitud: nuevaLatitud,
+                    longitud: nuevaLongitud
+                },
+                success: function(response) {
+                    alert('Ubicación actualizada exitosamente.');
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al actualizar la ubicación: ' + error);
+                }
+            });
+        });
     });
 </script>
+
 <script th:inline="javascript">
     if ([[${error}]] != null) {
         $(document).ready(function() {
@@ -70,4 +129,5 @@
         });
     }
 </script>
+</body>
 </html>
