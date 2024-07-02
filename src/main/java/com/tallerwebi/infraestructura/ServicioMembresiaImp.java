@@ -3,6 +3,7 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.Membresia;
 import com.tallerwebi.dominio.RepositorioMembresia;
 import com.tallerwebi.dominio.ServicioMembresia;
+import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.MembresiaNoEncontrada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,23 @@ public class ServicioMembresiaImp implements ServicioMembresia {
     }
 
     @Override
+    public Membresia buscarMembresiaPendientePorUsuario(Usuario usuario) {
+        return repositorioMembresia.buscarMembresiasActivasPorUsuario(usuario);
+    }
+
+    @Override
     public Boolean eliminarPorId(Long membresiaId) throws MembresiaNoEncontrada {
       return  repositorioMembresia.eliminarPorId(membresiaId);
+    }
+
+    @Override
+    public void actualizarMembresia(Membresia membresia) {
+        repositorioMembresia.crearMembresia(membresia);
+    }
+
+    @Override
+    public void eliminarPorUsuario(Usuario usuario) {
+        repositorioMembresia.eliminarPorUsuario(usuario);
     }
 
 }

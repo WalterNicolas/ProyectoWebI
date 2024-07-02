@@ -44,6 +44,12 @@ public class ControladorMembresia {
         try {
             HttpSession session = request.getSession(false);
             Usuario usuario = servicioLogin.buscarPorMail(email);
+            // Verificar si el usuario ya tiene una membresía activa
+           Membresia membresiaExistente = servicioMembresia.buscarMembresiaPendientePorUsuario(usuario);
+            if (membresiaExistente != null) {
+             servicioMembresia.eliminarPorUsuario(usuario);
+            }
+            // Crear la nueva membresía como 'PENDIENTE'
             Membresia membresia = new Membresia();
             LocalDate fechaActual = LocalDate.now();
             LocalDate fechaFutura = fechaActual.plusMonths(duracion);
@@ -68,6 +74,8 @@ public class ControladorMembresia {
             //CREO LA MEMBRESIA. -> Luego es borrada si el pago no es Satifactorio. /validar-pago
             servicioMembresia.crearMembresia(membresia);
             if (tipo.equalsIgnoreCase("GRATUITO")){
+                membresia.setEstado("ACTIVA");
+                servicioMembresia.actualizarMembresia(membresia);
                 List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(membresia.getUsuario());
                 session.setAttribute("membresia", membresia);
                 session.setAttribute("usuario", membresia.getUsuario());
@@ -101,6 +109,10 @@ public class ControladorMembresia {
         // Si es Exitoso, genero la rutina y mantengo la Membresia.
         if (status.equals("approved")) {
             Membresia membresia = servicioMembresia.buscarPorId(membresiaId);
+            // Activar la membresía solo si el pago fue aprobado
+            membresia.setEstado("ACTIVA");
+            servicioMembresia.actualizarMembresia(membresia);
+
             List<RutinaSemanal> rutinaSemanal = servicioRutina.generarRutinaSemanal(membresia.getUsuario());
             session.setAttribute("membresia", membresia);
             session.removeAttribute("idMembresia");
