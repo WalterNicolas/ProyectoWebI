@@ -98,8 +98,6 @@ public class ControladorMembresia {
             e.printStackTrace();
             modelo.put("error", e.getMessage());
             return new ModelAndView("home", modelo);
-        } catch (MembresiaNoEncontrada e) {
-            throw new RuntimeException(e);
         }
     }
     //Aca te redirecciona MercadoPago
