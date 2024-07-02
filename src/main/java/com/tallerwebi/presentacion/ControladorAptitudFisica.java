@@ -45,6 +45,10 @@ public class ControladorAptitudFisica {
                 return registroFallido(model, "Usuario no encontrado");
             }
 
+            if (aptitudFisica == null ||aptitudFisica.getAltura() == 0.0 || aptitudFisica.getPeso() == 0.0 || aptitudFisica.getHorasEntrenamiento() == 0 || aptitudFisica.getAptitudFisicaTipoEntrenamientos().isEmpty()){
+                return registroFallido(model, "Todos los campos deben estar completos");
+            }
+
             aptitudFisica.setUsuario(usuario);
 
             List<TipoEntrenamiento> tiposEntrenamiento = new ArrayList<>();

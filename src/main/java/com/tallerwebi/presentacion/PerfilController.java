@@ -44,12 +44,14 @@ public class PerfilController {
         String mailLogeado = (String) session.getAttribute("Email");
         if (session != null && session.getAttribute("Email") != null) {
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
+            Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
             AptitudFisica aptitudFisica = usuario.getAptitudFisica();
             List<AptitudFisicaTipoEntrenamiento> userEntrenamiento = aptitudFisica.getAptitudFisicaTipoEntrenamientos();
             List<TipoEntrenamiento> tiposEntrenamiento = servicioTipoEntrenamiento.findAll();
             modelo.put("Email", mailLogeado);
             modelo.put("usuario", usuario);
             modelo.put("aptitudFisica", aptitudFisica);
+            modelo.put("membresia", membresia);
             modelo.put("userTiposEntrenamiento", userEntrenamiento);
             modelo.put("tipoDeEntrenamientos", tiposEntrenamiento);
             return new ModelAndView("perfil", modelo);

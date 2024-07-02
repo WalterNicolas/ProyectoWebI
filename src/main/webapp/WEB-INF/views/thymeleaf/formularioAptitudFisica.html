@@ -7,7 +7,7 @@
     <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card d-flex h-100 secundario align-items-stretch p-3">
+                <div class="card d-flex h-100 secundario align-items-stretch p-6">
                     <form id="form-aptitud-fisica" th:action="@{/{id}/guardar-aptitud-fisica(id=${usuario.getId()})}" method="POST" th:object="${aptitudFisica}">
                         <h3 class="form-signin-heading text-light text-center">Datos de Aptitud Física: <span th:if="${usuario != null}" th:text="${usuario.getNombre()}"> </span> </h3>
 
@@ -83,32 +83,31 @@
     }).join('');
     /*]]>*/
 
-function addEntrenamiento() {
+ function addEntrenamiento() {
     var container = document.getElementById('tiposEntrenamientoContainer');
     var index = container.children.length;
-
     var newEntrenamiento = `
         <div data-mdb-input-init class="form-outline mb-3">
-            <label class="form-label text-light" for="tipoEntrenamiento${index}">Tipo de entrenamiento</label>
-            <div class="d-flex align-items-center">
-                <select id="tipoEntrenamiento${index}" class="form-select" name="aptitudFisicaTipoEntrenamientos[${index}].tipoEntrenamiento.id">
-                    <option value="">Seleccione...</option>
-                    ${opcionesHtml}
-                </select>
-                <button type="button" class="btn btn-danger ms-2" onclick="removeEntrenamiento(this)">Borrar</button>
-            </div>
-
             <div class="row">
-                <div class="col-md-4">
-                    <label class="form-label text-light" for="diasEntrenamiento${index}">Días por Semana</label>
-                    <input id="diasEntrenamiento${index}" type="text" class="form-control" name="aptitudFisicaTipoEntrenamientos[${index}].dias">
+                <div class="col-md-8">
+                    <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
+                    <div class="d-flex align-items-center">
+                        <select id="tipoEntrenamiento" class="form-select" name="aptitudFisicaTipoEntrenamientos[` + index + `].tipoEntrenamiento.id">
+                            <option value="">Seleccione...</option>
+                            ` + opcionesHtml + `
+                        </select>
+                    </div>
                 </div>
+                <div class="col-md-4">
+                    <label class="form-label text-light" for="diasEntrenamiento` + index + `">Días por Semana</label>
+                    <input id="diasEntrenamiento` + index + `" type="text" class="form-control" name="aptitudFisicaTipoEntrenamientos[` + index + `].dias">
+                </div>
+                <button type="button" class="btn btn-danger btn-sm ms-2 mt-2" onclick="removeEntrenamiento(this)">Borrar</button>
             </div>
-            <input type="hidden" name="aptitudFisicaTipoEntrenamientos[${index}].id"/>
-            <input type="hidden" name="aptitudFisicaTipoEntrenamientos[${index}].aptitudFisica.id"/>
+            <input type="hidden" name="aptitudFisicaTipoEntrenamientos[` + index + `].id"/>
+            <input type="hidden" name="aptitudFisicaTipoEntrenamientos[` + index + `].aptitudFisica.id"/>
         </div>
     `;
-
     container.insertAdjacentHTML('beforeend', newEntrenamiento);
 }
 
@@ -150,6 +149,30 @@ $(document).ready(function() {
         e.preventDefault();
 
         var formData = $('#form-aptitud-fisica').serialize();
+
+        var altura = $('#altura').val();
+        var peso = $('#peso').val();
+        var horasEntrenamiento = $('#horasEntrenamiento').val();
+        var estadoFisico = $('#estadoFisico').val();
+        var fechaNacimiento = $('#fechaNacimiento').val();
+
+        if (!altura || !peso || !horasEntrenamiento || !estadoFisico || !fechaNacimiento) {
+            alert('Todos los campos deben estar completos');
+            return;
+        }
+
+        var fechaActual = new Date();
+        var fechaNac = new Date(fechaNacimiento);
+        var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+
+        if (new Date(fechaNac.setFullYear(fechaActual.getFullYear())) > fechaActual) {
+            edad--;
+        }
+
+        if (edad < 18) {
+            alert('Debe ser mayor de 18 años para registrarse');
+            return;
+        }
 
         $.ajax({
             type: 'POST',

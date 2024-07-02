@@ -44,6 +44,7 @@ public class ControladorMembresia {
         try {
             HttpSession session = request.getSession(false);
             Usuario usuario = servicioLogin.buscarPorMail(email);
+            validateMembrecia(usuario.getId());
             Membresia membresia = new Membresia();
             LocalDate fechaActual = LocalDate.now();
             LocalDate fechaFutura = fechaActual.plusMonths(duracion);
@@ -90,6 +91,8 @@ public class ControladorMembresia {
             e.printStackTrace();
             modelo.put("error", e.getMessage());
             return new ModelAndView("home", modelo);
+        } catch (MembresiaNoEncontrada e) {
+            throw new RuntimeException(e);
         }
     }
     //Aca te redirecciona MercadoPago
@@ -113,6 +116,13 @@ public class ControladorMembresia {
             return new ModelAndView("redirect:/home", modelo);
         }
         return new ModelAndView("redirect:/home");
+    }
+
+    public void validateMembrecia(Long UsuarioId) throws MembresiaNoEncontrada {
+        Membresia membresia = this.servicioMembresia.membresiasPorId(UsuarioId);
+        if (membresia != null) {
+            this.servicioMembresia.eliminarPorId(membresia.getId());
+        }
     }
 
 }

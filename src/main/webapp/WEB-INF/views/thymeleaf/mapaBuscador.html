@@ -6,26 +6,8 @@
 <div th:replace="templates/header :: header">
 </div>
 
-
 <div th:if="${error != null}">
-    <div class="modal fade" id="accessDeniedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Acceso Denegado</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p th:text="${error}"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='/home'">Volver al Inicio</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="templates/errorModal :: accessDeniedModal(errorMessage=${error}, redirect=true)"></div>
 </div>
 
 
@@ -62,7 +44,7 @@
 </body>
 <script th:inline="javascript" >
     $(document).ready(function() {
-      var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13); // Coordenadas de Ramos Mejía
+      var mymap = L.map('mapid').setView([-34.74973643128108, -58.571734784656066], 13);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -74,7 +56,6 @@
         var position = marker.getLatLng();
         marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
 
-        // Actualizar el div de coordenadas con las nuevas coordenadas
         $('#latitud').val(position.lat.toFixed(6));
         $('#longitud').val(position.lng.toFixed(6));
         $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());

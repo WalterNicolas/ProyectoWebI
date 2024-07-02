@@ -30,30 +30,18 @@ SET aptitudFisica_id = 3
 WHERE id = 3;
 
 
-INSERT INTO TipoEntrenamiento (id, nombre, descripcion, dias)
+INSERT INTO TipoEntrenamiento (id, nombre)
 VALUES
-    (1, 'Musculacion', 'Entrenamiento de fuerza, dura 1 día', 1),
-    (2, 'Musculacion', 'Entrenamiento de fuerza, dura 2 días', 2),
-    (3, 'Musculacion', 'Entrenamiento de fuerza, dura 3 días', 3),
-    (4, 'Musculacion', 'Entrenamiento de fuerza, dura 4 días', 4),
-    (5, 'Musculacion', 'Entrenamiento de fuerza, dura 5 días', 5),
-    (6, 'Calistenia', 'Entrenamiento con peso corporal, dura 1 día', 1),
-    (7, 'Calistenia', 'Entrenamiento con peso corporal, dura 2 días', 2),
-    (8, 'Calistenia', 'Entrenamiento con peso corporal, dura 3 días', 3),
-    (9, 'Calistenia', 'Entrenamiento con peso corporal, dura 4 días', 4),
-    (10, 'Calistenia', 'Entrenamiento con peso corporal, dura 5 días', 5),
-    (11, 'Cardio', 'Entrenamiento cardiovascular, dura 1 día', 1),
-    (12, 'Cardio', 'Entrenamiento cardiovascular, dura 2 días', 2),
-    (13, 'Cardio', 'Entrenamiento cardiovascular, dura 3 días', 3),
-    (14, 'Cardio', 'Entrenamiento cardiovascular, dura 4 días', 4),
-    (15, 'Cardio', 'Entrenamiento cardiovascular, dura 5 días', 5);
+    (1, 'Musculacion'),
+    (2, 'Calistenia'),
+    (3, 'Cardio');
 
-INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id)
-VALUES (1, 1),
-       (1, 13),
-       (3, 3),
-       (2, 2),
-       (2, 7);
+INSERT INTO AptitudFisicaTipoEntrenamiento (aptitudFisica_id, tipoEntrenamiento_id,dias)
+VALUES (1, 1,2),
+       (1, 2,2),
+       (3, 3,2),
+       (2, 2,2),
+       (2, 1,2);
 
 -- Insertar datos de prueba en RutinaSemanal
 -- INSERT INTO RutinaSemanal (usuario_id) VALUES
