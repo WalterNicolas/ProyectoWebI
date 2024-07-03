@@ -50,7 +50,7 @@ VALUES
     ('Gimnasio Fénix', 'Av. Rivadavia 13500, La Matanza, Buenos Aires', -58.552472, -34.710867),
     ('Club Deportivo Morón', 'Constitución 60, La Matanza, Buenos Aires', -58.624289, -34.677841),
     ('Parque de la Estación', 'Av. Mosconi 1200, La Matanza, Buenos Aires', -58.576573, -34.714259),
-    ('Centro Natatorio González', 'Av. Perón 14000, La Matanza, Buenos Aires', -58.549643, -34.721801),
+    ('Centro González', 'Av. Perón 14000, La Matanza, Buenos Aires', -58.549643, -34.721801),
     ('Plaza San Martín', 'Almafuerte 1900, La Matanza, Buenos Aires', -58.573501, -34.683274),
     ('Gimnasio Olimpia', 'Av. Crovara 7600, La Matanza, Buenos Aires', -58.527000, -34.674600),
     ('Club Atlético La Matanza', 'Av. Juan Manuel de Rosas 9000, La Matanza, Buenos Aires', -58.560780, -34.690830),
@@ -76,8 +76,133 @@ VALUES
     ('Parque Deportivo La Matanza', 'Av. Brig. Gral. Juan Manuel de Rosas 15000, La Matanza, Buenos Aires', -58.555000, -34.730000),
     ('Gimnasio Espartaco', 'Av. Don Bosco 9500, La Matanza, Buenos Aires', -58.575000, -34.685000),
     ('Espacio Recreativo San Justo', 'Av. San Justo 11500, La Matanza, Buenos Aires', -58.560000, -34.720000),
-    ('Club Atlético Temperley', 'Av. Alvear 12300, La Matanza, Buenos Aires', -58.552000, -34.730000);
-
+    ('Club Atlético Temperley', 'Av. Alvear 12300, La Matanza, Buenos Aires', -58.552000, -34.730000),
+    ('Parque Centenario', 'Av. Patricias Argentinas 900, Caballito, Buenos Aires', -58.438580, -34.607351),
+    ('Gimnasio Megatlon', 'Av. Cabildo 4700, Núñez, Buenos Aires', -58.472473, -34.557198),
+    ('Club Ciudad de Buenos Aires', 'Av. del Libertador 7500, Núñez, Buenos Aires', -58.456200, -34.544878),
+    ('Parque Saavedra', 'Av. García del Río y Av. Crisólogo Larralde, Saavedra, Buenos Aires', -58.487838, -34.558086),
+    ('Gimnasio Ocampo Wellness Club', 'Ocampo 2815, Palermo, Buenos Aires', -58.408987, -34.582143),
+    ('Club de Amigos', 'Av. Pres. Figueroa Alcorta 3885, Palermo, Buenos Aires', -58.414887, -34.571925),
+    ('Parque Las Heras', 'Av. Coronel Díaz y French, Palermo, Buenos Aires', -58.409739, -34.587318),
+    ('Gimnasio Sport Club', 'Av. Callao 360, Balvanera, Buenos Aires', -58.398062, -34.610040),
+    ('Club Ferro Carril Oeste', 'Av. Avellaneda 1240, Caballito, Buenos Aires', -58.440367, -34.619560),
+    ('Parque Chacabuco', 'Av. Asamblea y Emilio Mitre, Caballito, Buenos Aires', -58.438500, -34.628400),
+    ('Gimnasio Key Biscayne', 'Mansilla 3181, Palermo, Buenos Aires', -58.413852, -34.597439),
+    ('Club Harrods Gath & Chaves', 'Av. Figueroa Alcorta 7110, Núñez, Buenos Aires', -58.453800, -34.552000),
+    ('Parque de los Niños', 'Av. Cantilo y Av. Int. Cantilo, Núñez, Buenos Aires', -58.435678, -34.528011),
+    ('Gimnasio Megatlon Almagro', 'Av. Rivadavia 4100, Almagro, Buenos Aires', -58.415630, -34.613230),
+    ('Club Atlético River Plate', 'Av. Pres. Figueroa Alcorta 7597, Núñez, Buenos Aires', -58.454506, -34.545377),
+    ('Parque Indoamericano', 'Av. Castañares y Av. Escalada, Villa Lugano, Buenos Aires', -58.463773, -34.682290),
+    ('Gimnasio One Fitness Club', 'Av. Federico Lacroze 1800, Belgrano, Buenos Aires', -58.443951, -34.563710),
+    ('Club El Porvenir', 'Ramón Falcón 6100, Mataderos, Buenos Aires', -58.501742, -34.652369),
+    ('Parque Avellaneda', 'Av. Directorio 4100, Parque Avellaneda, Buenos Aires', -58.480800, -34.640000),
+    ('Gimnasio Boca Gym', 'Necochea 1258, La Boca, Buenos Aires', -58.363655, -34.634661),
+    ('Club Atlético Boca Juniors', 'Brandsen 805, La Boca, Buenos Aires', -58.367168, -34.635327),
+    ('Parque Lezama', 'Av. Martín García y Av. Paseo Colón, San Telmo, Buenos Aires', -58.367797, -34.620643),
+    ('Gimnasio Megatlon Belgrano', 'Av. del Libertador 7200, Belgrano, Buenos Aires', -58.451934, -34.557960),
+    ('Club Atlético San Lorenzo de Almagro', 'Av. La Plata 1700, Boedo, Buenos Aires', -58.412108, -34.638684),
+    ('Parque Rivadavia', 'Av. Rivadavia 4800, Caballito, Buenos Aires', -58.430000, -34.620400),
+('Club Atlético Estudiantil Porteño', 'Av. Cristianía 1234, La Matanza, Buenos Aires', -58.589472, -34.679867),
+('Gimnasio Iron Club', 'Av. Tte. Gral. Pablo Riccheri 15200, La Matanza, Buenos Aires', -58.544289, -34.693841),
+('Parque de la Juventud', 'Calle Pedro Bonifacio Palacios 1200, La Matanza, Buenos Aires', -58.576000, -34.712259),
+('Centro Deportivo 24 de Septiembre', 'Calle Arieta 9000, La Matanza, Buenos Aires', -58.532643, -34.723801),
+('Plaza San Justo', 'Calle Irigoyen 1900, La Matanza, Buenos Aires', -58.570000, -34.685274),
+('Gimnasio Titan Gym', 'Av. Monseñor Bufano 9500, La Matanza, Buenos Aires', -58.537000, -34.676600),
+('Club Social y Deportivo Defensores de La Matanza', 'Calle Belgrano 3200, La Matanza, Buenos Aires', -58.550780, -34.695830),
+('Complejo Deportivo Central', 'Calle Arieta 4000, La Matanza, Buenos Aires', -58.582500, -34.721500),
+('Parque del Sol', 'Av. Brig. Gral. Juan Manuel de Rosas 10000, La Matanza, Buenos Aires', -58.592550, -34.701050),
+('Centro Deportivo Fénix', 'Calle Almafuerte 1200, La Matanza, Buenos Aires', -58.535000, -34.699000),
+('Polideportivo Ciudad Evita', 'Av. Crovara 10200, La Matanza, Buenos Aires', -58.548000, -34.705000),
+('Gimnasio Strong Power', 'Calle Almafuerte 6500, La Matanza, Buenos Aires', -58.570000, -34.680000),
+('Espacio Deportivo Monte Dorrego', 'Calle Don Bosco 1200, La Matanza, Buenos Aires', -58.562000, -34.700000),
+('Club La Unión de La Matanza', 'Calle Don Bosco 1100, La Matanza, Buenos Aires', -58.575000, -34.690000),
+('Parque Los Robles', 'Calle Larrazábal 2000, La Matanza, Buenos Aires', -58.560000, -34.720000),
+('Gimnasio Barracuda', 'Av. Mosconi 12000, La Matanza, Buenos Aires', -58.560000, -34.730000),
+('Centro Deportivo El Ciclón', 'Calle Alvear 8900, La Matanza, Buenos Aires', -58.535000, -34.672500),
+('Complejo Deportivo Los Andes', 'Calle Carlos Casares 6500, La Matanza, Buenos Aires', -58.550000, -34.725000),
+('Club San Jorge', 'Av. Cristianía 7000, La Matanza, Buenos Aires', -58.562000, -34.720000),
+('Plaza San José', 'Calle Carlos Casares 900, La Matanza, Buenos Aires', -58.550000, -34.699000),
+('Gimnasio La Fortaleza', 'Av. Rivadavia 14600, La Matanza, Buenos Aires', -58.560000, -34.711000),
+('Club Deportivo Malvinas Argentinas', 'Calle San Martín 2400, La Matanza, Buenos Aires', -58.552000, -34.700000),
+('Centro Deportivo Mariano Moreno', 'Calle San Justo 3200, La Matanza, Buenos Aires', -58.540000, -34.675000),
+('Polideportivo 9 de Julio', 'Calle Belgrano 5300, La Matanza, Buenos Aires', -58.550000, -34.690000),
+('Complejo Deportivo Buenos Aires', 'Av. Cristianía 9000, La Matanza, Buenos Aires', -58.545000, -34.710000),
+('Club Defensores de La Matanza', 'Calle Mosconi 8500, La Matanza, Buenos Aires', -58.550000, -34.720000),
+('Parque Deportivo San Justo', 'Calle Alvear 11000, La Matanza, Buenos Aires', -58.555000, -34.730000),
+('Gimnasio Strongman', 'Av. Rivadavia 15500, La Matanza, Buenos Aires', -58.575000, -34.685000),
+('Espacio Deportivo La Matanza', 'Calle Almafuerte 1100, La Matanza, Buenos Aires', -58.560000, -34.720000),
+('Club Deportivo La Matanza', 'Calle Av. Mosconi 9500, La Matanza, Buenos Aires', -58.552000, -34.730000),
+('Parque Recreativo Don Bosco', 'Calle Crovara 1500, La Matanza, Buenos Aires', -58.560000, -34.720000),
+('Gimnasio Megatlon Caballito', 'Av. Rivadavia 5100, Caballito, Buenos Aires', -58.430440, -34.614200),
+('Club All Boys', 'Mercedes 1900, Floresta, Buenos Aires', -58.485800, -34.625400),
+('Parque Los Andes', 'Av. Dorrego y Av. Corrientes, Chacarita, Buenos Aires', -58.446500, -34.588800),
+('Gimnasio Belgrano Athletic Club', 'Virrey del Pino 3456, Belgrano, Buenos Aires', -58.459400, -34.566200),
+('Club Sportivo Barracas', 'Av. Iriarte 2056, Barracas, Buenos Aires', -58.378600, -34.646500),
+('Parque Centenario', 'Av. Patricias Argentinas 700, Caballito, Buenos Aires', -58.437800, -34.609500),
+('Gimnasio Megatlon Recoleta', 'Av. Las Heras 3000, Recoleta, Buenos Aires', -58.406300, -34.585700),
+('Club Ciudad de Buenos Aires', 'Av. del Libertador 7500, Núñez, Buenos Aires', -58.456300, -34.549900),
+('Parque Chacabuco', 'Av. Eva Perón y Av. Asamblea, Parque Chacabuco, Buenos Aires', -58.439000, -34.629500),
+('Gimnasio Villafañe', 'Av. Montes de Oca 1500, Barracas, Buenos Aires', -58.382200, -34.631900),
+('Club Social y Deportivo Platense', 'Zapiola 6275, Saavedra, Buenos Aires', -58.478900, -34.571100),
+('Parque de los Patricios', 'Av. Caseros y Monteagudo, Parque de los Patricios, Buenos Aires', -58.405400, -34.637800),
+('Gimnasio Balboa Boxing Club', 'Castro Barros 75, Almagro, Buenos Aires', -58.423200, -34.616600),
+('Club Gimnasia y Esgrima de Buenos Aires', 'Av. Del Libertador 7500, Núñez, Buenos Aires', -58.454600, -34.546800),
+('Parque Indoamericano', 'Av. Castañares y Av. Escalada, Villa Lugano, Buenos Aires', -58.464800, -34.667400),
+('Gimnasio Aconcagua', 'Olazabal 5900, Villa Urquiza, Buenos Aires', -58.489600, -34.567800),
+('Club Gimnasia y Esgrima de Buenos Aires (Sede Aldao)', 'Dr. Pedro Ignacio Rivera 4300, Villa Urquiza, Buenos Aires', -58.488200, -34.574900),
+('Parque Avellaneda', 'Av. Directorio 4100, Parque Avellaneda, Buenos Aires', -58.486800, -34.633200),
+('Gimnasio Villalba Fitness Club', 'Av. Cabildo 5000, Belgrano, Buenos Aires', -58.465200, -34.559800),
+('Club Sportivo Pereyra', 'Gral. José Gervasio Artigas 840, Parque Chacabuco, Buenos Aires', -58.445600, -34.634200),
+('Parque Rivadavia', 'Av. Rivadavia 4900, Caballito, Buenos Aires', -58.427700, -34.618600),
+('Gimnasio Juvencia', 'Lope de Vega 600, Vélez Sársfield, Buenos Aires', -58.496400, -34.632900),
+('Club Social y Deportivo Franja de Oro', 'Boedo 1400, Boedo, Buenos Aires', -58.416000, -34.624000),
+('Parque Lezama', 'Av. Martín García y Av. Paseo Colón, San Telmo, Buenos Aires', -58.366000, -34.620200),
+('Gimnasio Olimpo', 'Av. Corrientes 7000, Villa Crespo, Buenos Aires', -58.431200, -34.596800),
+('Club Harrods', 'Av. Figueroa Alcorta 7000, Núñez, Buenos Aires', -58.448600, -34.558300),
+('Parque Sarmiento', 'Av. Dr. Ricardo Balbín 4750, Saavedra, Buenos Aires', -58.503500, -34.572400),
+('Gimnasio San Telmo', 'Defensa 1300, San Telmo, Buenos Aires', -58.377800, -34.617900),
+('Club San Miguel', 'Calle Salta 1800, San Cristóbal, Buenos Aires', -58.391200, -34.621100),
+('Parque Las Heras', 'Av. Coronel Díaz y French, Palermo, Buenos Aires', -58.409800, -34.587000),
+('Gimnasio Comodoro', 'Av. Cabildo 3500, Belgrano, Buenos Aires', -58.450600, -34.573100),
+('Club Alvear', 'Marcelo T. de Alvear 1200, Recoleta, Buenos Aires', -58.395700, -34.596600),
+('Parque Alberdi', 'Av. Directorio y Av. Emilio Castro, Mataderos, Buenos Aires', -58.514600, -34.645400),
+('Gimnasio North Side', 'Av. Congreso 4500, Villa Urquiza, Buenos Aires', -58.474200, -34.568600),
+('Club de Amigos', 'Av. Pres. Figueroa Alcorta 3885, Palermo, Buenos Aires', -58.413700, -34.574600),
+('Parque Saavedra', 'Av. García del Río y Av. Crisólogo Larralde, Saavedra, Buenos Aires', -58.483700, -34.558800),
+('Gimnasio Form Fit', 'Scalabrini Ortiz 2100, Palermo, Buenos Aires', -58.409200, -34.590800),
+('Club Atlético Atlanta', 'Humboldt 540, Villa Crespo, Buenos Aires', -58.434500, -34.596100),
+('Parque Almirante Brown', 'Av. Castañares y Av. General Paz, Villa Riachuelo, Buenos Aires', -58.472300, -34.682400),
+('Gimnasio Terraza', 'Av. de Mayo 1400, Monserrat, Buenos Aires', -58.385300, -34.609700),
+('Club 17 de Octubre', 'Av. Chiclana 3000, Boedo, Buenos Aires', -58.417600, -34.631300),
+('Parque Manuel Belgrano', 'Av. Figueroa Alcorta 7000, Belgrano, Buenos Aires', -58.457800, -34.553600),
+('Gimnasio Su Gym', 'Av. Juan B. Justo 3000, Palermo, Buenos Aires', -58.439900, -34.595100),
+('Club Estudiantes de Buenos Aires', 'Av. Francisco Beiró 2800, Villa Devoto, Buenos Aires', -58.506200, -34.607600),
+('Parque De Los Niños', 'Gral. Paz y Av. Cantilo, Núñez, Buenos Aires', -58.475800, -34.532000),
+('Gimnasio Esparta', 'Av. San Juan 3300, San Cristóbal, Buenos Aires', -58.403400, -34.620500),
+('Club Liniers', 'Carhué 1800, Liniers, Buenos Aires', -58.535000, -34.656100),
+('Parque Los Andes', 'Av. Dorrego y Av. Corrientes, Chacarita, Buenos Aires', -58.445500, -34.590600),
+('Gimnasio Megatlon Caballito II', 'Av. Rivadavia 5200, Caballito, Buenos Aires', -58.431800, -34.614600),
+('Club Social y Deportivo Mitre', 'Pueyrredón 1500, Villa Mitre, Buenos Aires', -58.451000, -34.606500),
+('Parque Patricios', 'Av. Caseros y La Rioja, Parque Patricios, Buenos Aires', -58.398500, -34.631800),
+('Gimnasio Mega Sport', 'Av. Corrientes 2400, Balvanera, Buenos Aires', -58.407300, -34.607000),
+('Club Social y Deportivo Comunicaciones', 'Av. San Martín 5125, Agronomía, Buenos Aires', -58.482700, -34.598000),
+('Parque Rivadavia', 'Av. Rivadavia 4900, Caballito, Buenos Aires', -58.428300, -34.616900),
+('Gimnasio Crossfit Devoto', 'Av. Salvador María del Carril 4500, Villa Devoto, Buenos Aires', -58.515400, -34.603800),
+('Club Social y Deportivo San Jorge', 'Av. Álvarez Thomas 2700, Villa Urquiza, Buenos Aires', -58.487300, -34.574200),
+('Parque Alberdi', 'Av. Directorio 4200, Mataderos, Buenos Aires', -58.514800, -34.646200),
+('Gimnasio Rosario Central', 'Juan B. Justo 9000, Villa Real, Buenos Aires', -58.520000, -34.611400),
+('Club Social y Deportivo Mitre', 'Av. Congreso 5500, Villa Urquiza, Buenos Aires', -58.484300, -34.566800),
+('Parque Chacabuco', 'Av. Eva Perón y Av. Asamblea, Parque Chacabuco, Buenos Aires', -58.439300, -34.629800),
+('Gimnasio Le Park', 'Av. del Libertador 5000, Palermo, Buenos Aires', -58.422200, -34.582100),
+('Club Allende', 'Andrés Lamas 2400, Villa del Parque, Buenos Aires', -58.482500, -34.612000),
+('Parque Saavedra', 'Av. García del Río y Av. Balbín, Saavedra, Buenos Aires', -58.484700, -34.561300),
+('Gimnasio Aerofit', 'Av. Gaona 4600, Flores, Buenos Aires', -58.475800, -34.616400),
+('Club Gimnasia y Esgrima de Buenos Aires (Sede Figueroa Alcorta)', 'Av. Figueroa Alcorta 5500, Núñez, Buenos Aires', -58.451100, -34.560100),
+('Parque Los Andes', 'Av. Corrientes y Av. Dorrego, Chacarita, Buenos Aires', -58.446100, -34.589200),
+('Gimnasio Energy Gym', 'Av. Rivadavia 6300, Flores, Buenos Aires', -58.470200, -34.620800),
+('Club GEVP', 'Av. Nazca 4700, Villa del Parque, Buenos Aires', -58.497400, -34.606200),
+('Parque General Paz', 'Av. Gral. Paz y Av. Rivadavia, Liniers, Buenos Aires', -58.530800, -34.640200),
+('Gimnasio Megatlon Almagro', 'Av. Díaz Vélez 3900, Almagro, Buenos Aires', -58.415000, -34.613500);
 
 INSERT INTO Lugar_TipoEntrenamiento (lugar_id, tipoEntrenamiento_id)
 VALUES
@@ -119,7 +244,186 @@ VALUES
     (27, 1), -- Parque Deportivo La Matanza -> Musculacion
     (28, 2), -- Gimnasio Espartaco -> Calistenia
     (29, 3), -- Espacio Recreativo San Justo -> Cardio
-    (30, 1); -- Club Atlético Temperley -> Musculacion
+    (30, 1), -- Club Atlético Temperley -> Musculacion
+    (31, 2), -- Parque Centenario -> Cardio
+    (32, 1), -- Gimnasio Megatlon -> Musculacion
+    (32, 2), -- Gimnasio Megatlon -> Cardio
+    (33, 1), -- Club Ciudad de Buenos Aires -> Musculacion
+    (33, 3), -- Club Ciudad de Buenos Aires -> Calistenia
+    (34, 2), -- Parque Saavedra -> Cardio
+    (35, 1), -- Gimnasio Ocampo Wellness Club -> Musculacion
+    (35, 2), -- Gimnasio Ocampo Wellness Club -> Cardio
+    (36, 3), -- Club de Amigos -> Calistenia
+    (37, 2), -- Parque Las Heras -> Cardio
+    (38, 1), -- Gimnasio Sport Club -> Musculacion
+    (39, 1), -- Club Ferro Carril Oeste -> Musculacion
+    (39, 3), -- Club Ferro Carril Oeste -> Calistenia
+    (40, 2), -- Parque Chacabuco -> Cardio
+    (41, 1), -- Gimnasio Key Biscayne -> Musculacion
+    (42, 3), -- Club Harrods Gath & Chaves -> Calistenia
+    (43, 2), -- Parque de los Niños -> Cardio
+    (44, 1), -- Gimnasio Megatlon Almagro -> Musculacion
+    (44, 2), -- Gimnasio Megatlon Almagro -> Cardio
+    (45, 1), -- Club Atlético River Plate -> Musculacion
+    (45, 2), -- Club Atlético River Plate -> Cardio
+    (46, 3), -- Parque Indoamericano -> Calistenia
+    (47, 1), -- Gimnasio One Fitness Club -> Musculacion
+    (47, 2), -- Gimnasio One Fitness Club -> Cardio
+    (48, 1), -- Club El Porvenir -> Musculacion
+    (48, 3), -- Club El Porvenir -> Calistenia
+    (49, 2), -- Parque Avellaneda -> Cardio
+    (50, 1), -- Gimnasio Boca Gym -> Musculacion
+    (51, 2), -- Club Atlético Boca Juniors -> Cardio
+    (51, 3), -- Club Atlético Boca Juniors -> Calistenia
+    (52, 2), -- Parque Lezama -> Cardio
+    (53, 1), -- Gimnasio Megatlon Belgrano -> Musculacion
+    (54, 1), -- Club Atlético San Lorenzo de Almagro -> Musculacion
+    (54, 2), -- Club Atlético San Lorenzo de Almagro -> Cardio
+    (55, 2), -- Parque Rivadavia -> Cardio
+    (56, 1), -- Club Atlético Estudiantil Porteño -> Musculacion
+    (56, 3), -- Club Atlético Estudiantil Porteño -> Cardio
+    (57, 1), -- Gimnasio Iron Club -> Musculacion
+    (57, 2), -- Gimnasio Iron Club -> Calistenia
+    (58, 2), -- Parque de la Juventud -> Calistenia
+    (58, 3), -- Parque de la Juventud -> Cardio
+    (59, 3), -- Centro Deportivo 24 de Septiembre -> Cardio
+    (60, 2), -- Plaza San Justo -> Calistenia
+    (61, 1), -- Gimnasio Titan Gym -> Musculacion
+    (62, 3), -- Club Social y Deportivo Defensores de La Matanza -> Cardio
+    (63, 2), -- Complejo Deportivo Central -> Calistenia
+    (63, 3), -- Complejo Deportivo Central -> Cardio
+    (64, 2), -- Parque del Sol -> Calistenia
+    (65, 3), -- Centro Deportivo Fénix -> Cardio
+    (66, 2), -- Polideportivo Ciudad Evita -> Calistenia
+    (67, 1), -- Gimnasio Strong Power -> Musculacion
+    (67, 3), -- Gimnasio Strong Power -> Cardio
+    (68, 2), -- Espacio Deportivo Monte Dorrego -> Calistenia
+    (68, 3), -- Espacio Deportivo Monte Dorrego -> Cardio
+    (69, 1), -- Club La Unión de La Matanza -> Musculacion
+    (69, 3), -- Club La Unión de La Matanza -> Cardio
+    (70, 3), -- Parque Los Robles -> Cardio
+    (71, 1), -- Gimnasio Barracuda -> Musculacion
+    (71, 2), -- Gimnasio Barracuda -> Calistenia
+    (72, 3), -- Centro Deportivo El Ciclón -> Cardio
+    (72, 1), -- Centro Deportivo El Ciclón -> Musculacion
+    (73, 2), -- Complejo Deportivo Los Andes -> Calistenia
+    (73, 3), -- Complejo Deportivo Los Andes -> Cardio
+    (74, 1), -- Club San Jorge -> Musculacion
+    (75, 2), -- Plaza San José -> Calistenia
+    (75, 3), -- Plaza San José -> Cardio
+    (76, 1), -- Gimnasio La Fortaleza -> Musculacion
+    (77, 2), -- Club Deportivo Malvinas Argentinas -> Calistenia
+    (78, 3), -- Centro Deportivo Mariano Moreno -> Cardio
+    (78, 1), -- Centro Deportivo Mariano Moreno -> Musculacion
+    (79, 2), -- Polideportivo 9 de Julio -> Calistenia
+    (79, 3), -- Polideportivo 9 de Julio -> Cardio
+    (80, 1), -- Complejo Deportivo Buenos Aires -> Musculacion
+    (80, 2), -- Complejo Deportivo Buenos Aires -> Calistenia
+    (81, 1), -- Club Defensores de La Matanza -> Musculacion
+    (81, 2), -- Club Defensores de La Matanza -> Calistenia
+    (82, 3), -- Parque Deportivo San Justo -> Cardio
+    (83, 1), -- Gimnasio Strongman -> Musculacion
+    (83, 2), -- Gimnasio Strongman -> Calistenia
+    (84, 2), -- Espacio Deportivo La Matanza -> Calistenia
+    (84, 3), -- Espacio Deportivo La Matanza -> Cardio
+    (85, 1), -- Club Deportivo La Matanza -> Musculacion
+    (85, 2), -- Club Deportivo La Matanza -> Calistenia
+    (86, 3), -- Parque Recreativo Don Bosco -> Cardio
+    (86, 2), -- Parque Recreativo Don Bosco -> Calistenia
+    (87, 1),  -- Gimnasio Megatlon Caballito -> Musculacion
+                                                                             (87, 3),  -- Gimnasio Megatlon Caballito -> Cardio
+                                                                             (88, 1),  -- Club All Boys -> Musculacion
+                                                                             (88, 2),  -- Club All Boys -> Calistenia
+                                                                             (89, 3),  -- Parque Los Andes -> Cardio
+                                                                             (90, 1),  -- Gimnasio Belgrano Athletic Club -> Musculacion
+                                                                             (90, 3),  -- Gimnasio Belgrano Athletic Club -> Cardio
+                                                                             (91, 1),  -- Club Sportivo Barracas -> Musculacion
+                                                                             (91, 2),  -- Club Sportivo Barracas -> Calistenia
+                                                                             (92, 3),  -- Parque Centenario -> Cardio
+                                                                             (93, 1),  -- Gimnasio Megatlon Recoleta -> Musculacion
+                                                                             (93, 2),  -- Gimnasio Megatlon Recoleta -> Calistenia
+                                                                             (94, 1),  -- Club Ciudad de Buenos Aires -> Musculacion
+                                                                             (94, 3),  -- Club Ciudad de Buenos Aires -> Cardio
+                                                                             (95, 2),  -- Parque Chacabuco -> Calistenia
+                                                                             (96, 1),  -- Gimnasio Villafañe -> Musculacion
+                                                                             (96, 3),  -- Gimnasio Villafañe -> Cardio
+                                                                             (97, 1),  -- Club Social y Deportivo Platense -> Musculacion
+                                                                             (97, 2),  -- Club Social y Deportivo Platense -> Calistenia
+                                                                             (98, 1),  -- Parque de los Patricios -> Musculacion
+                                                                             (99, 1),  -- Gimnasio Balboa Boxing Club -> Musculacion
+                                                                             (99, 2),  -- Gimnasio Balboa Boxing Club -> Calistenia
+                                                                             (100, 1),  -- Club Gimnasia y Esgrima de Buenos Aires -> Musculacion
+                                                                             (100, 3),  -- Club Gimnasia y Esgrima de Buenos Aires -> Cardio
+                                                                             (101, 2),  -- Parque Indoamericano -> Calistenia
+                                                                             (102, 1),  -- Gimnasio Aconcagua -> Musculacion
+                                                                             (102, 2),  -- Gimnasio Aconcagua -> Calistenia
+                                                                             (103, 1),  -- Club Gimnasia y Esgrima de Buenos Aires (Sede Aldao) -> Musculacion
+                                                                             (103, 3),  -- Club Gimnasia y Esgrima de Buenos Aires (Sede Aldao) -> Cardio
+                                                                             (104, 2),  -- Parque Avellaneda -> Calistenia
+                                                                             (105, 1),  -- Gimnasio Villalba Fitness Club -> Musculacion
+                                                                             (105, 2),  -- Gimnasio Villalba Fitness Club -> Calistenia
+                                                                             (106, 1),  -- Club Sportivo Pereyra -> Musculacion
+                                                                             (106, 3),  -- Club Sportivo Pereyra -> Cardio
+                                                                             (107, 2),  -- Parque Rivadavia -> Calistenia
+                                                                             (108, 1),  -- Gimnasio Juvencia -> Musculacion
+                                                                             (108, 3),  -- Gimnasio Juvencia -> Cardio
+                                                                             (109, 1),  -- Club Social y Deportivo Franja de Oro -> Musculacion
+                                                                             (109, 3),  -- Club Social y Deportivo Franja de Oro -> Cardio
+                                                                             (110, 2),  -- Parque Lezama -> Calistenia
+                                                                             (111, 1),  -- Gimnasio Olimpo -> Musculacion
+                                                                             (111, 3),  -- Gimnasio Olimpo -> Cardio
+                                                                             (112, 1),  -- Club Harrods -> Musculacion
+                                                                             (112, 2),  -- Club Harrods -> Calistenia
+                                                                             (113, 3),  -- Parque Sarmiento -> Cardio
+                                                                             (114, 1),  -- Gimnasio San Telmo -> Musculacion
+                                                                             (114, 2),  -- Gimnasio San Telmo -> Calistenia
+                                                                             (115, 1),  -- Club San Miguel -> Musculacion
+                                                                             (115, 3),  -- Club San Miguel -> Cardio
+                                                                             (116, 2),  -- Parque Las Heras -> Calistenia
+                                                                             (117, 1),  -- Gimnasio Comodoro -> Musculacion
+                                                                             (117, 3),  -- Gimnasio Comodoro -> Cardio
+                                                                             (118, 1),  -- Club Alvear -> Musculacion
+                                                                             (118, 3),  -- Club Alvear -> Cardio
+                                                                             (119, 2),  -- Parque Alberdi -> Calistenia
+                                                                             (120, 1),  -- Gimnasio North Side -> Musculacion
+                                                                             (120, 2),  -- Gimnasio North Side -> Calistenia
+                                                                             (121, 1),  -- Club de Amigos -> Musculacion
+                                                                             (121, 3),  -- Club de Amigos -> Cardio
+                                                                             (122, 2),  -- Parque Saavedra -> Calistenia
+                                                                             (123, 1),  -- Gimnasio Form Fit -> Musculacion
+                                                                             (123, 3),  -- Gimnasio Form Fit -> Cardio
+                                                                             (124, 1),  -- Club Atlético Atlanta -> Musculacion
+                                                                             (124, 2),  -- Club Atlético Atlanta -> Calistenia
+                                                                             (125, 3),  -- Parque Almirante Brown -> Cardio
+                                                                             (126, 1),  -- Gimnasio Terraza -> Musculacion
+                                                                             (126, 3),  -- Gimnasio Terraza -> Cardio
+                                                                             (127, 1),  -- Club 17 de Octubre -> Musculacion
+                                                                             (127, 2),  -- Club 17 de Octubre -> Calistenia
+                                                                             (128, 1),  -- Parque Manuel Belgrano -> Musculacion
+                                                                             (128, 3),  -- Parque Manuel Belgrano -> Cardio
+                                                                             (129, 2),  -- Gimnasio Su Gym -> Calistenia
+                                                                             (130, 1),  -- Club Estudiantes de Buenos Aires -> Musculacion
+                                                                             (130, 3),  -- Club Estudiantes de Buenos Aires -> Cardio
+                                                                             (131, 2),  -- Parque De Los Niños -> Calistenia
+                                                                             (132, 1),  -- Gimnasio Esparta -> Musculacion
+                                                                             (132, 3),  -- Gimnasio Esparta -> Cardio
+                                                                             (133, 1),  -- Club Liniers -> Musculacion
+                                                                             (133, 2),  -- Club Liniers -> Calistenia
+                                                                             (134, 3),  -- Parque Los Andes -> Cardio
+                                                                             (135, 1),  -- Gimnasio Megatlon Caballito II -> Musculacion
+                                                                             (135, 2),  -- Gimnasio Megatlon Caballito II -> Calistenia
+                                                                             (136, 1),  -- Club Social y Deportivo Mitre -> Musculacion
+                                                                             (136, 3),  -- Club Social y Deportivo Mitre -> Cardio
+                                                                             (137, 2),  -- Parque Patricios -> Calistenia
+                                                                             (138, 1),  -- Gimnasio Mega Sport -> Musculacion
+                                                                             (138, 3),  -- Gimnasio Mega Sport -> Cardio
+                                                                             (139, 1),  -- Club Social y Deportivo Comunicaciones -> Musculacion
+                                                                             (139, 2),  -- Club Social y Deportivo Comunicaciones -> Calistenia
+                                                                             (140, 3),  -- Parque Rivadavia -> Cardio
+                                                                             (141, 1),  -- Gimnasio Los Andes -> Musculacion
+                                                                             (141, 2),  -- Gimnasio Los Andes -> Calistenia
+                                                                             (142, 1),  -- Club San Lorenzo -> Musculacion
+                                                                             (142, 3);  -- Club San Lorenzo -> Cardio;
 
 
 -- Insertar datos de prueba en RutinaSemanal
