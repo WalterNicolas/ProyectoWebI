@@ -24,7 +24,6 @@ public class ServicioMapaImp implements ServicioMapa {
     public List<Lugar> buscarSitios(double latitudUsuario, double longitudUsuario) throws SearchException {
         try {
             List<Lugar> lugares = lugarRepositorio.obtenerTodosLosLugares();
-            // Calcular la distancia para cada lugar
             for (Lugar lugar : lugares) {
                 double distancia = calcularDistancia(latitudUsuario, longitudUsuario, lugar.getLatitud(), lugar.getLongitud());
                 lugar.setDistancia(distancia);
@@ -39,7 +38,6 @@ public class ServicioMapaImp implements ServicioMapa {
     public List<Lugar> buscarLugaresPorTipoActividad(Long tipoActividad, double latitudUsuario, double longitudUsuario) throws SearchException {
         try {
             List<Lugar> lugares = lugarRepositorio.buscarLugaresPorTipoActividad(tipoActividad);
-            // Calcular la distancia para cada lugar
             for (Lugar lugar : lugares) {
                 double distancia = calcularDistancia(latitudUsuario, longitudUsuario, lugar.getLatitud(), lugar.getLongitud());
                 lugar.setDistancia(distancia);
@@ -72,7 +70,6 @@ public class ServicioMapaImp implements ServicioMapa {
                 + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
                 * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return R * c;
+        return R * c; // Distancia en Km
     }
 }

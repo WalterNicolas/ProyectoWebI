@@ -101,7 +101,38 @@ VALUES
     ('Parque Lezama', 'Av. Martín García y Av. Paseo Colón, San Telmo, Buenos Aires', -58.367797, -34.620643),
     ('Gimnasio Megatlon Belgrano', 'Av. del Libertador 7200, Belgrano, Buenos Aires', -58.451934, -34.557960),
     ('Club Atlético San Lorenzo de Almagro', 'Av. La Plata 1700, Boedo, Buenos Aires', -58.412108, -34.638684),
-    ('Parque Rivadavia', 'Av. Rivadavia 4800, Caballito, Buenos Aires', -58.430000, -34.620400);
+    ('Parque Rivadavia', 'Av. Rivadavia 4800, Caballito, Buenos Aires', -58.430000, -34.620400),
+('Club Atlético Estudiantil Porteño', 'Av. Cristianía 1234, La Matanza, Buenos Aires', -58.589472, -34.679867),
+('Gimnasio Iron Club', 'Av. Tte. Gral. Pablo Riccheri 15200, La Matanza, Buenos Aires', -58.544289, -34.693841),
+('Parque de la Juventud', 'Calle Pedro Bonifacio Palacios 1200, La Matanza, Buenos Aires', -58.576000, -34.712259),
+('Centro Deportivo 24 de Septiembre', 'Calle Arieta 9000, La Matanza, Buenos Aires', -58.532643, -34.723801),
+('Plaza San Justo', 'Calle Irigoyen 1900, La Matanza, Buenos Aires', -58.570000, -34.685274),
+('Gimnasio Titan Gym', 'Av. Monseñor Bufano 9500, La Matanza, Buenos Aires', -58.537000, -34.676600),
+('Club Social y Deportivo Defensores de La Matanza', 'Calle Belgrano 3200, La Matanza, Buenos Aires', -58.550780, -34.695830),
+('Complejo Deportivo Central', 'Calle Arieta 4000, La Matanza, Buenos Aires', -58.582500, -34.721500),
+('Parque del Sol', 'Av. Brig. Gral. Juan Manuel de Rosas 10000, La Matanza, Buenos Aires', -58.592550, -34.701050),
+('Centro Deportivo Fénix', 'Calle Almafuerte 1200, La Matanza, Buenos Aires', -58.535000, -34.699000),
+('Polideportivo Ciudad Evita', 'Av. Crovara 10200, La Matanza, Buenos Aires', -58.548000, -34.705000),
+('Gimnasio Strong Power', 'Calle Almafuerte 6500, La Matanza, Buenos Aires', -58.570000, -34.680000),
+('Espacio Deportivo Monte Dorrego', 'Calle Don Bosco 1200, La Matanza, Buenos Aires', -58.562000, -34.700000),
+('Club La Unión de La Matanza', 'Calle Don Bosco 1100, La Matanza, Buenos Aires', -58.575000, -34.690000),
+('Parque Los Robles', 'Calle Larrazábal 2000, La Matanza, Buenos Aires', -58.560000, -34.720000),
+('Gimnasio Barracuda', 'Av. Mosconi 12000, La Matanza, Buenos Aires', -58.560000, -34.730000),
+('Centro Deportivo El Ciclón', 'Calle Alvear 8900, La Matanza, Buenos Aires', -58.535000, -34.672500),
+('Complejo Deportivo Los Andes', 'Calle Carlos Casares 6500, La Matanza, Buenos Aires', -58.550000, -34.725000),
+('Club San Jorge', 'Av. Cristianía 7000, La Matanza, Buenos Aires', -58.562000, -34.720000),
+('Plaza San José', 'Calle Carlos Casares 900, La Matanza, Buenos Aires', -58.550000, -34.699000),
+('Gimnasio La Fortaleza', 'Av. Rivadavia 14600, La Matanza, Buenos Aires', -58.560000, -34.711000),
+('Club Deportivo Malvinas Argentinas', 'Calle San Martín 2400, La Matanza, Buenos Aires', -58.552000, -34.700000),
+('Centro Deportivo Mariano Moreno', 'Calle San Justo 3200, La Matanza, Buenos Aires', -58.540000, -34.675000),
+('Polideportivo 9 de Julio', 'Calle Belgrano 5300, La Matanza, Buenos Aires', -58.550000, -34.690000),
+('Complejo Deportivo Buenos Aires', 'Av. Cristianía 9000, La Matanza, Buenos Aires', -58.545000, -34.710000),
+('Club Defensores de La Matanza', 'Calle Mosconi 8500, La Matanza, Buenos Aires', -58.550000, -34.720000),
+('Parque Deportivo San Justo', 'Calle Alvear 11000, La Matanza, Buenos Aires', -58.555000, -34.730000),
+('Gimnasio Strongman', 'Av. Rivadavia 15500, La Matanza, Buenos Aires', -58.575000, -34.685000),
+('Espacio Deportivo La Matanza', 'Calle Almafuerte 1100, La Matanza, Buenos Aires', -58.560000, -34.720000),
+('Club Deportivo La Matanza', 'Calle Av. Mosconi 9500, La Matanza, Buenos Aires', -58.552000, -34.730000),
+('Parque Recreativo Don Bosco', 'Calle Crovara 1500, La Matanza, Buenos Aires', -58.560000, -34.720000);
 
 
 INSERT INTO Lugar_TipoEntrenamiento (lugar_id, tipoEntrenamiento_id)
@@ -179,7 +210,57 @@ VALUES
     (53, 1), -- Gimnasio Megatlon Belgrano -> Musculacion
     (54, 1), -- Club Atlético San Lorenzo de Almagro -> Musculacion
     (54, 2), -- Club Atlético San Lorenzo de Almagro -> Cardio
-    (55, 2); -- Parque Rivadavia -> Cardio
+    (55, 2), -- Parque Rivadavia -> Cardio
+    (56, 1), -- Club Atlético Estudiantil Porteño -> Musculacion
+    (56, 3), -- Club Atlético Estudiantil Porteño -> Cardio
+    (57, 1), -- Gimnasio Iron Club -> Musculacion
+    (57, 2), -- Gimnasio Iron Club -> Calistenia
+    (58, 2), -- Parque de la Juventud -> Calistenia
+    (58, 3), -- Parque de la Juventud -> Cardio
+    (59, 3), -- Centro Deportivo 24 de Septiembre -> Cardio
+    (60, 2), -- Plaza San Justo -> Calistenia
+    (61, 1), -- Gimnasio Titan Gym -> Musculacion
+    (62, 3), -- Club Social y Deportivo Defensores de La Matanza -> Cardio
+    (63, 2), -- Complejo Deportivo Central -> Calistenia
+    (63, 3), -- Complejo Deportivo Central -> Cardio
+    (64, 2), -- Parque del Sol -> Calistenia
+    (65, 3), -- Centro Deportivo Fénix -> Cardio
+    (66, 2), -- Polideportivo Ciudad Evita -> Calistenia
+    (67, 1), -- Gimnasio Strong Power -> Musculacion
+    (67, 3), -- Gimnasio Strong Power -> Cardio
+    (68, 2), -- Espacio Deportivo Monte Dorrego -> Calistenia
+    (68, 3), -- Espacio Deportivo Monte Dorrego -> Cardio
+    (69, 1), -- Club La Unión de La Matanza -> Musculacion
+    (69, 3), -- Club La Unión de La Matanza -> Cardio
+    (70, 3), -- Parque Los Robles -> Cardio
+    (71, 1), -- Gimnasio Barracuda -> Musculacion
+    (71, 2), -- Gimnasio Barracuda -> Calistenia
+    (72, 3), -- Centro Deportivo El Ciclón -> Cardio
+    (72, 1), -- Centro Deportivo El Ciclón -> Musculacion
+    (73, 2), -- Complejo Deportivo Los Andes -> Calistenia
+    (73, 3), -- Complejo Deportivo Los Andes -> Cardio
+    (74, 1), -- Club San Jorge -> Musculacion
+    (75, 2), -- Plaza San José -> Calistenia
+    (75, 3), -- Plaza San José -> Cardio
+    (76, 1), -- Gimnasio La Fortaleza -> Musculacion
+    (77, 2), -- Club Deportivo Malvinas Argentinas -> Calistenia
+    (78, 3), -- Centro Deportivo Mariano Moreno -> Cardio
+    (78, 1), -- Centro Deportivo Mariano Moreno -> Musculacion
+    (79, 2), -- Polideportivo 9 de Julio -> Calistenia
+    (79, 3), -- Polideportivo 9 de Julio -> Cardio
+    (80, 1), -- Complejo Deportivo Buenos Aires -> Musculacion
+    (80, 2), -- Complejo Deportivo Buenos Aires -> Calistenia
+    (81, 1), -- Club Defensores de La Matanza -> Musculacion
+    (81, 2), -- Club Defensores de La Matanza -> Calistenia
+    (82, 3), -- Parque Deportivo San Justo -> Cardio
+    (83, 1), -- Gimnasio Strongman -> Musculacion
+    (83, 2), -- Gimnasio Strongman -> Calistenia
+    (84, 2), -- Espacio Deportivo La Matanza -> Calistenia
+    (84, 3), -- Espacio Deportivo La Matanza -> Cardio
+    (85, 1), -- Club Deportivo La Matanza -> Musculacion
+    (85, 2), -- Club Deportivo La Matanza -> Calistenia
+    (86, 3), -- Parque Recreativo Don Bosco -> Cardio
+    (86, 2); -- Parque Recreativo Don Bosco -> Calistenia
 
 
 -- Insertar datos de prueba en RutinaSemanal

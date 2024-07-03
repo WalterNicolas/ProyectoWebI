@@ -1,6 +1,23 @@
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="templates/head :: head">
+    <style>
+        .scroll {
+            overflow-y: auto; /* Scroll vertical */
+            max-height: 500px; /* Altura máxima ajustable según tu diseño */
+        }
+
+        .buscadorContainer {
+            display: flex;
+            align-items: center; /* Centrar verticalmente los elementos */
+            justify-content: center; /* Centrar horizontalmente los elementos */
+        }
+
+        .searchCardContainer {
+            overflow-y: auto; /* Scroll vertical */
+            max-height: 300px; /* Altura máxima ajustable según tu diseño */
+        }
+    </style>
 </head>
 <body>
 <div th:replace="templates/header :: header">
@@ -25,31 +42,31 @@
         </div>
     </div>
 </div> -->
+
 <div class="row p-4">
     <div class="col-md-12">
         <h2 class="text-center text-white">Encuentra tu lugar ideal</h2>
     </div>
 </div>
-
 <div class="row justify-content-center">
     <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
         <div class="buscadorContainer">
             <form id="searchForm" action="/mapaBuscador" method="get" class="d-flex">
                 <div class="form-group mr-2 mb-0">
                     <select name="tipoActividad" class="form-control">
-                        <option value="" disabled selected>Tipo de Actividad</option>
+                        <option value="" disabled selected> Tipo de Actividad </option>
                         <option value="1">Musculación</option>
                         <option value="2">Cardio</option>
                         <option value="3">Calistenia</option>
                     </select>
                 </div>
                 <div class="form-group mr-2 mb-0">
-                    <select id="distancia" class="form-control">
-                        <option value="" disabled selected> Distancia Km </option>
-                        <option value="5">5km</option>
-                        <option value="10">10km</option>
-                        <option value="15">15km</option>
-                        <option value="30">30km</option>
+                    <select id="distancia" name="distancia" class="form-control">
+                        <option value="" disabled selected> Distancia </option>
+                        <option value="3.00">3km</option>
+                        <option value="6.00">6km</option>
+                        <option value="8.00">8km</option>
+                        <option value="10.00">10km</option>
                     </select>
                 </div>
                 <button type="submit" class="btn rose-button align-self-end">
@@ -63,8 +80,9 @@
             <div class="mt-1 searchCard" th:each="lugar : ${lugares}">
                 <img th:src="@{/img/ZonaRyp.jpg}" alt="">
                 <div class="infoContainer">
-                    <h3 th:text="${lugar.nombre}">Nombre del Lugar</h3>
+                    <h5 th:text="${lugar.nombre}"></h5>
                     <p>
+                        <span th:text="${lugar.ubicacion}"></span><br>
                         <i class="fa-solid fa-location-dot"></i> Distancia:
                         <span th:text="${#numbers.formatDecimal(lugar.distancia, 1, 2)}"></span> km
                     </p>
@@ -106,7 +124,23 @@
 
             // Actualizar el div de coordenadas con las nuevas coordenadas
             $('#coordenadas').text("Latitud: " + position.lat.toFixed(6) + ", Longitud: " + position.lng.toFixed(6));
+
+            // Actualizar los campos ocultos del formulario
+            $('#latitudHidden').val(position.lat);
+            $('#longitudHidden').val(position.lng);
         });
+
+        // Añadir campos ocultos al formulario para las coordenadas
+        $('<input>').attr({
+            type: 'hidden',
+            id: 'latitudHidden',
+            name: 'latitud'
+        }).appendTo('#searchForm');
+        $('<input>').attr({
+            type: 'hidden',
+            id: 'longitudHidden',
+            name: 'longitud'
+        }).appendTo('#searchForm');
 
         // Manejar la actualización de la ubicación
         $('#btn-actualizar-marcador').on('click', function() {
@@ -125,7 +159,7 @@
                     alert('Ubicación actualizada exitosamente.');
                 },
                 error: function(xhr, status, error) {
-                    alert('Error al actualizar la ubicación: ' + error);
+                    alert('Error al actualizar la ubicación: ' + xhr.responseText);
                 }
             });
         });

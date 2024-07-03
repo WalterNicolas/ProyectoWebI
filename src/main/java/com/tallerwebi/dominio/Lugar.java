@@ -36,5 +36,4 @@ public class Lugar {
         this.longitud = longitud;
         this.latitud = latitud;
     }
-
 }
