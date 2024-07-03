@@ -85,7 +85,7 @@ public class MapaController {
             modelo.put("lugares", lugares);
 
         } catch (SearchException e) {
-            modelo.put("error", "Error al buscar lugares: " + e.getMessage());
+            modelo.put("error", "Error al buscar lugares: ");
         }
 
         return new ModelAndView("mapaBuscador", modelo);
@@ -105,14 +105,14 @@ public class MapaController {
                 return ResponseEntity.ok("Ubicación actualizada exitosamente.");
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error al actualizar la ubicación: " + e.getMessage());
+                        .body("Error al actualizar la ubicación: ");
             }
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Usuario no autenticado");
         }
+        //return new ModelAndView("redirect:/home", modelo);
     }
-    //return new ModelAndView("redirect:/home", modelo);
 }
 
 
