@@ -1,10 +1,11 @@
-/*package com.tallerwebi.presentacion;
+package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
-import com.tallerwebi.dominio.excepcion.SearchException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -48,10 +46,24 @@ public class ControladorMapaTests {
         when(servicioMembresiaMock.membresiasPorId(1L)).thenReturn(membresiaMock); // Membresía válida
         when(membresiaMock.getTipo()).thenReturn("PREMIUM"); // Tipo de membresía que permite acceso
     }
-     @Test
+
+    @Test
     public void cuandoNoSeEncuentranLugaresDeberiaLanzarError() throws Exception {
         // Configurar el comportamiento del mock cuando el servicio busca lugares y no encuentra ninguno
-        when(servicioSearchMock.buscarSitios()).thenReturn(Collections.emptyList());
+        when(servicioSearchMock.buscarSitios(-34.74973643128108, -58.571734784656066)).thenReturn(Collections.emptyList());
+
+        // Ejecutar el método bajo prueba
+        ModelAndView mav = controller.irASearch(null, null, requestMock);
+
+        // Verificar el resultado esperado
+        assertEquals("mapaBuscador", mav.getViewName());
+        assertEquals("No se encontraron lugares para los filtros seleccionados.", mav.getModel().get("error"));
+    }
+
+    @Test
+    public void cuandoUsuarioNoTieneMembresiaAccesoDenegado() throws Exception {
+        // Configurar el comportamiento del mock para una membresía gratuita
+        when(membresiaMock.getTipo()).thenReturn("GRATUITO");
 
         // Ejecutar el método bajo prueba
         ModelAndView mav = controller.irASearch(null, null, requestMock);
@@ -62,91 +74,80 @@ public class ControladorMapaTests {
     }
 
     @Test
-    public void cuandoHayLugaresEncontradosDeberiaMostrarLista() throws Exception {
-        // Configurar el comportamiento del mock cuando el servicio busca lugares y encuentra algunos
-        List<Lugar> lugaresMock = new ArrayList<>();
-        lugaresMock.add(new Lugar("Gimnasio A", "Dirección A", -34.750, -58.570));
-        lugaresMock.add(new Lugar("Piscina B", "Dirección B", -34.755, -58.575));
-        when(servicioSearchMock.buscarSitios()).thenReturn(lugaresMock);
+    public void actualizarUbicacionUsuarioConExito() throws Exception {
+        when(sessionMock.getAttribute("id")).thenReturn(1L);
+        when(servicioUsuarioMock.buscarPorId(1L)).thenReturn(usuarioMock);
+
+        ResponseEntity<String> response = controller.actualizarUbicacion(-34.700000, -58.500000, sessionMock);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Ubicación actualizada exitosamente.", response.getBody());
+    }
+
+    @Test
+    public void actualizarUbicacionUsuarioErrorNoAutenticado() {
+        when(sessionMock.getAttribute("id")).thenReturn(null);
+
+        ResponseEntity<String> response = controller.actualizarUbicacion(-34.700000, -58.500000, sessionMock);
+
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertEquals("Usuario no autenticado", response.getBody());
+    }
+
+    @Test
+    public void cuandoSeFiltraPorTipoDeActividadDeberiaDevolverLugaresFiltrados() throws Exception {
+        // Configurar los mocks para devolver una lista de lugares
+        List<Lugar> lugares = new ArrayList<>();
+        Lugar lugar1 = new Lugar("Lugar 1", "Ubicación 1", -58.571734784656066, -34.74973643128108);
+        lugares.add(lugar1);
+
+        when(servicioSearchMock.buscarLugaresPorTipoActividad(1L, -34.74973643128108, -58.571734784656066)).thenReturn(lugares);
 
         // Ejecutar el método bajo prueba
-        ModelAndView mav = controller.irASearch(null, null, requestMock);
+        ModelAndView mav = controller.irASearch("1", null, requestMock);
 
         // Verificar el resultado esperado
-        assertEquals("mapaBuscador", mav.getViewName()); // Debe mostrar la vista "mapaBuscador"
-        assertEquals(lugaresMock, mav.getModel().get("lugares")); // Debe contener la lista de lugares encontrados
+        assertEquals("mapaBuscador", mav.getViewName());
+        assertEquals(lugares, mav.getModel().get("lugares"));
     }
-@Test
-public void cuandoFiltroPorTipoActividadDeberiaMostrarLugaresFiltrados() throws Exception {
-    // Configurar el comportamiento del mock para buscar lugares por tipo de actividad
-    Long tipoActividadId = 1L; // Supongamos que 1L representa la actividad de Musculación
-    List<Lugar> lugaresMock = new ArrayList<>();
-    lugaresMock.add(new Lugar("Gimnasio A", "Dirección A", -34.750, -58.570));
-    when(servicioSearchMock.buscarLugaresPorTipoActividad(tipoActividadId)).thenReturn(lugaresMock);
 
-    // Ejecutar el método bajo prueba con el tipo de actividad especificado
-    ModelAndView mav = controller.irASearch(tipoActividadId.toString(), null, requestMock);
+    @Test
+    public void cuandoSeFiltraPorDistanciaDeberiaDevolverLugaresFiltrados() throws Exception {
+        // Configurar los mocks para devolver una lista de lugares
+        List<Lugar> lugares = new ArrayList<>();
+        Lugar lugar1 = new Lugar("Lugar 1", "Ubicación 1", -58.571734784656066, -34.74973643128108);
+        Lugar lugar2 = new Lugar("Lugar 2", "Ubicación 2", -58.571734784656066, -34.74973643128108);
+        lugares.add(lugar1);
+        lugares.add(lugar2);
 
-    // Verificar el resultado esperado
-    assertEquals("mapaBuscador", mav.getViewName()); // Debe mostrar la vista "mapaBuscador"
-    assertEquals(lugaresMock, mav.getModel().get("lugares")); // Debe contener la lista de lugares filtrados por tipo de actividad
+        when(servicioSearchMock.buscarSitios(-34.74973643128108, -58.571734784656066)).thenReturn(lugares);
+        when(servicioSearchMock.filtrarLugaresPorDistancia(lugares, -34.74973643128108, -58.571734784656066, 3.0)).thenReturn(Collections.singletonList(lugar1));
+
+        // Ejecutar el método bajo prueba
+        ModelAndView mav = controller.irASearch(null, 3.0, requestMock);
+
+        // Verificar el resultado esperado
+        assertEquals("mapaBuscador", mav.getViewName());
+        assertEquals(Collections.singletonList(lugar1), mav.getModel().get("lugares"));
+    }
+
+    @Test
+    public void cuandoSeFiltraPorTipoDeActividadYDistanciaDeberiaDevolverLugaresFiltrados() throws Exception {
+        // Configurar los mocks para devolver una lista de lugares
+        List<Lugar> lugares = new ArrayList<>();
+        Lugar lugar1 = new Lugar("Lugar 1", "Ubicación 1", -58.571734784656066, -34.74973643128108);
+        Lugar lugar2 = new Lugar("Lugar 2", "Ubicación 2", -58.571734784656066, -34.74973643128108);
+        lugares.add(lugar1);
+        lugares.add(lugar2);
+
+        when(servicioSearchMock.buscarLugaresPorTipoActividad(1L, -34.74973643128108, -58.571734784656066)).thenReturn(lugares);
+        when(servicioSearchMock.filtrarLugaresPorDistancia(lugares, -34.74973643128108, -58.571734784656066, 3.0)).thenReturn(Collections.singletonList(lugar1));
+
+        // Ejecutar el método bajo prueba
+        ModelAndView mav = controller.irASearch("1", 3.0, requestMock);
+
+        // Verificar el resultado esperado
+        assertEquals("mapaBuscador", mav.getViewName());
+        assertEquals(Collections.singletonList(lugar1), mav.getModel().get("lugares"));
+    }
 }
-
-@Test
-public void cuandoFiltroPorDistanciaDeberiaMostrarLugaresEnRadioElegido() throws Exception {
-    // Configurar el comportamiento del mock para buscar lugares sin filtrar inicialmente
-    List<Lugar> lugaresMock = new ArrayList<>();
-    lugaresMock.add(new Lugar("Gimnasio A", "Dirección A", -34.750, -58.570));
-    lugaresMock.add(new Lugar("Piscina B", "Dirección B", -34.755, -58.575));
-    when(servicioSearchMock.buscarSitios()).thenReturn(lugaresMock);
-
-    // Configurar el comportamiento del mock para filtrar lugares por distancia
-    double latitudUsuario = -34.749;
-    double longitudUsuario = -58.571;
-    int distanciaSeleccionada = 10; // Se elige una distancia de 10 km
-    List<Lugar> lugaresFiltradosMock = new ArrayList<>();
-    lugaresFiltradosMock.add(new Lugar("Gimnasio A", "Dirección A", -34.750, -58.570)); // Este lugar está dentro de 10 km
-    when(servicioSearchMock.filtrarLugaresPorDistancia(lugaresMock, latitudUsuario, longitudUsuario, distanciaSeleccionada))
-            .thenReturn(lugaresFiltradosMock);
-
-    // Ejecutar el método bajo prueba con la distancia seleccionada
-    ModelAndView mav = controller.irASearch(null, distanciaSeleccionada, requestMock);
-
-    // Verificar el resultado esperado
-    assertEquals("mapaBuscador", mav.getViewName()); // Debe mostrar la vista "mapaBuscador"
-    assertEquals(lugaresFiltradosMock, mav.getModel().get("lugares")); // Debe contener la lista de lugares filtrados por distancia
-}
-
-@Test
-public void cuandoNoHayUsuarioLogueadoDeberiaDefinirUbicacionPorDefecto() throws Exception {
-    // Configurar el comportamiento del mock para obtener sesión nula (usuario no logueado)
-    when(requestMock.getSession(false)).thenReturn(null);
-
-    // Ejecutar el método bajo prueba cuando no hay sesión activa
-    ModelAndView mav = controller.irASearch(null, null, requestMock);
-
-    // Verificar el resultado esperado
-    assertEquals("mapaBuscador", mav.getViewName()); // Debe mostrar la vista "mapaBuscador"
-    assertEquals(-34.74973643128108, mav.getModel().get("latitudUsuario")); // Latitud por defecto
-    assertEquals(-58.571734784656066, mav.getModel().get("longitudUsuario")); // Longitud por defecto
-}
-
-@Test
-public void cuandoNoHayLugaresCercaDeUsuarioDeberiaMostrarMensaje() throws Exception {
-    // Configurar el comportamiento del mock para obtener lugares vacíos después del filtrado por distancia
-    List<Lugar> lugaresMock = new ArrayList<>();
-    double latitudUsuario = -34.749;
-    double longitudUsuario = -58.571;
-    int distanciaSeleccionada = 5; // Se elige una distancia de 5 km
-    when(servicioSearchMock.buscarSitios()).thenReturn(Collections.emptyList());
-    when(servicioSearchMock.filtrarLugaresPorDistancia(lugaresMock, latitudUsuario, longitudUsuario, distanciaSeleccionada))
-            .thenReturn(Collections.emptyList());
-
-    // Ejecutar el método bajo prueba con la distancia seleccionada
-    ModelAndView mav = controller.irASearch(null, distanciaSeleccionada, requestMock);
-
-    // Verificar el resultado esperado
-    assertEquals("datos", mav.getViewName()); // Debe redirigir a "datos" por falta de lugares cerca
-    assertEquals("No hay lugares cercanos a tu ubicación actual.", mav.getModel().get("error"));
-}
-}*/
