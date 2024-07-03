@@ -21,7 +21,7 @@ public class ControladorMapaTests {
     private HttpServletRequest requestMock;
     private MapaController controller;
     private HttpSession sessionMock;
-    @Mock
+
     private ServicioMapa servicioSearchMock;
     private ServicioMembresia servicioMembresiaMock;
     private ServicioUsuario servicioUsuarioMock;
@@ -43,6 +43,8 @@ public class ControladorMapaTests {
         when(sessionMock.getAttribute("id")).thenReturn(1L); // ID válido en la sesión
         when(servicioUsuarioMock.buscarPorId(1L)).thenReturn(usuarioMock); // Usuario válido
         when(usuarioMock.getId()).thenReturn(1L); // ID del usuario
+        when(usuarioMock.getLatitud()).thenReturn(-34.74973643128108); // Latitud del usuario
+        when(usuarioMock.getLongitud()).thenReturn(-58.571734784656066); // Longitud del usuario
         when(servicioMembresiaMock.membresiasPorId(1L)).thenReturn(membresiaMock); // Membresía válida
         when(membresiaMock.getTipo()).thenReturn("PREMIUM"); // Tipo de membresía que permite acceso
     }
