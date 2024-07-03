@@ -20,7 +20,7 @@ public class Lugar {
     private Double longitud;
     private Double latitud;
     @Transient
-    private String distancia;  // No persistir la distancia calculada, es una propiedad derivada
+    private Double distancia;  // No persistir la distancia calculada, es una propiedad derivada
 
     @ManyToMany
     @JoinTable(
