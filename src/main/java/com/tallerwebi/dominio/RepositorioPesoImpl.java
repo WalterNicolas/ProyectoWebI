@@ -35,4 +35,15 @@ public class RepositorioPesoImpl implements RepositorioPeso {
         if (result.size() == 0) throw new ErrorPesoRegistroIsEmpty("No hay registros disponibles");
         return result;
     }
+    @Override
+    public List<PesoRegistro> findByUsuarioIdAndMes(Long usuarioId, int mes) throws ErrorPesoRegistroIsEmpty {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM PesoRegistro WHERE usuario.id = :usuarioId AND MONTH(fecha) = :mes";
+        var result = session.createQuery(hql, PesoRegistro.class)
+                .setParameter("usuarioId", usuarioId)
+                .setParameter("mes", mes)
+                .list();
+        if (result.size() == 0) throw new ErrorPesoRegistroIsEmpty("No hay registros disponibles para el mes seleccionado");
+        return result;
+    }
 }

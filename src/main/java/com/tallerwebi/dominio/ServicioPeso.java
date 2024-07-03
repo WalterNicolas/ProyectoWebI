@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 
 public interface ServicioPeso {
-    ArrayList obtenerPesosPorMes(Long usuarioId)throws ErrorPesoRegistroIsEmpty;
+    ArrayList<Double> obtenerPesosPorMes(Long usuarioId, int mes)throws ErrorPesoRegistroIsEmpty;
 
     void postPeso(Usuario usuario, DatosPeso datos) throws Exception;
+
+    ArrayList<Double> obtenerPesosPorAnio(Long usuarioId) throws ErrorPesoRegistroIsEmpty;
 }

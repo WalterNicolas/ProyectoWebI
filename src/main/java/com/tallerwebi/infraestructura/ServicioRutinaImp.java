@@ -255,6 +255,9 @@ public class ServicioRutinaImp implements ServicioRutina {
         }
 
         for (Map.Entry<String, Integer> entry : datos.getEjercicios().entrySet()) {
+            if (Objects.equals(entry.getKey(), "Descanso Secundario") || Objects.equals(entry.getKey(), "Descanso Primario")){
+              continue;
+            }
             ejercicios.add(entry.getValue());
             labelEjercicios.add(entry.getKey());
         }

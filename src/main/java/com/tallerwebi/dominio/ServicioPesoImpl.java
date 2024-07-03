@@ -23,7 +23,22 @@ public class ServicioPesoImpl implements ServicioPeso{
     }
 
     @Override
-    public ArrayList<Double> obtenerPesosPorMes(Long usuarioId) throws ErrorPesoRegistroIsEmpty {
+    public ArrayList<Double> obtenerPesosPorMes(Long usuarioId, int mes) throws ErrorPesoRegistroIsEmpty {
+        List<PesoRegistro> pesoRegistro;
+        pesoRegistro = this.repositorioPeso.findByUsuarioIdAndMes(usuarioId, mes);
+
+
+        ArrayList<Double> pesosDelMes = new ArrayList<>();
+
+        for (PesoRegistro p : pesoRegistro) {
+            pesosDelMes.add(p.getPeso());
+        }
+
+        return pesosDelMes;
+    }
+
+    @Override
+    public ArrayList<Double> obtenerPesosPorAnio(Long usuarioId) throws ErrorPesoRegistroIsEmpty {
         List<PesoRegistro> pesoRegistro;
         try {
             pesoRegistro = this.repositorioPeso.findByUsuarioId(usuarioId);
