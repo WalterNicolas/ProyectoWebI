@@ -97,7 +97,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label text-light" for="diasEntrenamiento${i.index}">Días por Semana</label>
-                                <input id="diasEntrenamiento${i.index}" type="text" class="form-control" th:field="*{aptitudFisicaTipoEntrenamientos[__${i.index}__].dias}">
+                                <input id="diasEntrenamiento${i.index}" type="text" class="form-control dias" th:field="*{aptitudFisicaTipoEntrenamientos[__${i.index}__].dias}">
                             </div>
                             <button type="button" class="btn btn-danger btn-sm ms-2 mt-2" onclick="removeEntrenamiento(this)">Borrar</button>
                         </div>
@@ -116,7 +116,7 @@
                     <div class="col-md-4">
                         <div data-mdb-input-init class="form-outline mb-3">
                             <label class="form-label text-light" for="estadoFisico">Tu estado físico:</label>
-                            <select id="estadoFisico" class="form-select" th:field="*{estadoFisico}" required>
+                            <select id="estadoFisico" class="form-select inputEntrenamiento" th:field="*{estadoFisico}" required>
                                 <option value="">Seleccione...</option>
                                 <option value="sedentario">Sedentario</option>
                                 <option value="intermedio">Intermedio</option>
@@ -132,6 +132,7 @@
                     <button id="btn-guardar" class="btn btn-primary btn-lg" type="submit">Actualizar</button>
                     <button type="button" class="btn btn-secondary btn-lg ms-2" onclick="addEntrenamiento()">Nuevo entrenamiento</button>
                 </div>
+                <span class="form-label text-light">*Para una nueva rutina tiene que renovar la membresia</span>
             </form>
         </div>
     </div>
@@ -263,13 +264,19 @@
     function addEntrenamiento() {
     var container = document.getElementById('tiposEntrenamientoContainer');
     var index = container.children.length;
+
+    if (index == 3) {
+        alert("No puede tener mas de tres entrenamientos.");
+        return
+    }
+
     var newEntrenamiento = `
         <div data-mdb-input-init class="form-outline mb-3">
             <div class="row">
                 <div class="col-md-8">
                     <label class="form-label text-light" for="tipoEntrenamiento">Tipo de entrenamiento</label>
                     <div class="d-flex align-items-center">
-                        <select id="tipoEntrenamiento" class="form-select" name="aptitudFisicaTipoEntrenamientos[` + index + `].tipoEntrenamiento.id">
+                        <select id="tipoEntrenamiento" class="form-select inputEntrenamiento" name="aptitudFisicaTipoEntrenamientos[` + index + `].tipoEntrenamiento.id">
                             <option value="">Seleccione...</option>
                             ` + opcionesHtml + `
                         </select>
@@ -277,7 +284,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label text-light" for="diasEntrenamiento` + index + `">Días por Semana</label>
-                    <input id="diasEntrenamiento` + index + `" type="text" class="form-control" name="aptitudFisicaTipoEntrenamientos[` + index + `].dias">
+                    <input id="diasEntrenamiento` + index + `" type="text" class="form-control dias" name="aptitudFisicaTipoEntrenamientos[` + index + `].dias">
                 </div>
                 <button type="button" class="btn btn-danger btn-sm ms-2 mt-2" onclick="removeEntrenamiento(this)">Borrar</button>
             </div>
@@ -306,6 +313,36 @@
                alert("Debe ser mayor de 18 años para registrar esta información.");
                return;
            }
+
+            var sumaDias = 0;
+            $(".dias").each(function() {
+                var valor = parseInt($(this).val());
+                    sumaDias += valor;
+            });
+
+            if (sumaDias > 5) {
+                alert("La suma de los dias no puede ser mayor a 5.");
+                return;
+            }
+
+            var valoresSeleccionados = [];
+            var duplicado = false;
+
+            $(".inputEntrenamiento").each(function() {
+            var valor = $(this).val();
+            if (valor !== "") {
+                if (valoresSeleccionados.includes(valor)) {
+                    duplicado = true;
+                    return false; 
+                }
+                valoresSeleccionados.push(valor);
+             }
+            });
+
+            if (duplicado) {
+                alert("No se pueden seleccionar tipos de entrenamiento iguales.");
+                return;
+            }
 
            var formData = $(this).serialize();
 

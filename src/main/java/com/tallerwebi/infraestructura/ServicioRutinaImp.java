@@ -84,7 +84,7 @@ public class ServicioRutinaImp implements ServicioRutina {
         List<RutinaSemanal> rutinas = new ArrayList<>();
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-
+        repositorioRutinaSemanal.eliminarRutinasSemanalPorUsuario(usuario.getId());
         for (AptitudFisicaTipoEntrenamiento aft : aptitudFisicaTipoEntrenamientos) {
             TipoEntrenamiento tipoEntrenamiento = aft.getTipoEntrenamiento();
 
@@ -256,6 +256,9 @@ public class ServicioRutinaImp implements ServicioRutina {
         }
 
         for (Map.Entry<String, Integer> entry : datos.getEjercicios().entrySet()) {
+            if (Objects.equals(entry.getKey(), "Descanso Secundario") || Objects.equals(entry.getKey(), "Descanso Primario")){
+              continue;
+            }
             ejercicios.add(entry.getValue());
             labelEjercicios.add(entry.getKey());
         }

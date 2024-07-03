@@ -9,4 +9,6 @@ public interface RepositorioPeso {
 
     List<PesoRegistro> findByUsuarioId(Long usuarioId) throws ErrorPesoRegistroIsEmpty;
 
+    List<PesoRegistro> findByUsuarioIdAndMes(Long usuarioId, int mes) throws ErrorPesoRegistroIsEmpty;
+
 }

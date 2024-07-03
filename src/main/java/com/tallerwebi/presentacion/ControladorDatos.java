@@ -6,9 +6,7 @@ import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +45,7 @@ public class ControladorDatos {
             modelo.put("Email", session.getAttribute("Email"));
             modelo.put("id", session.getAttribute("id"));
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
-            ArrayList pesosRegistro = servicioPeso.obtenerPesosPorMes(usuario.getId());
+            ArrayList pesosRegistro = servicioPeso.obtenerPesosPorAnio(usuario.getId());
             Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
 
             if (membresia == null || "GRATUITO".equals(membresia.getTipo()) || "INTERMEDIO".equals(membresia.getTipo())) {
@@ -90,4 +88,33 @@ public class ControladorDatos {
 
         return new ModelAndView("redirect:/login");  
     }
+
+    @Transactional
+    @RequestMapping(value = "/filtrar-datos", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Double> filtrarDatosPorMes(@RequestParam("mes") int mes, HttpServletRequest request) throws ErrorPesoRegistroIsEmpty {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("id") != null) {
+            Long usuarioId = (Long) session.getAttribute("id");
+            if (mes == 0) {
+                return servicioPeso.obtenerPesosPorAnio(usuarioId);
+            } else {
+                return servicioPeso.obtenerPesosPorMes(usuarioId, mes);
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    @Transactional
+    @RequestMapping(value = "/limpiar-filtro", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Double> limpiarFiltro(HttpServletRequest request) throws ErrorPesoRegistroIsEmpty {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("id") != null) {
+            Long usuarioId = (Long) session.getAttribute("id");
+            return servicioPeso.obtenerPesosPorAnio(usuarioId);
+        }
+        return new ArrayList<>();
+    }
+
 }

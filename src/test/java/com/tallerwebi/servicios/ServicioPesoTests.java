@@ -42,7 +42,7 @@ public class ServicioPesoTests {
 
         when(repositorioPeso.findByUsuarioId(usuarioId)).thenReturn(pesoRegistros);
 
-        ArrayList<Double> result = servicioPeso.obtenerPesosPorMes(usuarioId);
+        ArrayList<Double> result = servicioPeso.obtenerPesosPorAnio(usuarioId);
 
         assertEquals(7, result.size());
         assertEquals(70.0, result.get(0));
@@ -59,7 +59,7 @@ public class ServicioPesoTests {
         when(repositorioPeso.findByUsuarioId(usuarioId)).thenThrow(new ErrorPesoRegistroIsEmpty("No hay registros disponibles"));
 
         ErrorPesoRegistroIsEmpty exception = assertThrows(ErrorPesoRegistroIsEmpty.class, () -> {
-            servicioPeso.obtenerPesosPorMes(usuarioId);
+            servicioPeso.obtenerPesosPorAnio(usuarioId);
         });
 
         assertEquals("No hay registros disponibles", exception.getMessage());
