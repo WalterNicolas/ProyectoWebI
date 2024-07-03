@@ -3,6 +3,8 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.SearchException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +27,6 @@ public class MapaController {
         this.servicioSearch = servicioSearch;
         this.servicioUsuario = servicioUsuario;
         this.servicioMembresia = servicioMembresia;
-
     }
 
     @Transactional
@@ -90,6 +91,27 @@ public class MapaController {
         return new ModelAndView("mapaBuscador", modelo);
     }
 
+    @PostMapping("/actualizarUbicacion")
+    public ResponseEntity<String> actualizarUbicacion(@RequestParam("latitud") double latitud,
+                                                      @RequestParam("longitud") double longitud,
+                                                      HttpSession session) {
+        if (session != null && session.getAttribute("id") != null) {
+            Long usuarioId = (Long) session.getAttribute("id");
+            try {
+                Usuario usuario = servicioUsuario.buscarPorId(usuarioId);
+                usuario.setLatitud(latitud);
+                usuario.setLongitud(longitud);
+                servicioUsuario.updateData(usuario);
+                return ResponseEntity.ok("Ubicación actualizada exitosamente.");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error al actualizar la ubicación: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Usuario no autenticado");
+        }
+    }
     //return new ModelAndView("redirect:/home", modelo);
 }
 
