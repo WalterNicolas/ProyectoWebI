@@ -24,30 +24,92 @@
                 <div class="col-list ">
                     <p class="to-do-list">Todos mis ejercicios</p>
                     <ul>
-                        <li th:each="ejercicio : ${detalleRutina.getListaEjercicios()}">
-                            <span th:text="${ejercicio.descripcion}"></span>
-                            <span th:if="${ejercicio.realizado}"> - Realizado</span>
-                            <span th:unless="${ejercicio.realizado}"> - Por Hacer</span>
+                        <!-- Recorrer la lista de rutinas y mostrar cada rutina -->
+                        <li tr th:each="rutina : ${rutinaSemanal.getRutinaDiaria()}">
+                            <tr th:each="ejercicio : ${rutina.getEjercicios()}">
+                                <span th:text="${ejercicio.getDiaSemana()}"></span>
+                                <span th:text="${ejercicio.getDescripcion()}"></span>
+                                <span th:if="${ejercicio.realizado}"> - Realizado</span>
+                                <span th:unless="${ejercicio.realizado}"> - Por Hacer</span>
                         </li>
                     </ul>
                 </div>
             </div>
-    <h3>Actualizar Datos</h3>
-    <button class="btn" id="btnActualizar">Actualizar</button>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <h3>Seleccionar ejercicios actualizados:</h3>
-            <form id="formActualizar" th:action="@{/actualizarRutina}" method="post">
-                <div th:each="ejercicio : ${ejercicios}">
-                    <input type="checkbox" th:id="${'ejercicio' + ejercicio.nombre}" th:name="${'ejercicio' + ejercicio.nombre}" th:value="${ejercicio.nombre}" th:checked="${!ejercicio.realizado}">
-                    <label th:for="${'ejercicio' + ejercicio.nombre}" th:text="${ejercicio.descripcion}"></label><br>
-                </div>
-                <button type="submit">Actualizar</button>
-            </form>
-        </div>
-    </div>
 </div>
+
+<h3>Actualizar Datos</h3>
+<button class="btn" id="btnActualizar">Actualizar</button>
+<!-- Formulario pop-up para editar estado -->
+<div id="popup" class="popup-form">
+    <h3>Editar Estado</h3>
+    <form id="formulario-ejercicio">
+        <input type="hidden" id="ejercicio-id" name="id">
+        <label><input type="checkbox" id="estado-checkbox" name="estado"> Realizado</label><br>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary cancelar">Cancelar</button>
+    </form>
+</div>
+
+<!-- JavaScript y jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Mostrar formulario pop-up al hacer clic en un ejercicio
+        $('#ejercicios-lista').on('click', 'li', function() {
+            var id = $(this).data('id');
+            var nombre = $(this).find('.nombre').text();
+            var estado = $(this).data('estado');
+
+            // Llenar el formulario con los datos del ejercicio seleccionado
+            $('#ejercicio-id').val(id);
+            $('#estado-checkbox').prop('checked', estado === 'realizado');
+
+            // Mostrar el formulario pop-up
+            $('#popup-formulario').show();
+        });
+
+        // Cancelar la edición y cerrar el formulario pop-up
+        $('.cancelar').click(function() {
+            $('#popup-formulario').hide();
+        });
+
+        // Enviar el formulario mediante AJAX
+        $('#formulario-ejercicio').submit(function(event) {
+            event.preventDefault();
+
+            var id = $('#ejercicio-id').val();
+            var estado = $('#estado-checkbox').is(':checked') ? 'realizado' : 'por-hacer';
+
+            // Mostrar confirmación antes de enviar los datos
+            var confirmacion = confirm('¿Estás seguro de cambiar el estado del ejercicio?');
+            if (!confirmacion) {
+                return;
+            }
+
+            // Enviar los datos mediante AJAX
+            $.ajax({
+                url: '/actualizarRutina',
+                method: 'POST',
+                data: {
+                    id: id,
+                    estado: estado
+                },
+                success: function(response) {
+                    // Actualizar visualización del ejercicio en la lista
+                    var $ejercicio = $('#ejercicios-lista').find('[data-id="' + id + '"]');
+                    $ejercicio.attr('data-estado', estado);
+                    $ejercicio.find('.estado').prop('checked', estado === 'realizado');
+
+                    // Cerrar formulario pop-up
+                    $('#popup-formulario').hide();
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al actualizar el estado del ejercicio. Por favor, inténtalo de nuevo.');
+                }
+            });
+        });
+    });
+</script>
 <footer th:replace="templates/footer:: footer">
 </footer>
 </body>
