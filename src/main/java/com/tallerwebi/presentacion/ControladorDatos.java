@@ -37,7 +37,7 @@ public class ControladorDatos {
 
     @Transactional
     @RequestMapping("/datos")
-    public ModelAndView mostrarDatos(HttpServletRequest request) throws RutinaSemanalVacia, ErrorPesoRegistroIsEmpty {
+    public ModelAndView mostrarDatos(HttpServletRequest request)  {
         HttpSession session = request.getSession(false);
         ModelMap modelo = new ModelMap();
 
@@ -45,7 +45,12 @@ public class ControladorDatos {
             modelo.put("Email", session.getAttribute("Email"));
             modelo.put("id", session.getAttribute("id"));
             Usuario usuario = servicioUsuario.buscarPorId((Long) session.getAttribute("id"));
-            ArrayList pesosRegistro = servicioPeso.obtenerPesosPorAnio(usuario.getId());
+            ArrayList pesosRegistro = null;
+            try {
+                pesosRegistro = servicioPeso.obtenerPesosPorAnio(usuario.getId());
+            } catch (ErrorPesoRegistroIsEmpty e) {
+                modelo.put("error", "No hay datos para mostrar");
+            }
             Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
 
             if (membresia == null || "GRATUITO".equals(membresia.getTipo()) || "INTERMEDIO".equals(membresia.getTipo())) {
@@ -57,7 +62,12 @@ public class ControladorDatos {
                 return new ModelAndView("datos", modelo);
             }
 
-            DatosDiasYEjercicios datos = servicioRutina.procesarRutinas(usuario.getId());
+            DatosDiasYEjercicios datos = null;
+            try {
+                datos = servicioRutina.procesarRutinas(usuario.getId());
+            } catch (RutinaSemanalVacia e) {
+                modelo.put("error", "No hay datos para mostrar");
+            }
 
 
             modelo.put("registroPeso", pesosRegistro);
