@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.DatosMalIngresadosException;
+import com.tallerwebi.dominio.excepcion.RutinaSemanalVacia;
 import com.tallerwebi.dominio.excepcion.esMenorDeEdadException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
@@ -36,7 +40,7 @@ public class MisRutinasControllerTest {
     }
 
     @Test
-    public void queMuestreElResumenDeRutinaConUsuarioAutenticado(){
+    public void queMuestreElResumenDeRutinaConUsuarioAutenticado() throws RutinaSemanalVacia {
         // Configurar el mock de HttpSession para simular la sesión iniciada
         when(sessionMock.getAttribute("Email")).thenReturn("usuario@example.com");
 
@@ -51,7 +55,7 @@ public class MisRutinasControllerTest {
     }
 
     @Test
-    public void queRedirijaALoginSiUsuarioNoAutenticado(){
+    public void queRedirijaALoginSiUsuarioNoAutenticado() throws RutinaSemanalVacia {
         // Configurar el mock de HttpServletRequest para devolver null, indicando que no hay sesión
         when(requestMock.getSession(false)).thenReturn(null);
 
@@ -62,7 +66,7 @@ public class MisRutinasControllerTest {
         thenRedireccionALogin(mav);
     }
 
-    private ModelAndView whenVerMisRutinas(HttpServletRequest requestMock) {
+    private ModelAndView whenVerMisRutinas(HttpServletRequest requestMock) throws RutinaSemanalVacia {
         // Aquí deberías llamar al método del controlador que estás probando
         // y pasarle el HttpServletRequest que has configurado
         return misRutinasController.verMisRutinas(requestMock);
@@ -81,16 +85,16 @@ public class MisRutinasControllerTest {
     @Test
     public void queSePuedanActualizarEjerciciosDesdeElResumenDeRutinas() {
         // Crea un detalle de rutina de prueba
-        DetalleRutina detalleRutina = new DetalleRutina();
+        RutinaSemanal rutinaSemanal = new RutinaSemanal();
 
         // Simula el comportamiento del servicio de rutina
-        Mockito.when(servicioRutinaMock.actualizarRutina(detalleRutina)).thenReturn(detalleRutina);
+        Mockito.when(servicioRutinaMock.actualizarRutina(rutinaSemanal)).thenReturn(rutinaSemanal);
 
         // Llama al método a probar
-        ModelAndView mav = misRutinasController.actualizarRutina(detalleRutina, requestMock);
+        ModelAndView mav = misRutinasController.actualizarRutina(rutinaSemanal, requestMock);
 
         // Verifica que se haya llamado al método actualizarRutina del servicio con los argumentos correctos
-        Mockito.verify(servicioRutinaMock).actualizarRutina(detalleRutina);
+        Mockito.verify(servicioRutinaMock).actualizarRutina(rutinaSemanal);
 
         // Verifica que se devuelva una redirección a "/misRutinas"
         assertEquals("redirect:/misRutinas", mav.getViewName());
@@ -116,4 +120,3 @@ public class MisRutinasControllerTest {
         assertEquals("La rutina ha sido actualizada exitosamente", mav.getModel().get("confirmacion"));
     }
 }
-
