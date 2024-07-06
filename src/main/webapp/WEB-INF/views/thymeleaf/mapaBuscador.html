@@ -106,6 +106,9 @@
         var latitudUsuario = /*[[${latitudUsuario}]]*/ -34.74973643128108;
         var longitudUsuario = /*[[${longitudUsuario}]]*/ -58.571734784656066;
 
+        var longitudLatitud = /*[[${longitudLatitud}]]*/;
+
+
         // Inicializar el mapa centrado en las coordenadas del usuario
         var mymap = L.map('mapid').setView([latitudUsuario, longitudUsuario], 13);
 
@@ -161,6 +164,13 @@
                 }
             });
         });
+
+        for (var i = 0; i < longitudLatitud.length; i += 2) {
+        var lng = longitudLatitud[i];
+        var lat = longitudLatitud[i + 1];
+        L.marker([lat, lng]).addTo(mymap);
+        }
+
     });
 </script>
 

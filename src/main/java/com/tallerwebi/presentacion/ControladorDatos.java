@@ -68,8 +68,6 @@ public class ControladorDatos {
             } catch (RutinaSemanalVacia e) {
                 modelo.put("error", "No hay datos para mostrar");
             }
-
-
             modelo.put("registroPeso", pesosRegistro);
             modelo.put("usuario", usuario);
             modelo.put("membresia", membresia);

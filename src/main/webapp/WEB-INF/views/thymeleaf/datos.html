@@ -201,7 +201,6 @@
 
                 <div class="charts" style="relative">
                     <canvas id="ProgresChart" width="700" height="400"></canvas>
-                    <h3  id="sinDatos">No hay datos disponibles</h3>
                 </div>
             </div>
         </div>
@@ -444,7 +443,6 @@
 
     function updateCharts(data, month) {
         var ctxProgress = document.getElementById('ProgresChart').getContext('2d');
-        let h3 = document.getElementById('sinDatos')
 
 
         if (progressChart) {
@@ -452,12 +450,9 @@
         }
 
         if (data.length === 0) {
-            h3.style.display = "block"
+             alert('No hay datos para mostrar');
             return;
-        }else{
-         h3.style.display = "none"
         }
-
         var labels = (month == 0)
             ? ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
             : data.map((_, index) => `Día ${index + 1}`); // Etiquetas para días del mes

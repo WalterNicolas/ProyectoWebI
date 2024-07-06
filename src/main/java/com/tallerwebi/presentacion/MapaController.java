@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -76,10 +78,14 @@ public class MapaController {
             if (distancia != null) {
                 lugares = servicioSearch.filtrarLugaresPorDistancia(lugares, latitudUsuario, longitudUsuario, distancia);
             }
-
+            List<Double> array = new ArrayList<>();
             if (lugares.isEmpty()) {
                 modelo.put("error", "No se encontraron lugares para los filtros seleccionados.");
+            }else{
+                array = obtenerLongitudLatitudLugares(lugares);
+                modelo.put("longitudLatitud", array);
             }
+
             modelo.put("lugares", lugares);
 
         } catch (SearchException e) {
@@ -87,6 +93,15 @@ public class MapaController {
         }
 
         return new ModelAndView("mapaBuscador", modelo);
+    }
+
+    private List<Double> obtenerLongitudLatitudLugares(List<Lugar> lugares){
+        List<Double> array = new ArrayList<>();
+        lugares.forEach( l ->{
+            array.add(l.getLongitud());
+            array.add(l.getLatitud());
+        });
+        return array;
     }
 
     @PostMapping("/actualizarUbicacion")
