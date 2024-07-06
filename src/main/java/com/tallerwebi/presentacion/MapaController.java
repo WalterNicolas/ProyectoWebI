@@ -127,5 +127,3 @@ public class MapaController {
         //return new ModelAndView("redirect:/home", modelo);
     }
 }
-
-

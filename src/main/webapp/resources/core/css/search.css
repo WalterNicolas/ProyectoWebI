@@ -1,6 +1,6 @@
 :root {
   --primario: #F70C5B;
-  --color-fondo: #AB093F;
+  --color-fondo: #0978ab;
   --blanco: #FFFF;
 }
 
@@ -82,7 +82,7 @@ img{
 .mapContainer{
     display: flex;
     width: 500px;
-    background-color: #AB093F;
+    background-color: var(--color-fondo);
     border-radius: 10px;
     justify-content: center;
 }

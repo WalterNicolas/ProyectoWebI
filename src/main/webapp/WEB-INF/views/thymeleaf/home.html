@@ -162,7 +162,7 @@
      <p class="text-light">Por favor no olvide completar tu <a  class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" th:onclick="|window.location.href='@{/perfil}'|">Perfil</a></p>
     </div>
   <div th:if="${usuario.getAptitudFisica() != null}" class="d-flex justify-content-center">
-    <div class="card text-center" style="padding-left:100px;padding-right:100px;background-color: rgba(255, 255, 255, 0.75);">
+    <div class="card text-center" style="padding-left:100px;padding-right:100px;background-color: rgb(255, 255, 255);">
       <div class="card-body">
         <h5 class="card-title">Datos de Aptitud Física</h5>
         <p class="card-text">Altura: <span th:text="${usuario.getAptitudFisica().getAltura()}"></span> cm</p>
@@ -187,7 +187,7 @@
         <div class="text-light text-center mt-4" th:each="rutinaDiaria, stat : ${rutinaSemanal.getRutinaDiaria()}">
           <h3 th:text="'Día: ' + (${stat.index} + 1)"></h3>
 
-          <table class="table table-bordered mt-3 text-light" style="background-color: rgba(0, 0, 0, 0.75);">
+          <table class="table table-bordered mt-3 text-light" style="background-color: rgba(0, 0, 0);">
             <thead>
             <tr>
               <th>Duración</th>
@@ -219,7 +219,7 @@
           </div>
           <div class="ag-courses-item_date-box">
             <span class="ag-courses-item_date">
-           Rutina gratuita
+           Rutina gratuita FREE
           </span>
           </div>
         </a>
@@ -233,7 +233,7 @@
           <div class="ag-courses-item_bg"></div>
 
           <div class="ag-courses-item_title">
-            Pack Intermedio
+            Pack Intermedio $1000/mes
           </div>
 
           <div class="ag-courses-item_date-box">
@@ -252,7 +252,7 @@
         <a href="#" class="ag-courses-item_link">
           <div class="ag-courses-item_bg"></div>
           <div class="ag-courses-item_title">
-            Pack Premium
+            Pack Premium  $2000/mes
           </div>
           <div class="ag-courses-item_date-box">
             <span class="ag-courses-item_date">
