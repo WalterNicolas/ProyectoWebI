@@ -116,15 +116,23 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
 
+        let customIcon = {
+            iconUrl:/*[[@{/img/puntero.png}]]*/,
+            iconSize:[40,40]
+        }
+        let myIcon = L.icon(customIcon);
+        let iconOptions = {
+            title:"ubicacion",
+            draggable:true,
+            icon:myIcon
+        }
         // Agregar un marcador draggable en las coordenadas del usuario
-        var marker = L.marker([latitudUsuario, longitudUsuario], {draggable: true}).addTo(mymap);
+        var marker = L.marker([latitudUsuario, longitudUsuario], iconOptions).addTo(mymap);
         marker.on('dragend', function (event) {
             var marker = event.target;
             var position = marker.getLatLng();
             marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
 
-            // Actualizar el div de coordenadas con las nuevas coordenadas
-            $('#coordenadas').text("Latitud: " + position.lat.toFixed(6) + ", Longitud: " + position.lng.toFixed(6));
 
             // Actualizar los campos ocultos del formulario
             $('#latitudHidden').val(position.lat);
@@ -170,8 +178,9 @@
             var lat = longitudLatitud[i + 1];
             L.marker([lat, lng]).addTo(mymap);
         }
-
     });
+
+
 </script>
 
 <script th:inline="javascript">
