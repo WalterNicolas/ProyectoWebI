@@ -54,11 +54,11 @@ public class MapaController {
                 modelo.put("latitudUsuario", latitudUsuario);
                 modelo.put("longitudUsuario", longitudUsuario);
 
-               Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
+               /*Membresia membresia = servicioMembresia.membresiasPorId(usuario.getId());
                 if (membresia == null || "GRATUITO".equals(membresia.getTipo())) {
                     modelo.put("error", "No tienes acceso a esta sección. Actualice su Membresia");
                     return new ModelAndView("datos", modelo);
-                }
+                }*/
 
             } else {
                 latitudUsuario = -34.74973643128108;
