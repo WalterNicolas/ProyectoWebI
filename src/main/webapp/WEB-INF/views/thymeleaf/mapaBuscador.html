@@ -40,7 +40,6 @@
         </div>
     </div>
 </div> -->
-
 <div class="row p-4">
     <div class="col-md-12">
         <h2 class="text-center text-white">Encuentra tu lugar ideal</h2>
@@ -91,8 +90,7 @@
     <div class="col-md-4 m-2 rounded-xl bg-white bg-opacity-50">
         <div id="mapid" style="height: 500px; width:100%;"></div>
         <div class="ml-4" id="coordenadas"></div>
-
-        <!-- Botón para actualizar el marcador a las nuevas coordenadas obtenidas del mapa -->
+        <div id="direccion"></div>
         <div class="mt-2">
             <button id="btn-actualizar-marcador" class="btn btn-primary">Actualizar Ubicacion</button>
         </div>
@@ -102,14 +100,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
     $(document).ready(function() {
-        // Obtener las coordenadas del usuario desde el modelo de Spring
         var latitudUsuario = /*[[${latitudUsuario}]]*/ -34.74973643128108;
         var longitudUsuario = /*[[${longitudUsuario}]]*/ -58.571734784656066;
 
         var longitudLatitud = /*[[${longitudLatitud}]]*/;
 
-
-        // Inicializar el mapa centrado en las coordenadas del usuario
         var mymap = L.map('mapid').setView([latitudUsuario, longitudUsuario], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -126,20 +121,28 @@
             draggable:true,
             icon:myIcon
         }
-        // Agregar un marcador draggable en las coordenadas del usuario
+
         var marker = L.marker([latitudUsuario, longitudUsuario], iconOptions).addTo(mymap);
         marker.on('dragend', function (event) {
             var marker = event.target;
             var position = marker.getLatLng();
             marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
 
-
-            // Actualizar los campos ocultos del formulario
             $('#latitudHidden').val(position.lat);
             $('#longitudHidden').val(position.lng);
+
+            $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.lat}&lon=${position.lng}`,
+                function(data) {
+                    if (data && data.display_name) {
+                        $('#direccion').text(data.display_name);
+                    } else {
+                        $('#direccion').text('No se encontró una dirección para las coordenadas proporcionadas.');
+                    }
+                }).fail(function() {
+                $('#direccion').text('Error en la solicitud.');
+            });
         });
 
-        // Añadir campos ocultos al formulario para las coordenadas
         $('<input>').attr({
             type: 'hidden',
             id: 'latitudHidden',
@@ -151,12 +154,10 @@
             name: 'longitud'
         }).appendTo('#searchForm');
 
-        // Manejar la actualización de la ubicación
         $('#btn-actualizar-marcador').on('click', function() {
             var nuevaLatitud = marker.getLatLng().lat;
             var nuevaLongitud = marker.getLatLng().lng;
 
-            // Realizar una solicitud POST para enviar las nuevas coordenadas al backend
             $.ajax({
                 url: '/actualizarUbicacion',
                 type: 'POST',
@@ -180,15 +181,12 @@
         }
     });
 
-
-</script>
-
-<script th:inline="javascript">
     if ([[${error}]] != null) {
         $(document).ready(function() {
             $('#accessDeniedModal').modal('show');
         });
     }
 </script>
+
 </body>
 </html>
