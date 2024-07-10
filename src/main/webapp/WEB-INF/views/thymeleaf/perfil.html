@@ -46,6 +46,7 @@
                         <div class="max-w-full px-3 mt-12 ml-auto text-center lg:mt-0 lg:w-5/12 lg:flex-none">
                             <div id="mapid" style="height: 50vh;"></div>
                             <div class="ml-4 text-light" id="coordenadas"></div>
+                            <div class="text-light" id="direccion"></div>
                         </div>
                     </div>
                 </div>
@@ -203,19 +204,45 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
+        let customIcon = {
+            iconUrl:/*[[@{/img/puntero.png}]]*/,
+            iconSize:[40,40]
+        }
+        let myIcon = L.icon(customIcon);
+        let iconOptions = {
+            title:"ubicacion",
+            draggable:true,
+            icon:myIcon
+        }
 
-        let marker = L.marker([latitud, longitud], {draggable: true}).addTo(mymap);
-        marker.on('dragend', function (event) {
+
+        // Inicializa el mapa y el marcador
+        let marker = L.marker([latitud, longitud], iconOptions).addTo(mymap);
+
+    // Función para actualizar la dirección
+        function actualizarDireccion(lat, lng) {
+            $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`, function(data) {
+                if (data && data.display_name) {
+                    $('#direccion').text(data.display_name);
+                } else {
+                    $('#direccion').text('No se encontró una dirección para las coordenadas proporcionadas.');
+                }
+            }).fail(function() {
+                $('#direccion').text('Error en la solicitud.');
+            });
+        }
+
+        // Llama a la función para actualizar la dirección al inicializar el marcador
+        actualizarDireccion(latitud, longitud);
+
+        // Evento para actualizar la dirección cuando el marcador se mueva
+        marker.on('dragend', function(event) {
             var marker = event.target;
             var position = marker.getLatLng();
-            marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
-
-            // Actualizar el div de coordenadas con las nuevas coordenadas
-            $('#latitud').val(position.lat.toFixed(6));
-            $('#longitud').val(position.lng.toFixed(6));
-            $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
-
+            marker.setLatLng(new L.LatLng(position.lat, position.lng), { draggable: true });
+            actualizarDireccion(position.lat, position.lng);
         });
+
     });
 </script>
 <script th:inline="javascript">

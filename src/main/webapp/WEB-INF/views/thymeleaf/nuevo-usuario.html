@@ -40,6 +40,7 @@
       <div class="col-md-4">
         <div id="mapid" style="height: 50vh;"></div>
         <div class="ml-4 text-light" id="coordenadas"></div>
+        <div class="text-light" id="direccion"></div>
       </div>
     </div>
   </div>
@@ -60,16 +61,41 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
 
-    var marker = L.marker([-34.6475, -58.5560], {draggable: true}).addTo(mymap); // Marcador en Ramos Mejía
+    let customIcon = {
+      iconUrl:/*[[@{/img/puntero.png}]]*/,
+      iconSize:[40,40]
+    }
+    let myIcon = L.icon(customIcon);
+    let iconOptions = {
+      title:"ubicacion",
+      draggable:true,
+      icon:myIcon
+    }
+
+
+    var marker = L.marker([-34.6475, -58.5560], iconOptions).addTo(mymap); // Marcador en Ramos Mejía
     marker.on('dragend', function (event) {
       var marker = event.target;
       var position = marker.getLatLng();
       marker.setLatLng(new L.LatLng(position.lat, position.lng), {draggable: true});
 
       // Actualizar el div de coordenadas con las nuevas coordenadas
-      $('#latitud').val(position.lat.toFixed(6));
+      $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.lat}&lon=${position.lng}`,
+              function(data) {
+                if (data && data.display_name) {
+                  $('#direccion').text(data.display_name);
+                } else {
+                  $('#direccion').text('No se encontró una dirección para las coordenadas proporcionadas.');
+                }
+              }).fail(function() {
+        $('#direccion').text('Error en la solicitud.');
+      });
+
+
+     $('#latitud').val(position.lat.toFixed(6));
       $('#longitud').val(position.lng.toFixed(6));
-      $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());
+      /*
+      $("#coordenadas").text("Latitud: " + $('#latitud').val() + ", Longitud: " + $('#longitud').val());*/
 
     });
   });

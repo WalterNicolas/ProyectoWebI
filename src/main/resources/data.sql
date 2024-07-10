@@ -618,9 +618,12 @@ VALUES ('Press de Banca. Realiza 3 series de 12 repeticiones.', 15, 'Press de Ba
 -- ('Nivel 2', 90, 100, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 90 DAY),3);
 
 -- Insertar datos de prueba en pesoRegistro
-    INSERT INTO pesoregistro (usuario_id, fecha, peso)
+INSERT INTO pesoregistro (usuario_id, fecha, peso)
 VALUES
     (1, '2024-01-01', 71.0),
+    (1, '2024-01-07', 75.0),
+    (1, '2024-01-14', 70.0),
+    (1, '2024-01-29', 68.0),
     (1, '2024-02-01', 70.5),
     (1, '2024-03-01', 70.0),
     (2, '2024-01-01', 76.0),
@@ -629,7 +632,6 @@ VALUES
     (3, '2024-01-01', 61.0),
     (3, '2024-02-01', 60.5),
     (3, '2024-03-01', 60.0);
-
 
 INSERT INTO articulo (titulo, subtitulo, imagen, contenido, tipoEntrenamiento) VALUES
                                                                                    ('Guía Completa para el Entrenamiento de Fuerza', 'Mejora tu fuerza y masa muscular con estos consejos', '/img/ejercicioDos.PNG', 'El entrenamiento de fuerza es esencial para desarrollar músculo y mejorar tu salud general. Comienza con ejercicios básicos como el press de banca, sentadillas y peso muerto. Asegúrate de aumentar gradualmente el peso para evitar lesiones. Mantén una técnica adecuada y enfócate en la forma correcta durante cada repetición. No te olvides de incluir un calentamiento adecuado antes de cada sesión y de enfriar después del entrenamiento para facilitar la recuperación muscular y prevenir lesiones.', 'Musculacio	n'),
